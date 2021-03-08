@@ -69,7 +69,35 @@ GameObject.board = Native('div', {
 	},
 });
 
-const x = new GameObject();
-x.setPos(50, 50);
-x.setVel(-1);
+// const x = new GameObject();
+// x.pos = [ 50, 50 ];
+// x.vel = [ 1, 1 ];
+
+// const x = new GameObject({
+// 	// text: 'abc',
+// 	image: 'ball',
+// 	// color: 'blue',
+// 	size: [ 50, 50 ],
+// 	pos: [ 50, 50 ],
+// 	vel: [ 5, 1 ],
+// });
+
+const pad = new GameObject({
+	size: [ 10, 2 ],
+	color: 'white',
+	pos: [ 45 , 95 ],
+});
+
+const behaviour = {
+	"ArrowLeft"  : _ => pad.move(-1),
+	"ArrowRight" : _ => pad.move(1),
+	' ': _ => console.log('hi!'),
+};
+
+document.onkeydown = function(event) {
+	const { key } = event;
+	
+	behaviour[key]?.();
+};
+
 turn.start();

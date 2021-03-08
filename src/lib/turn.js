@@ -1,9 +1,8 @@
-import { signal } from "./utils.js";
-
 let fps = 24;
 let timeoutID;
 
 export const moving = [];
+export const registered = [];
 
 export const setFps = rate => fps = rate;
 
@@ -19,18 +18,11 @@ function turn (lastTime) {
 	const now = Date.now();
 	const elapsed = (now - lastTime) / 1000;
 	
-	for (const object of moving) {
-		const hip = object.vel;
-		const tan = object.angle;
-		const sign = signal(tan);
-		
-		const sin = sign * (tan**-2 + 1) ** -(1/2);
-		const cos = sign * (tan**2 + 1) ** -(1/2);
-		
-		const velx = cos * hip;
-		const vely = sin * hip;
-		
-		object.move(velx*elapsed, vely*elapsed);
+	for (const obj of moving) {
+		obj.move(obj.vx * elapsed, obj.vy * elapsed);
+	}
+	for (const obj of registered) {
+		obj.turn?.(elapsed);
 	}
 	
 	start(now);

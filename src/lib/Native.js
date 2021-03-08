@@ -11,6 +11,9 @@ export default function Native (target, { style, props, on={}, children=[], pare
 		.forEach(
 			([ eventName, listener ]) => target.addEventListener(eventName, listener)
 		);
+	
+	if (Array.isArray(children))
+		target.innerText = '';
 	target.append(...toArray(children));
 	
 	parent?.appendChild(target);
