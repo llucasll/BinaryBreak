@@ -1,0 +1,9 @@
+.idea
+node_modules
+
+# Automatically compiled files from TS
+#src/**/*.js
+src/**/*.js.map
+
+# Explicity include all playground files
+!src/playground/**/*

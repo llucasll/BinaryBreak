@@ -1,0 +1,25 @@
+{
+	"name": "binary-break",
+	"description": "Binary Break is a game in Breakout style, developed with Web Technologies",
+	"version": "0.0.0",
+	"type": "module",
+	"private": true,
+	"license": "ISC",
+	"contributors": [
+		{
+			"name": "Lucas Camilo",
+			"email": "lcamilo@id.uff.br",
+			"url": "https://t.me/llucasll"
+		},
+		{
+			"name": "Willian Oliveira",
+			"email": "williano@id.uff.br"
+		}
+	],
+	"scripts": {
+		"start": "npx serve -s src"
+	},
+	"dependencies": {
+		"serve": "^11.3.2"
+	}
+}
