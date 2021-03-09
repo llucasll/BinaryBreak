@@ -27,16 +27,16 @@ export const Movement = {
 		);
 	},
 	bounce (x, y) {
-		if (
-			x + this.entity.w >= 100
-			|| x <= 0
-		)
-			this.entity.speed.x *= -1;
+		const { speed } = this.entity;
 		
-		if (
-			y + this.entity.h >= 100
-			|| y <= 0
-		)
-			this.entity.speed.y *= -1;
+		if (speed.x>0 && x + this.entity.w >= 100)
+			speed.x *= -1;
+		if (speed.x<0 && x<=0)
+			speed.x *= -1;
+		
+		if (speed.y>0 && y + this.entity.h >= 100)
+			speed.y *= -1;
+		if (speed.y<0 && y<=0)
+			speed.y *= -1;
 	},
 };
