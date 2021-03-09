@@ -19,7 +19,7 @@ function turn (lastTime) {
 	const elapsed = (now - lastTime) / 1000;
 	
 	for (const obj of moving) {
-		obj.move(obj.vx * elapsed, obj.vy * elapsed);
+		obj.move(obj.speed.x * elapsed, obj.speed.y * elapsed);
 	}
 	for (const obj of registered) {
 		obj.turn?.(elapsed);

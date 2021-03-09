@@ -7,14 +7,8 @@ function xy (x, y) {
 function wh (w, h) {
 	return Object.assign([ w, h ], { w, h });
 }
-function getXY (Arguments, Default) {
-	return {
-		x: Arguments[0].x ?? Default.x,
-		y: Arguments[0].y ?? Default.y,
-	}
-}
 
-export default class GameObject {
+export default class Entity {
 	static board;
 	static font;
 	static textColor = 'white';
@@ -22,7 +16,12 @@ export default class GameObject {
 	static mediaPrefix = 'media/';
 	static mediaSuffix = '.png';
 	
-	#internal = {};
+	#internal = {
+		speed: {
+			x: null,
+			y: null,
+		},
+	};
 	get internal () { return this.#internal }
 	
 	/* POSITION */
@@ -44,13 +43,6 @@ export default class GameObject {
 		
 		this.element.style.left = x + '%';
 		this.element.style.top = y + '%';
-		
-		// Native(this.element, {
-		// 	style: {
-		// 		left: x + "%",
-		// 		top: y + "%",
-		// 	}
-		// });
 	}
 	
 	get pos () {
@@ -81,13 +73,6 @@ export default class GameObject {
 	set size ([ w=this.size.w, h=this.size.h ]) {
 		this.element.style.width = w + '%';
 		this.element.style.height = h + '%';
-		
-		// Native(this.element, {
-		// 	style: {
-		// 		left: x + "%",
-		// 		top: y + "%",
-		// 	}
-		// });
 	}
 	
 	get size () {
@@ -95,34 +80,23 @@ export default class GameObject {
 			parseFloat(this.element.style.width),
 			parseFloat(this.element.style.height),
 		);
-		
-		// const { left, top } = this.element.style;
-		//
-		// return [
-		// 	parseFloat(left),
-		// 	parseFloat(top),
-		// ];
 	}
 	
 	/* SPEED */
 	
-	get vx () { return this.vel.x }
-	set vx (value) { this.vel = [ value, undefined ] }
-	get vy () { return this.vel.y }
-	set vy (value) { this.vel = [ undefined, value ] }
-	
-	set vel ([ vx=this.vx, vy=this.vy ]) {
-		this.internal.vx = vx;
-		this.internal.vy = vy;
+	set speed ([ x, y ]) {
+		const old = this.internal.speed;
 		
-		if (vx || vy)
+		this.internal.speed.x = x ?? old.x;
+		this.internal.speed.y = y ?? old.y;
+		
+		if (x || y)
 			turn.moving.push(this);
 		else
 			turn.moving.splice(turn.moving.indexOf(this), 1);
 	}
-	get vel () {
-		const { vx, vy } = this.internal;
-		return xy(vx, vy);
+	get speed () {
+		return this.internal.speed;
 	}
 	
 	/* CONTENT */
@@ -134,12 +108,11 @@ export default class GameObject {
 	get color () { return this.element.style.backgroundColor }
 	
 	set image (value) {
-		this.element.style.backgroundImage =
-			'url('
-			+ GameObject.mediaPrefix
+		this.element.style.backgroundImage = 'url('
+			+ Entity.mediaPrefix
 			+ value
-			+ GameObject.mediaSuffix
-			+ ')';
+			+ Entity.mediaSuffix
+		+ ')';
 	}
 	get image () { return this.element.style.backgroundImage }
 	
@@ -147,7 +120,10 @@ export default class GameObject {
 	element;
 	removeOnOutside = true;
 	
-	constructor (props={}, board=GameObject.board) {
+	set profile (Profile) { this.#internal.profile = new Profile(this) }
+	get profile () { return this.#internal.profile }
+	
+	constructor (Profile, board=Entity.board) {
 		this.board = board;
 		
 		this.element = Native('div', {
@@ -157,8 +133,8 @@ export default class GameObject {
 				left: '0%',
 				top: '0%',
 				
-				fontFamily: GameObject.font,
-				color: GameObject.textColor,
+				fontFamily: Entity.font,
+				color: Entity.textColor,
 				// textAlign: 'center',
 				// verticalAlign: 'center',
 				display: 'flex',
@@ -175,7 +151,7 @@ export default class GameObject {
 		
 		board.append(this.element);
 		
-		Object.assign(this, props);
+		this.profile = Profile;
 	}
 	
 	die () {

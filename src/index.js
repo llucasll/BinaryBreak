@@ -7,8 +7,9 @@
 // });
 
 import Native from "./lib/Native.js";
-import GameObject from "./lib/GameObject.js";
+import Entity from "./lib/Entity.js";
 import * as turn from './lib/turn.js';
+import { Pad, Pad2 } from "./lib/Profile.js";
 
 Native(document.body, {
 	style: {
@@ -57,7 +58,7 @@ Native(document.body, {
 // 	})
 // });
 
-GameObject.board = Native('div', {
+Entity.board = Native('div', {
 	parent: document.body,
 	style: {
 		width: '80vmin',
@@ -82,16 +83,13 @@ GameObject.board = Native('div', {
 // 	vel: [ 5, 1 ],
 // });
 
-const pad = new GameObject({
-	size: [ 10, 2 ],
-	color: 'white',
-	pos: [ 45 , 95 ],
-});
+const pad = new Entity(Pad);
 
 const behaviour = {
 	"ArrowLeft"  : _ => pad.move(-1),
 	"ArrowRight" : _ => pad.move(1),
 	' ': _ => console.log('hi!'),
+	'g': _ => pad.profile=Pad2,
 };
 
 document.onkeydown = function(event) {
