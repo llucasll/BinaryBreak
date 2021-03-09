@@ -32,14 +32,16 @@ export default class Entity {
 	set y (value) { this.pos = [ undefined, value ] }
 	
 	set pos ([ x=this.pos.x, y=this.pos.y ]) {
-		const die = this.removeOnOutside && (
-			x > 100
-			|| y > 100
-			|| x+this.w < 0
-			|| y+this.h < 0
-		);
-		if (die)
-			this.die();
+		if (this.profile?.move) {
+			const result = this.profile.move(x, y);
+			
+			if (result === false)
+				return;
+			if (result === null)
+				return this.die();
+			if (Array.isArray(result))
+				([ x, y ] = result);
+		}
 		
 		this.element.style.left = x + '%';
 		this.element.style.top = y + '%';
@@ -118,7 +120,6 @@ export default class Entity {
 	
 	board;
 	element;
-	removeOnOutside = true;
 	
 	set profile (Profile) { this.#internal.profile = new Profile(this) }
 	get profile () { return this.#internal.profile }

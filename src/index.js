@@ -9,7 +9,7 @@
 import Native from "./lib/Native.js";
 import Entity from "./lib/Entity.js";
 import * as turn from './lib/turn.js';
-import { Pad, Pad2 } from "./lib/Profile.js";
+import { Ball, Pad, Pad2 } from "./lib/Profile.js";
 
 Native(document.body, {
 	style: {
@@ -84,12 +84,14 @@ Entity.board = Native('div', {
 // });
 
 const pad = new Entity(Pad);
+const ball = new Entity(Ball);
 
 const behaviour = {
 	"ArrowLeft"  : _ => pad.move(-1),
 	"ArrowRight" : _ => pad.move(1),
 	' ': _ => console.log('hi!'),
-	'g': _ => pad.profile=Pad2,
+	'g': _ => pad.profile = Pad2,
+	'w': _ => pad.profile = Pad,
 };
 
 document.onkeydown = function(event) {
