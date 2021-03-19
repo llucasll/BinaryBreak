@@ -19,6 +19,10 @@ export class Pad extends Profile {
 		color: 'white',
 		pos: [ 45 , 95 ],
 	};
+	
+	collided () {
+	
+	}
 }
 Pad.prototype.move = Movement.stop;
 export class Pad2 extends Profile {
@@ -27,6 +31,13 @@ export class Pad2 extends Profile {
 		color: 'green',
 		// pos: [ 45 , 95 ],
 	};
+	collided () {
+	
+	}
+	
+	turn () {
+		console.log(this.entity.x);
+	}
 }
 
 export class Ball extends Profile {
@@ -38,3 +49,13 @@ export class Ball extends Profile {
 	};
 }
 Ball.prototype.move = Movement.bounce;
+
+export class Brick extends Profile {
+	static defaults = {
+		// size: [ 10, 5 ],
+		// text: 'Brick',
+		// image: 'ball',
+		// color: 'green',
+		color: 'white',
+	};
+}

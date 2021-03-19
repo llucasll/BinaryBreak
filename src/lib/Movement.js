@@ -20,10 +20,10 @@ export const Movement = {
 	},
 	stop (x, y) {
 		return !(
-			x + this.entity.w >= 100
-			|| y + this.entity.h >= 100
-			|| x <= 0
-			|| y <= 0
+			x + this.entity.w > 100
+			|| y + this.entity.h > 100
+			|| x < 0
+			|| y < 0
 		);
 	},
 	bounce (x, y) {

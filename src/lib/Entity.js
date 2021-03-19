@@ -93,7 +93,8 @@ export default class Entity {
 		this.internal.speed.y = y ?? old.y;
 		
 		if (x || y)
-			turn.moving.push(this);
+			if (!turn.moving.includes(this))
+				turn.moving.push(this);
 		else
 			turn.moving.splice(turn.moving.indexOf(this), 1);
 	}
@@ -121,7 +122,7 @@ export default class Entity {
 	board;
 	element;
 	
-	set profile (Profile) { this.#internal.profile = new Profile(this) }
+	set profile (Profile) { this.#internal.profile = Profile? new Profile(this) : null }
 	get profile () { return this.#internal.profile }
 	
 	constructor (Profile, board=Entity.board) {

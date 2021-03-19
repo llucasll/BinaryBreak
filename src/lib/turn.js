@@ -22,7 +22,7 @@ function turn (lastTime) {
 		obj.move(obj.speed.x * elapsed, obj.speed.y * elapsed);
 	}
 	for (const obj of registered) {
-		obj.turn?.(elapsed);
+		obj.profile?.turn?.(elapsed);
 	}
 	
 	start(now);
