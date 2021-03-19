@@ -1,5 +1,3 @@
-import { Movement } from "./Movement.js";
-
 export default class Profile {
 	static defaults = {};
 	
@@ -11,51 +9,4 @@ export default class Profile {
 		
 		Object.assign(entity, this.constructor.defaults);
 	}
-}
-
-export class Pad extends Profile {
-	static defaults = {
-		size: [ 10, 2 ],
-		color: 'white',
-		pos: [ 45 , 95 ],
-	};
-	
-	collided () {
-	
-	}
-}
-Pad.prototype.move = Movement.stop;
-export class Pad2 extends Profile {
-	static defaults = {
-		// size: [ 10, 2 ],
-		color: 'green',
-		// pos: [ 45 , 95 ],
-	};
-	collided () {
-	
-	}
-	
-	turn () {
-		console.log(this.entity.x);
-	}
-}
-
-export class Ball extends Profile {
-	static defaults = {
-		size: [ 10, 10 ],
-		pos: [ 45, 45 ],
-		image: 'ball',
-		speed: [ 20, 10 ],
-	};
-}
-Ball.prototype.move = Movement.bounce;
-
-export class Brick extends Profile {
-	static defaults = {
-		// size: [ 10, 5 ],
-		// text: 'Brick',
-		// image: 'ball',
-		// color: 'green',
-		color: 'white',
-	};
 }

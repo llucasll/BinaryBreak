@@ -1,5 +1,5 @@
 import Native from "./Native.js";
-import * as turn from "./turn.js";
+import * as turn from "./engine.js";
 
 function xy (x, y) {
 	return Object.assign([ x, y ], { x, y });
