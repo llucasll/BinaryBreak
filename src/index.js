@@ -9,7 +9,8 @@
 import Native from "./lib/Native.js";
 import Entity from "./lib/Entity.js";
 import * as turn from './lib/turn.js';
-import { Ball, Brick, Pad, Pad2 } from "./lib/Profile.js";
+import Profile, { Ball, Brick, Pad, Pad2 } from "./lib/Profile.js";
+import { Movement } from "./lib/Movement.js";
 
 Native(document.body, {
 	style: {
@@ -105,7 +106,6 @@ function insertBrick (x, y, profile=Brick) {
 		x: (qtd.max.x - qtd.margin*qtd.x)/qtd.x,
 		y: (qtd.max.y - qtd.margin*qtd.x)/qtd.y,
 	}
-	debugger
 	
 	brick.pos = [ size.x * x + qtd.margin*x, size.y * y + qtd.margin*y ];
 	brick.size = [ size.x, size.y ];
@@ -117,19 +117,42 @@ for (let j=0; j<qtd.y; j++) {
 	}
 }
 
-// const nave = new Entity();
-// nave.text = "Eu sou uma nave";
-// nave.pos = [ 50, 50 ];
-// nave.speed = [ -10 ];
-//
-// function invert () {
-// 	const timeout = Math.random()*1000;
-// 	nave.speed = [ -nave.speed.x ];
-// 	nave.vx *= -1;
-// 	setInterval(invert, timeout);
-// }
-//
-// invert();
+class Ship extends Profile {
+	static defaults = {
+		size: [ 10, 10 ],
+		image: 'ship',
+		speed: [ -7 ],
+	};
+	move = Movement.bounce;
+}
+class Bullet extends Profile {
+	static defaults = {
+		size: [ 5, 5 ],
+		image: 'bullet',
+		speed: [ 0, -7 ],
+	};
+	move = Movement.die;
+}
+
+const ship = new Entity(Ship);
+// ship.text = "I'm a ship";
+ship.pos = [ 50, 50 ];
+// ship.speed = [ -7 ];
+
+function invert () {
+	const timeout = Math.random() * 1000;
+	
+	ship.speed = [ -ship.speed.x ];
+	//ship.vx *= -1;
+	
+	const bullet = new Entity(Bullet);
+	bullet.y = ship.y;
+	bullet.x = ship.x + ship.w/2;
+	
+	setTimeout(invert, 2000 + timeout);
+}
+
+invert();
 
 const behaviour = {
 	ArrowLeft: _ => pad.move(-1),

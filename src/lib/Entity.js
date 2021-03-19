@@ -92,9 +92,10 @@ export default class Entity {
 		this.internal.speed.x = x ?? old.x;
 		this.internal.speed.y = y ?? old.y;
 		
-		if (x || y)
+		if (x || y) {
 			if (!turn.moving.includes(this))
 				turn.moving.push(this);
+		}
 		else
 			turn.moving.splice(turn.moving.indexOf(this), 1);
 	}

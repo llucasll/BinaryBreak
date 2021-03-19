@@ -1,4 +1,4 @@
-let fps = 24;
+let fps = 30;
 let timeoutID;
 
 export const moving = [];
@@ -7,7 +7,7 @@ export const registered = [];
 export const setFps = rate => fps = rate;
 
 export function start (now=Date.now()) {
-	timeoutID = setTimeout(turn, 1/fps, now);
+	timeoutID = setTimeout(turn, 1000/fps, now);
 }
 
 export function pause () {
