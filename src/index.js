@@ -6,7 +6,8 @@ import { setKeyboardListener } from "./lib/keyboard.js";
 
 import { Pad, Pad2 } from "./profile/Pad.js";
 import { Ball } from "./profile/Ball.js";
-import { Brick } from "./profile/Brick.js";
+import { Brick, Brick2, Brick3 } from "./profile/Brick.js";
+import { rand } from "./lib/utils.js";
 
 document.title = 'Binary Break';
 
@@ -27,7 +28,7 @@ const ball = new Entity(Ball);
 
 for (let j=0; j<Brick.qtd.y; j++) {
 	for (let i=0; i<Brick.qtd.x; i++) {
-		Brick.insertBrick(i, j);
+		Brick.insertBrick(i, j, rand([ Brick, Brick, Brick, Brick2, Brick3 ]));
 	}
 }
 

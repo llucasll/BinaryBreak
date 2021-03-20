@@ -47,3 +47,23 @@ export class Brick extends Profile {
 		});
 	}
 }
+
+export class Brick2 extends Brick {
+	static defaults = {
+		color: 'lightgreen',
+		shape: Shape.rectangle,
+	};
+	collided (collider) {
+		this.entity.profile = Brick;
+	}
+}
+
+export class Brick3 extends Brick {
+	static defaults = {
+		color: 'green',
+		shape: Shape.rectangle,
+	};
+	collided (collider) {
+		this.entity.profile = Brick2;
+	}
+}

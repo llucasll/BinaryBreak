@@ -38,3 +38,6 @@ export function healthyInterval (callback, interval, timeout, timeoutCallback, .
 			timeout
 		);
 }
+
+export const rand = array => array[Math.floor(Math.random() * array.length)];
+
