@@ -27,7 +27,7 @@ export class Pad2 extends Profile {
 	
 	}
 	
-	turn () {
+	act () {
 		console.log(this.entity.x);
 	}
 }

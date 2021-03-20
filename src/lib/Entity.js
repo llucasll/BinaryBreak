@@ -1,6 +1,7 @@
 import Native from "./Native.js";
 import * as turn from "./engine.js";
-import { removeFromArray } from "./utils.js";
+import { healthyInterval, removeFromArray } from "./utils.js";
+import { getFps } from "./engine.js";
 
 function xy (x, y) {
 	return Object.assign([ x, y ], { x, y });
@@ -121,6 +122,29 @@ export default class Entity {
 	}
 	get image () { return this.element.style.backgroundImage }
 	
+	animate () {
+		const defaultFps = getFps();
+		if (typeof arguments[0] == "function") {
+			const [ callback, timeout ] = arguments;
+			healthyInterval(callback, defaultFps, timeout, null, defaultFps);
+			return;
+		}
+		
+		const [ arr, fps=defaultFps, timeout, callback ] = arguments;
+		
+		let i = 0;
+		
+		healthyInterval(
+			_ => {
+				this.image = arr[i++];
+				i %= arr.length;
+			},
+			fps,
+			timeout,
+			callback
+		);
+	}
+	
 	board;
 	element;
 	
@@ -151,7 +175,7 @@ export default class Entity {
 			},
 		});
 		
-		turn.registered.push(this);
+		turn.entities.push(this);
 		
 		board.append(this.element);
 		
@@ -159,7 +183,7 @@ export default class Entity {
 	}
 	
 	die () {
-		removeFromArray(turn.registered, this);
+		removeFromArray(turn.entities, this);
 		removeFromArray(turn.moving, this);
 		this.element.parentNode.removeChild(this.element);
 	}

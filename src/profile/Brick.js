@@ -35,6 +35,15 @@ export class Brick extends Profile {
 	
 	collided (collider) {
 		// console.log("brick collided with", collider);
-		this.entity.die();
+		
+		this.entity.animate(elapsed => {
+			const oldOpacity = this.entity.element.style.opacity || 1; // TODO
+			this.entity.element.style.opacity = oldOpacity - elapsed/1000;
+			
+			if (this.entity.element.style.opacity <= 0) {
+				this.entity.die();
+				return true;
+			}
+		});
 	}
 }

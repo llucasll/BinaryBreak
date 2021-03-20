@@ -17,3 +17,24 @@ export function removeFromArray (arr, elem) {
 	if (index !== -1)
 		arr.splice(index, 1);
 }
+
+export function healthyInterval (callback, interval, timeout, timeoutCallback, ...args) {
+	let timeoutID;
+	
+	function action () {
+		if (!callback(...args))
+			timeoutID = setTimeout(action, interval);
+	}
+	
+	setTimeout(action, interval);
+	
+	if (timeout)
+		setTimeout(
+			_ => {
+				clearTimeout(timeoutID);
+				if (typeof timeoutCallback == "function")
+					timeoutCallback();
+			},
+			timeout
+		);
+}
