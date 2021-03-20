@@ -1,5 +1,6 @@
 import Profile from "../lib/Profile.js";
 import Entity from "../lib/Entity.js";
+import Shape from "../lib/Shape.js";
 
 export class Brick extends Profile {
 	static insertBrick (x, y, profile=Brick) {
@@ -29,5 +30,11 @@ export class Brick extends Profile {
 		// image: 'ball',
 		// color: 'green',
 		color: 'white',
+		shape: Shape.rectangle,
 	};
+	
+	collided (collider) {
+		// console.log("brick collided with", collider);
+		this.entity.die();
+	}
 }

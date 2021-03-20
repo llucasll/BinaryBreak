@@ -1,5 +1,6 @@
 import Native from "./Native.js";
 import * as turn from "./engine.js";
+import { removeFromArray } from "./utils.js";
 
 function xy (x, y) {
 	return Object.assign([ x, y ], { x, y });
@@ -158,8 +159,8 @@ export default class Entity {
 	}
 	
 	die () {
-		turn.registered.splice(turn.registered.indexOf(this), 1);
-		turn.moving.splice(turn.moving.indexOf(this), 1);
+		removeFromArray(turn.registered, this);
+		removeFromArray(turn.moving, this);
 		this.element.parentNode.removeChild(this.element);
 	}
 }

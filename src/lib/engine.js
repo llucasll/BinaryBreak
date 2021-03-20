@@ -1,3 +1,5 @@
+import { collided } from "./Shape.js";
+
 let fps = 30;
 let timeoutID;
 
@@ -20,6 +22,15 @@ function turn (lastTime) {
 	
 	for (const obj of moving) {
 		obj.move(obj.speed.x * elapsed, obj.speed.y * elapsed);
+		
+		for (const testing of registered) {
+			const result = collided[obj.shape]?.[testing.shape]?.(obj, testing)
+				|| collided[testing.shape]?.[obj.shape]?.(testing, obj)
+			if (result) {
+				obj.profile.collided?.(testing);
+				testing.profile.collided?.(obj);
+			}
+		}
 	}
 	for (const obj of registered) {
 		obj.profile?.turn?.(elapsed);

@@ -1,11 +1,13 @@
 import { Movement } from "../lib/Movement.js";
 import Profile from "../lib/Profile.js";
+import Shape from "../lib/Shape.js";
 
 export class Pad extends Profile {
 	static defaults = {
 		size: [ 10, 2 ],
 		color: 'white',
 		pos: [ 45 , 95 ],
+		shape: Shape.rectangle,
 	};
 	
 	collided () {
