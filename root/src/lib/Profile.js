@@ -7,11 +7,13 @@ export default class Profile {
 	 * Entity's value, when linked with this Profile
 	 */
 	static defaults = {};
-	// static colliders = _ => ({});
 	
 	static #symbols = new WeakMap();
+	/**
+	 * Class identity.
+	 * To be used, for example, when determining collision behaviours.
+	 */
 	static get symbol () {
-		// return this.x ?? (this.x = Symbol(this.name));
 		return Profile.#symbols.get(this)
 			?? Profile.#symbols.set(this, Symbol(this.name)).get(this);
 	}
@@ -19,8 +21,9 @@ export default class Profile {
 	#entity;
 	get entity () { return this.#entity }
 	
-	// colliders = Object.create(this.constructor.colliders);
-	// colliders = this.constructor.colliders();
+	/**
+	 * Default collision handlers (a empty mapper)
+	 */
 	colliders = {};
 	
 	constructor (entity) {
@@ -29,6 +32,10 @@ export default class Profile {
 		Object.assign(entity, this.constructor.defaults);
 	}
 	
+	/**
+	 * Default collision behaviour
+	 * @param {Entity} collider entity that had collided with this.
+	 */
 	collided (collider) {
 		for (let c=collider.profile.constructor; c!==Function.prototype; c=Object.getPrototypeOf(c)) {
 			const collisionHandler = this.colliders[c.symbol];

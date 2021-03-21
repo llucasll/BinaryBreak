@@ -1,6 +1,8 @@
-import Profile from "../lib/Profile.js";
 import Entity from "../lib/Entity.js";
+import Profile from "../lib/Profile.js";
+
 import Shape from "../lib/Shape.js";
+
 import { Ball } from "./Ball.js";
 
 export class Brick extends Profile {
@@ -30,22 +32,12 @@ export class Brick extends Profile {
 	};
 	
 	static defaults = {
-		// image: 'ball',
-		// color: 'green',
 		color: 'white',
 		shape: Shape.rectangle, // TODO it's Profile's attribute
 	};
 	
-	// static colliders = _ => ({
-	// 	[ Ball.symbol ] (collider) {
-	// 		// console.log("brick collided with", collider);
-	// 		this.entity.dieSlowly();
-	// 	}
-	// });
-	
 	colliders = {
-		[ Ball.symbol ] (collider) {
-			// console.log("brick collided with", collider);
+		[ Ball.symbol ]: collider => {
 			this.entity.dieSlowly();
 		}
 	};

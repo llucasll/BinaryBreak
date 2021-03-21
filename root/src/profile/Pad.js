@@ -1,5 +1,6 @@
-import { Movement } from "../lib/Movement.js";
 import Profile from "../lib/Profile.js";
+
+import { Movement } from "../lib/Movement.js";
 import Shape from "../lib/Shape.js";
 
 export class Pad extends Profile {
