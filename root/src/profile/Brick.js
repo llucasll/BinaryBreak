@@ -6,30 +6,33 @@ import Shape from "../lib/Shape.js";
 import { Ball } from "./Ball.js";
 
 export class Brick extends Profile {
+	static bricksArea = {
+		dy: 10,
+		x: 100,
+		y: 20,
+	};
+	static amount = {
+		x: 10,
+		y: 4,
+	};
+	static margin = 1;
+	
 	static insertBrick (x, y, profile=Brick) {
 		const brick = new Entity(profile);
-		const size = {
-			x: (Brick.qtd.max.x - Brick.qtd.margin*Brick.qtd.x)/Brick.qtd.x,
-			y: (Brick.qtd.max.y - Brick.qtd.margin*Brick.qtd.x)/Brick.qtd.y,
-		}
 		
-		brick.pos = [ size.x * x + Brick.qtd.margin*x, size.y * y + Brick.qtd.margin*y ];
+		const size = {
+			x: (Brick.bricksArea.x - Brick.margin*Brick.amount.x)/Brick.amount.x,
+			y: (Brick.bricksArea.y - Brick.margin*(Brick.amount.y+2))/Brick.amount.y,
+		};
+		
+		brick.pos = [
+			size.x * x + Brick.margin*x + Brick.margin,
+			size.y * y + Brick.margin*y + Brick.bricksArea.dy,
+		];
 		brick.size = [ size.x, size.y ];
 		
 		return brick;
 	}
-	
-	static qtd = {
-		x: 10,
-		y: 4,
-		
-		max: {
-			x: 100,
-			y: 20,
-		},
-		
-		margin: 1,
-	};
 	
 	static defaults = {
 		color: 'white',
@@ -43,7 +46,7 @@ export class Brick extends Profile {
 	};
 }
 
-export class Brick2 extends Brick {
+export class SolidBrick extends Brick {
 	static defaults = {
 		color: 'lightgreen',
 		shape: Shape.rectangle,
@@ -53,12 +56,12 @@ export class Brick2 extends Brick {
 	}
 }
 
-export class Brick3 extends Brick {
+export class HardBrick extends SolidBrick {
 	static defaults = {
 		color: 'green',
 		shape: Shape.rectangle,
 	};
 	collided (collider) {
-		this.entity.profile = Brick2;
+		this.entity.profile = SolidBrick;
 	}
 }

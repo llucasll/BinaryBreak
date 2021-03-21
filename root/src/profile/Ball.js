@@ -3,7 +3,7 @@ import Profile from "../lib/Profile.js";
 import { Movement } from "../lib/Movement.js";
 import Shape from "../lib/Shape.js";
 
-import { Brick2 } from "./Brick.js";
+import { SolidBrick } from "./Brick.js";
 import { Pad } from "./Pad.js";
 
 export class Ball extends Profile {
@@ -28,7 +28,7 @@ export class Ball extends Profile {
 				}
 			});
 		},
-		[ Brick2.symbol ]: collider => {
+		[ SolidBrick.symbol ]: collider => {
 			this.revert(collider);
 		},
 	};

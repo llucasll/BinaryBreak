@@ -6,7 +6,7 @@ import * as keyboard from "./lib/keyboard.js";
 
 import { Pad, Pad2 } from "./profile/Pad.js";
 import { Ball } from "./profile/Ball.js";
-import { Brick, Brick2, Brick3 } from "./profile/Brick.js";
+import { Brick, SolidBrick, HardBrick } from "./profile/Brick.js";
 import { rand } from "./lib/utils.js";
 
 document.title = 'Binary Break';
@@ -27,10 +27,10 @@ const pad = new Entity(Pad);
 const ball = new Entity(Ball);
 
 const bricks = [];
-for (let j=0; j<Brick.qtd.y; j++) {
+for (let j=0; j<Brick.amount.y; j++) {
 	bricks[j] = [];
-	for (let i=0; i<Brick.qtd.x; i++) {
-		bricks[j][i] = Brick.insertBrick(i, j, rand([ Brick, Brick, Brick, Brick2, Brick3 ]));
+	for (let i=0; i<Brick.amount.x; i++) {
+		bricks[j][i] = Brick.insertBrick(i, j, rand([ Brick, Brick, Brick, SolidBrick, HardBrick ]));
 	}
 }
 console.log(bricks);
