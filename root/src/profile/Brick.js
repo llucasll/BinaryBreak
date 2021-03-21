@@ -1,7 +1,7 @@
-import Entity from "../lib/Entity.js";
-import Profile from "../lib/Profile.js";
+import Entity from "../lib/engine/Entity.js";
+import Profile from "../lib/engine/Profile.js";
 
-import Shape from "../lib/Shape.js";
+import Shape from "../lib/engine/Shape.js";
 
 import { Ball } from "./Ball.js";
 

@@ -1,6 +1,6 @@
-import Native from "./Native.js";
+import Native from "../Native.js";
 import * as turn from "./engine.js";
-import { healthyInterval, removeFromArray } from "./utils.js";
+import { healthyInterval, removeFromArray } from "../utils.js";
 import { getFps } from "./engine.js";
 
 function xy (x, y) {

@@ -1,7 +1,7 @@
-import Profile from "../lib/Profile.js";
+import Profile from "../lib/engine/Profile.js";
 
-import { Movement } from "../lib/Movement.js";
-import Shape from "../lib/Shape.js";
+import { Movement } from "../lib/engine/Movement.js";
+import Shape from "../lib/engine/Shape.js";
 
 export class Pad extends Profile {
 	static defaults = {

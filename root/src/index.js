@@ -1,8 +1,8 @@
 import Native from "./lib/Native.js";
-import Entity from "./lib/Entity.js";
+import Entity from "./lib/engine/Entity.js";
 
-import * as engine from './lib/engine.js';
-import * as keyboard from "./lib/keyboard.js";
+import * as engine from './lib/engine/engine.js';
+import * as keyboard from "./lib/engine/keyboard.js";
 
 import { Pad, Pad2 } from "./profile/Pad.js";
 import { Ball } from "./profile/Ball.js";
@@ -24,7 +24,7 @@ Entity.board = Native('div', {
 });
 
 const pad = new Entity(Pad);
-const ball = new Entity(Ball);
+let ball = new Entity(Ball);
 
 const bricks = [];
 for (let j=0; j<Brick.amount.y; j++) {
@@ -38,7 +38,7 @@ console.log(bricks);
 keyboard.setKeydownListener({
 	ArrowLeft: _ => pad.move(-1),
 	ArrowRight: _ => pad.move(1),
-	' ': _ => console.log('hi!'),
+	' ': _ => ball.die() || (ball = new Entity(Ball)),
 	g: _ => pad.profile = Pad2,
 	w: _ => pad.profile = Pad,
 	x: _ => ball.profile = Pad,

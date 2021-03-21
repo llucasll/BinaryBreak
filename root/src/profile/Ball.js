@@ -1,7 +1,7 @@
-import Profile from "../lib/Profile.js";
+import Profile from "../lib/engine/Profile.js";
 
-import { Movement } from "../lib/Movement.js";
-import Shape from "../lib/Shape.js";
+import { Movement } from "../lib/engine/Movement.js";
+import Shape from "../lib/engine/Shape.js";
 
 import { SolidBrick } from "./Brick.js";
 import { Pad } from "./Pad.js";
@@ -52,6 +52,11 @@ export class Ball extends Profile {
 			this.entity.speed = [ x, -y ];
 		}
 	}
+	
+	die () {
+		this.entity.die();
+		console.log("Ball is died");
+	}
 }
 
-Ball.prototype.move = Movement.bounce;
+Ball.prototype.move = Movement.bounceOrFall;

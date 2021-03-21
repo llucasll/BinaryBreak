@@ -1,6 +1,6 @@
-import Profile from "../lib/Profile.js";
-import { Movement } from "../lib/Movement.js";
-import Entity from "../lib/Entity.js";
+import Profile from "../lib/engine/Profile.js";
+import { Movement } from "../lib/engine/Movement.js";
+import Entity from "../lib/engine/Entity.js";
 
 class Ship extends Profile {
 	static defaults = {
