@@ -1,6 +1,8 @@
 import { Movement } from "../lib/Movement.js";
 import Profile from "../lib/Profile.js";
 import Shape from "../lib/Shape.js";
+import { Brick2 } from "./Brick.js";
+import { Pad } from "./Pad.js";
 
 export class Ball extends Profile {
 	static defaults = {
@@ -11,18 +13,47 @@ export class Ball extends Profile {
 		shape: Shape.rectangle,
 	};
 	
-	collided (collider) {
-		// console.log("ball collided with", collider);
-		
-		this.entity.animate([ 'ship', 'bullet' ], {
-			fps: 5,
-			timeout: 2,
-			timeoutCallback: _ => {
-				this.entity.image = 'ball';
-				console.log("Ball animation ended!");
-			}
-		});
-		
+	// static colliders = _ => ({
+	// 	[ Pad.symbol ] (collider) {
+	// 		// console.log("ball collided with", collider);
+	// 		this.revert(collider);
+	//
+	// 		this.entity.animate([ 'ship', 'bullet' ], {
+	// 			fps: 5,
+	// 			timeout: 2,
+	// 			timeoutCallback: _ => {
+	// 				this.entity.image = 'ball';
+	// 				console.log("Ball animation ended!");
+	// 			}
+	// 		});
+	// 	},
+	// 	[ Brick2.symbol ] (collider) {
+	// 		// console.log("ball collided with", collider);
+	// 		this.revert(collider);
+	// 	},
+	// });
+	
+	colliders = {
+		[ Pad.symbol ] (collider) {
+			// console.log("ball collided with", collider);
+			this.revert(collider);
+
+			this.entity.animate([ 'ship', 'bullet' ], {
+				fps: 5,
+				timeout: 2,
+				timeoutCallback: _ => {
+					this.entity.image = 'ball';
+					console.log("Ball animation ended!");
+				}
+			});
+		},
+		[ Brick2.symbol ] (collider) {
+			// console.log("ball collided with", collider);
+			this.revert(collider);
+		},
+	};
+	
+	revert (collider) {
 		const { x, y } = this.entity.speed;
 		
 		const top = {

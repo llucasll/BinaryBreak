@@ -25,6 +25,29 @@ export default class Entity {
 	static mediaPrefix = 'media/';
 	static mediaSuffix = '.png';
 	
+	static buildElement () {
+		return Native('div', {
+			style: {
+				position: 'absolute',
+				
+				left: '0%',
+				top: '0%',
+				
+				fontFamily: Entity.font,
+				color: Entity.textColor,
+				// textAlign: 'center',
+				// verticalAlign: 'center',
+				display: 'flex',
+				justifyContent: 'center',
+				alignItems: 'center',
+				
+				backgroundSize: 'cover',
+				
+				borderRadius: '20px',
+			},
+		});
+	}
+	
 	/**
 	 * Private internal data
 	 */
@@ -163,8 +186,8 @@ export default class Entity {
 	}
 	// TODO stop animation
 	
-	board;
-	element;
+	board = Entity.board;
+	element = Entity.buildElement();
 	
 	/**
 	 * @see {@link Profile}
@@ -172,35 +195,13 @@ export default class Entity {
 	set profile (Profile) { this.#internal.profile = Profile? new Profile(this) : null }
 	get profile () { return this.#internal.profile }
 	
-	constructor (Profile=null, board=Entity.board) {
+	constructor (Profile=null, board=this.board) {
 		this.board = board;
-		
-		this.element = Native('div', {
-			style: {
-				position: 'absolute',
-				
-				left: '0%',
-				top: '0%',
-				
-				fontFamily: Entity.font,
-				color: Entity.textColor,
-				// textAlign: 'center',
-				// verticalAlign: 'center',
-				display: 'flex',
-				justifyContent: 'center',
-				alignItems: 'center',
-				
-				backgroundSize: 'cover',
-				
-				borderRadius: '20px',
-			},
-		});
-		
-		turn.entities.push(this);
-		
 		board.append(this.element);
 		
 		this.profile = Profile;
+		
+		turn.entities.push(this);
 	}
 	
 	/**
@@ -215,5 +216,18 @@ export default class Entity {
 		catch (e) {
 			debugger; // TODO
 		}
+	}
+	
+	dieSlowly (duration=1) {
+		// TODO this is being scheduled more than one time if it collides twice
+		this.animate(elapsed => {
+			const oldOpacity = this.element.style.opacity || 1; // TODO
+			this.element.style.opacity = oldOpacity - elapsed/(duration*1000);
+			
+			if (this.element.style.opacity <= 0) {
+				this.die();
+				return true;
+			}
+		});
 	}
 }

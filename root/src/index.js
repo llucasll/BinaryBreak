@@ -26,11 +26,14 @@ Entity.board = Native('div', {
 const pad = new Entity(Pad);
 const ball = new Entity(Ball);
 
+const bricks = [];
 for (let j=0; j<Brick.qtd.y; j++) {
+	bricks[j] = [];
 	for (let i=0; i<Brick.qtd.x; i++) {
-		Brick.insertBrick(i, j, rand([ Brick, Brick, Brick, Brick2, Brick3 ]));
+		bricks[j][i] = Brick.insertBrick(i, j, rand([ Brick, Brick, Brick, Brick2, Brick3 ]));
 	}
 }
+console.log(bricks);
 
 keyboard.setKeydownListener({
 	ArrowLeft: _ => pad.move(-1),

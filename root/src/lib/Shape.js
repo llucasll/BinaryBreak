@@ -59,7 +59,7 @@ export const collided = {
 			return a.radius + b.radius < distance(a.x, a.y, b.x, b.y);
 		},
 		[Shape.rectangle] (self, testing) {
-			
+			// TODO
 		},
 	},
 };
