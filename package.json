@@ -4,7 +4,7 @@
 	"version": "0.0.0",
 	"type": "module",
 	"private": true,
-	"license": "ISC",
+	"license": "GNU GPL 3.0+",
 	"contributors": [
 		{
 			"name": "Lucas Camilo",
@@ -17,7 +17,7 @@
 		}
 	],
 	"scripts": {
-		"start": "npx serve -s src"
+		"start": "npx serve -s root"
 	},
 	"dependencies": {
 		"serve": "^11.3.2"

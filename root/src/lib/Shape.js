@@ -5,14 +5,6 @@ const Shape = {
 
 export default Shape;
 
-class Circle {
-	constructor (entity) {
-		this.x = entity.x + entity.w/2;
-		this.y = entity.y + entity.h/2;
-		this.radius = entity.w/2;
-	}
-}
-
 function Point ([ x, y ]) {
 	return { x, y };
 }
@@ -24,6 +16,14 @@ function Rectangle (entity) {
 		Point([ entity.x + entity.w, entity.y ]),
 		Point([ entity.x + entity.w, entity.y + entity.h ]),
 	];
+}
+
+class Circle {
+	constructor (entity) {
+		this.x = entity.x + entity.w/2;
+		this.y = entity.y + entity.h/2;
+		this.radius = entity.w/2;
+	}
 }
 
 function distance (x0, y0, x1, y1) {

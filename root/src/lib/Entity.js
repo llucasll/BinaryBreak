@@ -10,20 +10,33 @@ function wh (w, h) {
 	return Object.assign([ w, h ], { w, h });
 }
 
+/**
+ * A engine's object body.
+ * A Object visible in the screen handled by the engine.
+ */
 export default class Entity {
+	/* DEFAULTS */
+	
 	static board;
+	// text font
 	static font;
 	static textColor = 'white';
 	
 	static mediaPrefix = 'media/';
 	static mediaSuffix = '.png';
 	
+	/**
+	 * Private internal data
+	 */
 	#internal = {
 		speed: {
 			x: null,
 			y: null,
 		},
 	};
+	/**
+	 * Private data
+	 */
 	get internal () { return this.#internal }
 	
 	/* POSITION */
@@ -48,7 +61,6 @@ export default class Entity {
 		this.element.style.left = x + '%';
 		this.element.style.top = y + '%';
 	}
-	
 	get pos () {
 		return xy(
 			parseFloat(this.element.style.left),
@@ -62,6 +74,9 @@ export default class Entity {
 		// 	parseFloat(top),
 		// ];
 	}
+	/**
+	 * Move object on screen (relative movement).
+	 */
 	move (dx=0, dy=0) {
 		const [ x, y ] = this.pos;
 		this.pos = [ x+dx, y+dy ];
@@ -122,36 +137,42 @@ export default class Entity {
 	}
 	get image () { return this.element.style.backgroundImage }
 	
-	animate () {
-		const defaultFps = getFps();
-		if (typeof arguments[0] == "function") {
-			const [ callback, timeout ] = arguments;
-			healthyInterval(callback, defaultFps, timeout, null, defaultFps);
+	/**
+	 * Make animation effects
+	 * TODO use async/await
+	 */
+	animate (definition, { fps=getFps(), timeout, timeoutCallback } = {}) {
+		if (!Array.isArray(definition)) {
+			const callback = definition;
+			healthyInterval(callback, fps, timeout, timeoutCallback, fps);
 			return;
 		}
 		
-		const [ arr, fps=defaultFps, timeout, callback ] = arguments;
-		
+		const sprites = definition;
 		let i = 0;
 		
 		healthyInterval(
 			_ => {
-				this.image = arr[i++];
-				i %= arr.length;
+				this.image = sprites[i++];
+				i %= sprites.length;
 			},
-			fps,
-			timeout,
-			callback
+			1000/fps,
+			timeout*1000,
+			timeoutCallback
 		);
 	}
+	// TODO stop animation
 	
 	board;
 	element;
 	
+	/**
+	 * @see {@link Profile}
+	 */
 	set profile (Profile) { this.#internal.profile = Profile? new Profile(this) : null }
 	get profile () { return this.#internal.profile }
 	
-	constructor (Profile, board=Entity.board) {
+	constructor (Profile=null, board=Entity.board) {
 		this.board = board;
 		
 		this.element = Native('div', {
@@ -182,9 +203,17 @@ export default class Entity {
 		this.profile = Profile;
 	}
 	
+	/**
+	 * Destroy element.
+	 */
 	die () {
 		removeFromArray(turn.entities, this);
 		removeFromArray(turn.moving, this);
-		this.element.parentNode.removeChild(this.element);
+		try {
+			this.element.parentNode.removeChild(this.element);
+		}
+		catch (e) {
+			debugger; // TODO
+		}
 	}
 }

@@ -3,8 +3,8 @@ import { collided } from "./Shape.js";
 let fps = 30;
 let timeoutID;
 
-export const moving = [];
 export const entities = [];
+export const moving = [];
 // export const animated = [];
 
 export const setFps = rate => fps = rate;
@@ -18,6 +18,9 @@ export function pause () {
 	clearTimeout(timeoutID);
 }
 
+/**
+ * Engine's heart. This function executes each 'frame', defined from fps variable.
+ */
 function turn (lastTime) {
 	const now = Date.now();
 	const elapsed = (now - lastTime) / 1000;
@@ -27,7 +30,7 @@ function turn (lastTime) {
 		
 		for (const testing of entities) {
 			const result = collided[obj.shape]?.[testing.shape]?.(obj, testing)
-				|| collided[testing.shape]?.[obj.shape]?.(testing, obj)
+				|| collided[testing.shape]?.[obj.shape]?.(testing, obj);
 			if (result) {
 				obj.profile.collided?.(testing);
 				testing.profile.collided?.(obj);

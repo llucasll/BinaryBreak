@@ -14,9 +14,13 @@ export class Ball extends Profile {
 	collided (collider) {
 		// console.log("ball collided with", collider);
 		
-		this.entity.animate([ 'ship', 'bullet' ], 200, 2000, _ => {
-			this.entity.image = 'ball';
-			console.log("Ball animation ended!");
+		this.entity.animate([ 'ship', 'bullet' ], {
+			fps: 5,
+			timeout: 2,
+			timeoutCallback: _ => {
+				this.entity.image = 'ball';
+				console.log("Ball animation ended!");
+			}
 		});
 		
 		const { x, y } = this.entity.speed;

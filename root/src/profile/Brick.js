@@ -30,7 +30,7 @@ export class Brick extends Profile {
 		// image: 'ball',
 		// color: 'green',
 		color: 'white',
-		shape: Shape.rectangle,
+		shape: Shape.rectangle, // TODO it's Profile's attribute
 	};
 	
 	collided (collider) {

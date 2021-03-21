@@ -9,10 +9,6 @@ export class Pad extends Profile {
 		pos: [ 45 , 95 ],
 		shape: Shape.rectangle,
 	};
-	
-	collided () {
-	
-	}
 }
 
 Pad.prototype.move = Movement.stop;
@@ -23,9 +19,6 @@ export class Pad2 extends Profile {
 		color: 'green',
 		// pos: [ 45 , 95 ],
 	};
-	collided () {
-	
-	}
 	
 	act () {
 		console.log(this.entity.x);

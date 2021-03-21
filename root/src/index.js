@@ -2,7 +2,7 @@ import Native from "./lib/Native.js";
 import Entity from "./lib/Entity.js";
 
 import * as engine from './lib/engine.js';
-import { setKeyboardListener } from "./lib/keyboard.js";
+import * as keyboard from "./lib/keyboard.js";
 
 import { Pad, Pad2 } from "./profile/Pad.js";
 import { Ball } from "./profile/Ball.js";
@@ -32,7 +32,7 @@ for (let j=0; j<Brick.qtd.y; j++) {
 	}
 }
 
-setKeyboardListener({
+keyboard.setKeydownListener({
 	ArrowLeft: _ => pad.move(-1),
 	ArrowRight: _ => pad.move(1),
 	' ': _ => console.log('hi!'),

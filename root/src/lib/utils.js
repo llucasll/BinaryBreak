@@ -1,3 +1,7 @@
+/**
+ * Returns x if it's an array. Returns an array only with x, otherwise.
+ * @param x
+ */
 export const toArray = x => Array.isArray(x)? x : [ x ];
 
 // export const isPositive = x => 1 / x === 1 / Math.abs(x);
@@ -18,6 +22,14 @@ export function removeFromArray (arr, elem) {
 		arr.splice(index, 1);
 }
 
+/**
+ * A lightweight version of setInterval, using setTimeout and re-scheduling
+ * @param callback to be ran periodically
+ * @param interval in milliseconds
+ * @param timeout optionally define a time limit (in milliseconds)
+ * @param timeoutCallback optional function to be executed after timeout
+ * @param args optional arguments to callback
+ */
 export function healthyInterval (callback, interval, timeout, timeoutCallback, ...args) {
 	let timeoutID;
 	
@@ -39,5 +51,8 @@ export function healthyInterval (callback, interval, timeout, timeoutCallback, .
 		);
 }
 
+/**
+ * @param array
+ * @return an random element of the array
+ */
 export const rand = array => array[Math.floor(Math.random() * array.length)];
-

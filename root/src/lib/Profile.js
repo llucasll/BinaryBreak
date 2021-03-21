@@ -1,4 +1,11 @@
+/**
+ * A Entity's soul
+ * @see Entity
+ */
 export default class Profile {
+	/**
+	 * Entity's value, when linked with this Profile
+	 */
 	static defaults = {};
 	
 	#entity;
