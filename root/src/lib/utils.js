@@ -56,3 +56,11 @@ export function healthyInterval (callback, interval, timeout, timeoutCallback, .
  * @return an random element of the array
  */
 export const rand = array => array[Math.floor(Math.random() * array.length)];
+
+export const atMost = (proposed, limit, old) =>
+	Math.abs(limit) >= Math.abs(old)?
+		keepInRange(proposed, -Math.abs(limit), Math.abs(limit))
+		: (old<-Math.abs(limit)? Math.min(proposed, -Math.abs(limit)) : Math.max(proposed, Math.abs(limit)));
+
+export const keepInRange = (proposed, min=-Infinity, max=Infinity) =>
+	Math.max(Math.min(proposed, max), min);

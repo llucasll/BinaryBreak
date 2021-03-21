@@ -1,6 +1,6 @@
 import Native from "../Native.js";
 import * as turn from "./engine.js";
-import { healthyInterval, removeFromArray } from "../utils.js";
+import { healthyInterval, atMost, removeFromArray } from "../utils.js";
 import { getFps } from "./engine.js";
 
 function xy (x, y) {
@@ -56,6 +56,12 @@ export default class Entity {
 			x: null,
 			y: null,
 		},
+		acceleration: {
+			x: null,
+			y: null,
+			maxX: null,
+			maxY: null,
+		},
 	};
 	/**
 	 * Private data
@@ -73,12 +79,34 @@ export default class Entity {
 		if (this.profile?.move) {
 			const result = this.profile.move(x, y);
 			
-			if (result === false)
+			if (result === false) {
+				this.speed = [ 0, 0 ];
+				this.acceleration = [ 0, 0, 0, 0 ];
+				
 				return;
+			}
 			if (result === null)
 				return this.die();
-			if (Array.isArray(result))
-				([ x, y ] = result);
+			if (Array.isArray(result)) {
+				const [ newX, newY ] = result;
+				
+				const { x: vx, y: vy } = this.speed;
+				this.speed = [
+					newX !== x? 0 : vx,
+					newY !== y? 0 : vy,
+				];
+				
+				const { x: ax, y: ay, maxX, maxY } = this.acceleration;
+				this.acceleration = [
+					newX !== x? 0 : ax,
+					newY !== y? 0 : ay,
+					newX !== x? 0 : maxX,
+					newY !== y? 0 : maxY,
+				];
+				
+				x = newX;
+				y = newY;
+			}
 		}
 		
 		this.element.style.left = x + '%';
@@ -140,7 +168,47 @@ export default class Entity {
 			turn.moving.splice(turn.moving.indexOf(this), 1);
 	}
 	get speed () {
-		return this.internal.speed;
+		return this.internal.speed ?? {};
+	}
+	
+	/* ACCELERATION */
+	
+	set acceleration ([ x, y, maxX, maxY ]) {
+		const old = this.internal.acceleration;
+		
+		this.internal.acceleration.x = x ?? old.x;
+		this.internal.acceleration.y = y ?? old.y;
+		this.internal.acceleration.maxX = maxX ?? old.maxX;
+		this.internal.acceleration.maxY = maxY ?? old.maxY;
+		
+		if (x || y) {
+			if (!turn.accelerating.includes(this))
+				turn.accelerating.push(this);
+		}
+		else {
+			turn.accelerating.splice(turn.accelerating.indexOf(this), 1);
+		}
+	}
+	get acceleration () {
+		return this.internal.acceleration;
+	}
+	/**
+	 * Changes the speed (relatively).
+	 */
+	accelerate ([ dx=0, dy=0 ], [ maxX=Infinity, maxY=Infinity ]) {
+		const { x, y } = this.speed;
+		
+		// if (x + dx < -maxX)
+		// 	debugger
+		const effective = [
+			atMost(x + dx, maxX, x),
+			atMost(y + dy, maxY, y),
+		];
+		
+		this.speed = effective;
+		
+		if (!effective[0] && !effective[1])
+			this.acceleration = [ 0, 0, 0, 0 ];
 	}
 	
 	/* CONTENT */

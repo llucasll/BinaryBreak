@@ -36,12 +36,17 @@ for (let j=0; j<Brick.amount.y; j++) {
 console.log(bricks);
 
 keyboard.setKeydownListener({
-	ArrowLeft: _ => pad.move(-1),
-	ArrowRight: _ => pad.move(1),
+	ArrowLeft: _ => pad.acceleration = [ -50, 0, 50, 0 ],
+	ArrowRight: _ => pad.acceleration = [ 50 , 0, 50, 0 ],
 	' ': _ => ball.die() || (ball = new Entity(Ball)),
 	g: _ => pad.profile = Pad2,
 	w: _ => pad.profile = Pad,
 	x: _ => ball.profile = Pad,
+});
+
+keyboard.setKeyupListener({
+	ArrowLeft: _ => pad.acceleration = [ 75, 0, 0, 0 ],
+	ArrowRight: _ => pad.acceleration = [ -75, 0, 0, 0 ],
 });
 
 engine.start();

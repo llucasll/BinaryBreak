@@ -5,6 +5,7 @@ let timeoutID;
 
 export const entities = [];
 export const moving = [];
+export const accelerating = [];
 // export const animated = [];
 
 export const setFps = rate => fps = rate;
@@ -25,6 +26,12 @@ function turn (lastTime) {
 	const now = Date.now();
 	const elapsed = (now - lastTime) / 1000;
 	
+	for (const obj of accelerating) {
+		obj.accelerate(
+			[ obj.acceleration.x * elapsed, obj.acceleration.y * elapsed ],
+			[ obj.acceleration.maxX, obj.acceleration.maxY ]
+		);
+	}
 	for (const obj of moving) {
 		obj.move(obj.speed.x * elapsed, obj.speed.y * elapsed);
 		

@@ -1,5 +1,6 @@
 /**
- * A Entity's soul
+ * A Entity's soul, that defines it's behaviour and appearance,
+ * and can be changed dynamically
  * @see Entity
  */
 export default class Profile {

@@ -1,3 +1,5 @@
+import { keepInRange } from "../utils.js";
+
 export const Movement = {
 	infinity () {
 		return true;
@@ -11,20 +13,16 @@ export const Movement = {
 		)? null : true;
 	},
 	hide (x, y) {
-		return !(
-			x > 100 // right
-			|| y > 100 // bottom
-			|| x + this.entity.w < 0 // left
-			|| y + this.entity.h < 0 // top
-		);
+		return [
+			keepInRange(x, 0-this.entity.w, 100),
+			keepInRange(y, 0-this.entity.h, 100),
+		];
 	},
 	stop (x, y) {
-		return !(
-			x + this.entity.w > 100 // right
-			|| y + this.entity.h > 100 // bottom
-			|| x < 0 // left
-			|| y < 0 // top
-		);
+		return [
+			keepInRange(x, 0, 100-this.entity.w),
+			keepInRange(y, 0, 100-this.entity.h),
+		];
 	},
 	bounce (x, y) {
 		const { speed } = this.entity;
