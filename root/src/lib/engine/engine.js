@@ -43,6 +43,9 @@ function turn (lastTime) {
 				testing.profile.collided?.(obj);
 			}
 		}
+		if (obj.stalker) {
+			obj.stalker.move(obj.speed.x * elapsed, obj.speed.y * elapsed);
+		}
 	}
 	for (const obj of entities) {
 		obj.profile?.act?.(elapsed);

@@ -262,6 +262,22 @@ export default class Entity {
 	 */
 	set profile (Profile) { this.#internal.profile = Profile? new Profile(this) : null }
 	get profile () { return this.#internal.profile }
+
+	set stalker (stalker) {
+		this.#internal.stalker = stalker;
+	}
+	get stalker () {
+		return this.#internal.stalker;
+	}
+	
+	/**
+	 * O pad libera a bola ao pressionar espaço.
+	 * Enquanto isso não acontece, a bola segue o pad. pad.stalked = ball;
+	 * O centro da bola é setado no centro do pad;
+	 *
+	 *
+	 *
+	 */
 	
 	constructor (Profile=null, board=this.board) {
 		this.board = board;
@@ -276,13 +292,15 @@ export default class Entity {
 	 * Destroy element.
 	 */
 	die () {
+		if (this.profile?.die?.() === false)
+			return;
 		removeFromArray(turn.entities, this);
 		removeFromArray(turn.moving, this);
 		try {
 			this.element.parentNode.removeChild(this.element);
 		}
 		catch (e) {
-			debugger; // TODO
+			//debugger; // TODO
 		}
 	}
 	
