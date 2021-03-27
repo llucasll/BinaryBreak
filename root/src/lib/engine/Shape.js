@@ -64,6 +64,11 @@ export const collided = {
 	},
 };
 
+export function testCollision (a, b) {
+	return collided[a.shape]?.[b.shape]?.(a, b)
+		|| collided[b.shape]?.[a.shape]?.(b, a);
+}
+
 // collided[Shape.circle][Shape.square](a, b)
 // a.shape = Shape.circle
 

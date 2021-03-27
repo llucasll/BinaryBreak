@@ -4,6 +4,7 @@ import Profile from "../lib/engine/Profile.js";
 import Shape from "../lib/engine/Shape.js";
 
 import { Ball } from "./Ball.js";
+import data from "../data.js";
 
 export class Brick extends Profile {
 	static bricksArea = {
@@ -44,6 +45,14 @@ export class Brick extends Profile {
 			this.entity.dieSlowly();
 		}
 	};
+	
+	replacing (next) {
+		data.score++;
+	}
+	
+	die () {
+		data.score++;
+	}
 }
 
 export class SolidBrick extends Brick {

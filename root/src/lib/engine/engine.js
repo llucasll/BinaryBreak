@@ -1,6 +1,6 @@
-import { collided } from "./Shape.js";
+import { configs } from "../../data.js";
 
-let fps = 30;
+let fps = configs.fps;
 let timeoutID;
 
 export const entities = [];
@@ -36,12 +36,7 @@ function turn (lastTime) {
 		obj.move(obj.speed.x * elapsed, obj.speed.y * elapsed);
 		
 		for (const testing of entities) {
-			const result = collided[obj.shape]?.[testing.shape]?.(obj, testing)
-				|| collided[testing.shape]?.[obj.shape]?.(testing, obj);
-			if (result) {
-				obj.profile.collided?.(testing);
-				testing.profile.collided?.(obj);
-			}
+			obj.checkCollision(testing);
 		}
 	}
 	for (const obj of entities) {

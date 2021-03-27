@@ -22,6 +22,7 @@ export const Movement = {
 		return [
 			keepInRange(x, 0, 100-this.entity.w),
 			keepInRange(y, 0, 100-this.entity.h),
+			true,
 		];
 	},
 	bounce (x, y) {
@@ -36,6 +37,13 @@ export const Movement = {
 			speed.y *= -1;
 		if (speed.y<0 && y<=0) // top
 			speed.y *= -1;
+
+		// It shall become to the screen, even if it have been
+		// outside of the screen for a long time
+		return [
+			keepInRange(x, 0, 100-this.entity.w),
+			keepInRange(y, 0, 100-this.entity.h),
+		];
 	},
 	bounceOrFall (x, y) {
 		const { speed } = this.entity;
@@ -46,8 +54,13 @@ export const Movement = {
 			speed.x *= -1;
 		
 		if (y >= 100) // bottom
-			this.die();
+			return null;
 		if (speed.y<0 && y<=0) // top
 			speed.y *= -1;
+		
+		return [
+			keepInRange(x, 0, 100-this.entity.w),
+			keepInRange(y, 0, Infinity),
+		];
 	},
 };

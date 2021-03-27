@@ -3,8 +3,9 @@ import Profile from "../lib/engine/Profile.js";
 import { Movement } from "../lib/engine/Movement.js";
 import Shape from "../lib/engine/Shape.js";
 
-import { SolidBrick } from "./Brick.js";
+import { Brick, SolidBrick } from "./Brick.js";
 import { Pad } from "./Pad.js";
+import data from "../data.js";
 
 export class Ball extends Profile {
 	static defaults = {
@@ -28,8 +29,12 @@ export class Ball extends Profile {
 				}
 			});
 		},
+		[ Brick.symbol ]: collider => {
+			data.score++;
+		},
 		[ SolidBrick.symbol ]: collider => {
 			this.revert(collider);
+			data.score++;
 		},
 	};
 	
@@ -54,7 +59,6 @@ export class Ball extends Profile {
 	}
 	
 	die () {
-		this.entity.die();
 		console.log("Ball is died");
 	}
 }

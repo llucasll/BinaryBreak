@@ -2,6 +2,7 @@ import Native from "../Native.js";
 import * as turn from "./engine.js";
 import { healthyInterval, atMost, removeFromArray } from "../utils.js";
 import { getFps } from "./engine.js";
+import { testCollision } from "./Shape.js";
 
 function xy (x, y) {
 	return Object.assign([ x, y ], { x, y });
@@ -19,7 +20,8 @@ export default class Entity {
 	
 	static board;
 	// text font
-	static font;
+	static font = '"Courier New", monospace';
+	static textSize = '2em';
 	static textColor = 'white';
 	
 	static mediaPrefix = 'media/';
@@ -34,6 +36,7 @@ export default class Entity {
 				top: '0%',
 				
 				fontFamily: Entity.font,
+				fontSize: Entity.textSize,
 				color: Entity.textColor,
 				// textAlign: 'center',
 				// verticalAlign: 'center',
@@ -88,21 +91,23 @@ export default class Entity {
 			if (result === null)
 				return this.die();
 			if (Array.isArray(result)) {
-				const [ newX, newY ] = result;
+				const [ newX, newY, clearSpeed ] = result;
 				
-				const { x: vx, y: vy } = this.speed;
-				this.speed = [
-					newX !== x? 0 : vx,
-					newY !== y? 0 : vy,
-				];
-				
-				const { x: ax, y: ay, maxX, maxY } = this.acceleration;
-				this.acceleration = [
-					newX !== x? 0 : ax,
-					newY !== y? 0 : ay,
-					newX !== x? 0 : maxX,
-					newY !== y? 0 : maxY,
-				];
+				if (clearSpeed) {
+					const { x: vx, y: vy } = this.speed;
+					this.speed = [
+						newX !== x? 0 : vx,
+						newY !== y? 0 : vy,
+					];
+					
+					const { x: ax, y: ay, maxX, maxY } = this.acceleration;
+					this.acceleration = [
+						newX !== x? 0 : ax,
+						newY !== y? 0 : ay,
+						newX !== x? 0 : maxX,
+						newY !== y? 0 : maxY,
+					];
+				}
 				
 				x = newX;
 				y = newY;
@@ -165,7 +170,7 @@ export default class Entity {
 				turn.moving.push(this);
 		}
 		else
-			turn.moving.splice(turn.moving.indexOf(this), 1);
+			removeFromArray(turn.moving, this);
 	}
 	get speed () {
 		return this.internal.speed ?? {};
@@ -186,7 +191,7 @@ export default class Entity {
 				turn.accelerating.push(this);
 		}
 		else {
-			turn.accelerating.splice(turn.accelerating.indexOf(this), 1);
+			removeFromArray(turn.moving, this);
 		}
 	}
 	get acceleration () {
@@ -260,8 +265,21 @@ export default class Entity {
 	/**
 	 * @see {@link Profile}
 	 */
-	set profile (Profile) { this.#internal.profile = Profile? new Profile(this) : null }
+	set profile (Profile) {
+		this.profile?.replacing(Profile);
+		
+		this.#internal.profile = Profile?
+			new Profile(this)
+			: null;
+	}
 	get profile () { return this.#internal.profile }
+	
+	checkCollision (obj) {
+		if (testCollision(this, obj)) {
+			this.profile.collided?.(obj);
+			obj.profile.collided?.(this);
+		}
+	}
 	
 	constructor (Profile=null, board=this.board) {
 		this.board = board;
@@ -276,13 +294,14 @@ export default class Entity {
 	 * Destroy element.
 	 */
 	die () {
+		this.profile?.die?.();
 		removeFromArray(turn.entities, this);
 		removeFromArray(turn.moving, this);
 		try {
 			this.element.parentNode.removeChild(this.element);
 		}
 		catch (e) {
-			debugger; // TODO
+			// debugger; // TODO
 		}
 	}
 	
