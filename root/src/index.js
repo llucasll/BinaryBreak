@@ -8,10 +8,6 @@ import * as keyboard from "./lib/engine/keyboard.js";
 import objects, { init } from "./gameObjects.js";
 
 import { Pad, Pad2 } from "./profile/Pad.js";
-import { Ball } from "./profile/Ball.js";
-
-import { Brick, SolidBrick, HardBrick, SpecialBrick } from "./profile/Brick.js";
-import { rand } from "./lib/utils.js";
 
 document.title = 'Binary Break';
 
@@ -35,9 +31,9 @@ keyboard.setKeydownListener({
 	' ': _ => {
 		//ball.die();
 		//ball = new Entity(Ball);
-		if (pad.stalker === ball)
-			ball.speed = [ 20, -10 ];
-		pad.stalker = null;
+		if (objects.pad.stalker === objects.balls[0])
+			objects.balls[0].speed = [ 20, -10 ];
+		objects.pad.stalker = null;
 	},
 	g: _ => objects.pad.profile = Pad2,
 	w: _ => objects.pad.profile = Pad,

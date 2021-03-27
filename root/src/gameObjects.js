@@ -2,7 +2,7 @@ import Entity from "./lib/engine/Entity.js";
 import { Pad } from "./profile/Pad.js";
 import { Ball } from "./profile/Ball.js";
 import data from "./data.js";
-import { Brick, HardBrick, SolidBrick } from "./profile/Brick.js";
+import { Brick, HardBrick, SolidBrick, SpecialBrick } from "./profile/Brick.js";
 import { rand } from "./lib/utils.js";
 
 const objects = {};
@@ -18,8 +18,7 @@ export function init () {
 		score: new Entity(),
 	});
 	
-	objects.balls[0].pos = [ pad.x + pad.w/2 - objects.balls[0].w/2, pad.y - objects.balls[0].h ];
-	objects.pad.stalker = objects.balls[0];
+	objects.balls[0].profile.init();
 
 	// TODO if debug
 	Object.assign(window, objects);

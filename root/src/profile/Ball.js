@@ -13,7 +13,6 @@ export class Ball extends Profile {
 		size: [ 8, 8 ],
 		pos: [ 45, 80 ],
 		image: 'ball',
-		//speed: [ 50, -25 ],
 		shape: Shape.rectangle,
 	};
 	
@@ -39,6 +38,13 @@ export class Ball extends Profile {
 		},
 	};
 	
+	init () {
+		const pad = objects.pad;
+		this.entity.pos = [ pad.x + pad.w/2 - this.entity.w/2, pad.y - this.entity.h ];
+		this.entity.speed = [ 0, 0 ];
+		pad.stalker = this.entity;
+	}
+	
 	revert (collider) {
 		const { x, y } = this.entity.speed;
 		
@@ -62,10 +68,7 @@ export class Ball extends Profile {
 	die () {
 		console.log("Ball is died");
 		
-		const pad = objects.pad;
-		this.entity.pos = [ pad.x + pad.w/2 - this.entity.w/2, pad.y - this.entity.h ];
-		this.entity.speed = [ 0, 0 ];
-		pad.stalker = this.entity;
+		this.init();
 		
 		return false;
 	}
