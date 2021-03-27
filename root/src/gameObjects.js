@@ -17,6 +17,9 @@ export function init () {
 		
 		score: new Entity(),
 	});
+	
+	objects.balls[0].pos = [ pad.x + pad.w/2 - objects.balls[0].w/2, pad.y - objects.balls[0].h ];
+	objects.pad.stalker = objects.balls[0];
 
 	// TODO if debug
 	Object.assign(window, objects);
@@ -30,7 +33,7 @@ export function init () {
 	for (let j=0; j<Brick.amount.y; j++) {
 		objects.bricks[j] = [];
 		for (let i=0; i<Brick.amount.x; i++) {
-			objects.bricks[j][i] = Brick.insertBrick(i, j, rand([ Brick, Brick, Brick, SolidBrick, HardBrick ]));
+			objects.bricks[j][i] = Brick.insertBrick(i, j, rand([ Brick, Brick, Brick, SolidBrick, HardBrick, SpecialBrick ]));
 		}
 	}
 }

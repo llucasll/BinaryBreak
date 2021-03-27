@@ -6,6 +6,7 @@ import Shape from "../lib/engine/Shape.js";
 import { Brick, SolidBrick } from "./Brick.js";
 import { Pad } from "./Pad.js";
 import data from "../data.js";
+import objects from "../gameObjects.js";
 
 export class Ball extends Profile {
 	static defaults = {
@@ -61,7 +62,7 @@ export class Ball extends Profile {
 	die () {
 		console.log("Ball is died");
 		
-		const pad = window.pad;
+		const pad = objects.pad;
 		this.entity.pos = [ pad.x + pad.w/2 - this.entity.w/2, pad.y - this.entity.h ];
 		this.entity.speed = [ 0, 0 ];
 		pad.stalker = this.entity;
