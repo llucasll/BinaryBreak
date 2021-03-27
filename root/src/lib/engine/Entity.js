@@ -203,8 +203,6 @@ export default class Entity {
 	accelerate ([ dx=0, dy=0 ], [ maxX=Infinity, maxY=Infinity ]) {
 		const { x, y } = this.speed;
 		
-		// if (x + dx < -maxX)
-		// 	debugger
 		const effective = [
 			atMost(x + dx, maxX, x),
 			atMost(y + dy, maxY, y),

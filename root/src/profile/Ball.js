@@ -5,7 +5,6 @@ import Shape from "../lib/engine/Shape.js";
 
 import { Brick, SolidBrick } from "./Brick.js";
 import { Pad } from "./Pad.js";
-import data from "../data.js";
 import objects from "../gameObjects.js";
 
 export class Ball extends Profile {
@@ -30,11 +29,10 @@ export class Ball extends Profile {
 			});
 		},
 		[ Brick.symbol ]: collider => {
-			data.score++;
+		
 		},
 		[ SolidBrick.symbol ]: collider => {
 			this.revert(collider);
-			data.score++;
 		},
 	};
 	
