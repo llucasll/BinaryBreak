@@ -9,10 +9,10 @@ import data from "../data.js";
 
 export class Ball extends Profile {
 	static defaults = {
-		size: [ 10, 10 ],
-		pos: [ 45, 45 ],
+		size: [ 8, 8 ],
+		pos: [ 45, 80 ],
 		image: 'ball',
-		speed: [ 20, 10 ],
+		//speed: [ 50, -25 ],
 		shape: Shape.rectangle,
 	};
 	
@@ -60,6 +60,13 @@ export class Ball extends Profile {
 	
 	die () {
 		console.log("Ball is died");
+		
+		const pad = window.pad;
+		this.entity.pos = [ pad.x + pad.w/2 - this.entity.w/2, pad.y - this.entity.h ];
+		this.entity.speed = [ 0, 0 ];
+		pad.stalker = this.entity;
+		
+		return false;
 	}
 }
 

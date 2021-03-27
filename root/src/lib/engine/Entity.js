@@ -273,6 +273,13 @@ export default class Entity {
 			: null;
 	}
 	get profile () { return this.#internal.profile }
+
+	set stalker (stalker) {
+		this.#internal.stalker = stalker;
+	}
+	get stalker () {
+		return this.#internal.stalker;
+	}
 	
 	checkCollision (obj) {
 		if (testCollision(this, obj)) {
@@ -294,7 +301,8 @@ export default class Entity {
 	 * Destroy element.
 	 */
 	die () {
-		this.profile?.die?.();
+		if (this.profile?.die?.() === false)
+			return;
 		removeFromArray(turn.entities, this);
 		removeFromArray(turn.moving, this);
 		try {

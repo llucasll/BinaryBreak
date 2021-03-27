@@ -74,3 +74,13 @@ export class HardBrick extends SolidBrick {
 		this.entity.profile = SolidBrick;
 	}
 }
+
+export class SpecialBrick extends SolidBrick {
+	static defaults = {
+		color: 'purple',
+		shape: Shape.rectangle,
+	};
+	collided (collider) {
+		this.entity.dieSlowly(1);
+	}
+}

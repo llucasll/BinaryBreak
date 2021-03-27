@@ -53,8 +53,9 @@ export const Movement = {
 		if (speed.x<0 && x<=0) // left
 			speed.x *= -1;
 		
-		if (y >= 100) // bottom
+		if (y >= 100) { // bottom
 			return null;
+		}
 		if (speed.y<0 && y<=0) // top
 			speed.y *= -1;
 		
