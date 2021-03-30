@@ -16,6 +16,9 @@ export class Ball extends Profile {
 	};
 	
 	colliders = {
+		revert (collider) {
+			this.revert(collider);
+		},
 		[ Pad.symbol ]: collider => {
 			this.revert(collider);
 
@@ -32,7 +35,7 @@ export class Ball extends Profile {
 		
 		},
 		[ SolidBrick.symbol ]: collider => {
-			this.revert(collider);
+			this.runCollision('revert', collider);
 		},
 	};
 	

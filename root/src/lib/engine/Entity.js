@@ -298,8 +298,8 @@ export default class Entity {
 	/**
 	 * Destroy element.
 	 */
-	die () {
-		if (this.profile?.die?.() === false)
+	async die () {
+		if ((await this.profile?.die?.()) === false)
 			return;
 		removeFromArray(turn.entities, this);
 		removeFromArray(turn.moving, this);
