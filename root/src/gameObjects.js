@@ -15,19 +15,18 @@ export function init () {
 		balls: [ new Entity(Ball) ],
 		bricks: [],
 		
-		score: new Entity(),
+		score: new Entity(null, { x: 80 }),
 	});
 	
 	objects.balls[0].profile.init();
 
 	// TODO if debug
 	Object.assign(window, objects);
+	window.objects = objects;
 	
 	Object.assign(data, {
 		score: 0,
-	})
-	
-	objects.score.x = 80;
+	});
 	
 	for (let j=0; j<Brick.amount.y; j++) {
 		objects.bricks[j] = [];

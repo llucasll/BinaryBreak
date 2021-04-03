@@ -267,7 +267,7 @@ export default class Entity {
 		this.profile?.replacing(Profile);
 		
 		this.#internal.profile = Profile?
-			new Profile(this)
+			(Profile instanceof Function? new Profile(this): Profile)
 			: null;
 	}
 	get profile () { return this.#internal.profile }
@@ -286,13 +286,15 @@ export default class Entity {
 		}
 	}
 	
-	constructor (Profile=null, board=this.board) {
+	constructor (Profile=null, defaultProps={}, board=this.board) {
 		this.board = board;
 		board.append(this.element);
 		
 		this.profile = Profile;
 		
 		turn.entities.push(this);
+		
+		Object.assign(this, defaultProps);
 	}
 	
 	/**

@@ -8,7 +8,9 @@ const data = {
 	},
 	set score (val) {
 		objects.score.text = String(val).padStart(3, '0');
-	}
+	},
 };
+
+window.data = data; // TODO if debug
 
 export default data;

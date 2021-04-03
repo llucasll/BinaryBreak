@@ -20,7 +20,7 @@ export class Ball extends Profile {
 			this.revert(collider);
 		},
 		[ Pad.symbol ]: collider => {
-			this.revert(collider);
+			this.runCollision('revert', collider);
 
 			this.entity.animate([ 'ship', 'bullet' ], {
 				fps: 5,
@@ -39,8 +39,7 @@ export class Ball extends Profile {
 		},
 	};
 	
-	init () {
-		const pad = objects.pad;
+	init (pad = objects.pad) {
 		this.entity.pos = [ pad.x + pad.w/2 - this.entity.w/2, pad.y - this.entity.h ];
 		this.entity.speed = [ 0, 0 ];
 		pad.stalker = this.entity;
