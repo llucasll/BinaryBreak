@@ -232,6 +232,13 @@ export default class Entity {
 	}
 	get image () { return this.element.style.backgroundImage }
 	
+	set opacity (value) {
+		this.element.style.opacity = (value/100).toString();
+	}
+	get opacity () {
+		return (this.element.style.opacity || 1) * 100;
+	}
+	
 	/**
 	 * Make animation effects
 	 * TODO use async/await
@@ -317,10 +324,9 @@ export default class Entity {
 	dieSlowly (duration=1) {
 		// TODO this is being scheduled more than one time if it collides twice
 		this.animate(elapsed => {
-			const oldOpacity = this.element.style.opacity || 1; // TODO
-			this.element.style.opacity = oldOpacity - elapsed/(duration*1000);
+			this.opacity -= elapsed*100/(duration*1000);
 			
-			if (this.element.style.opacity <= 0) {
+			if (this.opacity <= 0) {
 				this.die();
 				return true;
 			}
