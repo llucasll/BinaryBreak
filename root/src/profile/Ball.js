@@ -6,6 +6,7 @@ import Shape from "../lib/engine/Shape.js";
 import { Brick, SolidBrick } from "./Brick.js";
 import { Pad } from "./Pad.js";
 import objects from "../gameObjects.js";
+import { healthyInterval } from "../lib/utils.js";
 
 export class Ball extends Profile {
 	static defaults = {
@@ -28,11 +29,27 @@ export class Ball extends Profile {
 				timeoutCallback: _ => {
 					this.entity.image = 'ball';
 					console.log("Ball animation ended!");
-				}
+				},
 			});
 		},
 		[ Brick.symbol ]: collider => {
-		
+			// healthyInterval(
+			// 	(function* () {
+			// 		const profiles = [a, b, b];
+			// 		for (const profile of profiles) {
+			// 			yield this.transform(profile);
+			// 		}
+			// 	})()
+			// );
+			
+			// function* gen (profiles) {
+			// 	for (const profile of profiles) {
+			// 		yield this.transform(profile);
+			// 	}
+			// }
+			//
+			// const iterator = gen(["a", "b", "c"]);
+			// const result = [...iterator];
 		},
 		[ SolidBrick.symbol ]: collider => {
 			this.runCollision('revert', collider);
