@@ -6,6 +6,8 @@ import Shape from "../lib/engine/Shape.js";
 import { Ball } from "./Ball.js";
 import data from "../data.js";
 
+import { SpecialItem } from "./SpecialItem.js";
+
 export class Brick extends Profile {
 	static bricksArea = {
 		dy: 10,
@@ -81,6 +83,6 @@ export class SpecialBrick extends SolidBrick {
 		shape: Shape.rectangle,
 	};
 	collided (collider) {
-		this.entity.dieSlowly(1);
+		this.entity.die();
 	}
 }

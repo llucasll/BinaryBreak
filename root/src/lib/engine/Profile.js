@@ -47,6 +47,10 @@ export default class Profile {
 		return; // no handler
 	}
 	
+	transform (Profile) {
+		this.entity.profile = Profile;
+	}
+	
 	runCollision (collision, collider) {
 		return this.colliders[collision]?.call(this, collider);
 	}
