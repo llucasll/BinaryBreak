@@ -6,7 +6,6 @@ import Shape from "../lib/engine/Shape.js";
 import { Brick, SolidBrick } from "./Brick.js";
 import { Pad } from "./Pad.js";
 import objects from "../gameObjects.js";
-import { healthyInterval } from "../lib/utils.js";
 
 export class Ball extends Profile {
 	static defaults = {

@@ -1,6 +1,7 @@
 import Native from "../Native.js";
+import { atMost, healthyInterval, removeFromArray } from "../utils.js";
+
 import * as turn from "./engine.js";
-import { healthyInterval, atMost, removeFromArray } from "../utils.js";
 import { getFps } from "./engine.js";
 import { testCollision } from "./Shape.js";
 
