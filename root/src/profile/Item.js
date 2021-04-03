@@ -4,18 +4,20 @@ import { Movement } from "../lib/engine/Movement.js";
 import { Pad } from "./Pad.js";
 import Shape from "../lib/engine/Shape.js";
 
-export class SpecialItem extends Profile {
+export default class Item extends Profile {
 	static defaults = {
 		image: 'bullet',
+		color: '',
+		size: [ 8, 8 ],
 		shape: Shape.rectangle,
 		speed: [ 0, 20 ],
 	};
 	
 	colliders = {
 		[ Pad.symbol ]: collider => {
-				this.entity.die();
-			},
+			this.entity.die();
+		},
 	};
 }
 
-SpecialItem.prototype.move = Movement.die;
+Item.prototype.move = Movement.die;

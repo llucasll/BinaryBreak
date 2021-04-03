@@ -21,15 +21,6 @@ export class Ball extends Profile {
 		},
 		[ Pad.symbol ]: collider => {
 			this.runCollision('revert', collider);
-
-			this.entity.animate([ 'ship', 'bullet' ], {
-				fps: 5,
-				timeout: 2,
-				timeoutCallback: _ => {
-					this.entity.image = 'ball';
-					console.log("Ball animation ended!");
-				},
-			});
 		},
 		[ Brick.symbol ]: collider => {
 			// healthyInterval(
