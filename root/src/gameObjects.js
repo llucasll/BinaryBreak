@@ -12,8 +12,8 @@ export default objects;
 
 export function init () {
 	Object.assign(objects, {
-		lives: new Entity(),
-		score: new Entity(null, { x: 80 }),
+		lives: new Entity(null, { pos: [ 3, 1.5 ] }),
+		score: new Entity(null, { pos: [ 86, 1.5 ] }),
 		
 		pad: new Entity(Pad, { pos: [ 45 , 95 ] }),
 		balls: [ new Entity(Ball) ],

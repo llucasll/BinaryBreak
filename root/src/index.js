@@ -33,8 +33,10 @@ Entity.board = Native('div', {
 				// 'background/anotherAlphabet',
 				// 'background/dataConcept',
 				
+				/* ELIMINATED ROUND 3 */
+				// 'background/movingAway',
+			
 				/* FINALISTS */
-				'background/movingAway',
 				'background/small',
 				'background/simple', // standard
 			])

@@ -19,7 +19,7 @@ const data = {
 	set lives (val) {
 		const difference = val - this.lives;
 		
-		objects.lives.size = [ 8*val, 8 ];
+		objects.lives.size = [ 6*val, 6 ];
 		
 		if (difference > 0)
 			for (let i=0; i<difference; i++) {
