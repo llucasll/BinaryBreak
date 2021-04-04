@@ -44,8 +44,8 @@ export default class Profile {
 	 * @param {Entity} collider entity that had collided with this.
 	 */
 	collided (collider) {
-		for (let c=collider.profile.constructor; c!==Function.prototype; c=Object.getPrototypeOf(c)) {
-			const collisionHandler = this.colliders[c.symbol];
+		for (let constructor of classChain(collider.profile)) {
+			const collisionHandler = this.colliders?.[constructor.symbol];
 			if (collisionHandler)
 				return collisionHandler.call(this, collider);
 		}
