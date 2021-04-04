@@ -239,6 +239,13 @@ export default class Entity {
 		return (this.element.style.opacity || 1) * 100;
 	}
 	
+	set textColor (color) {
+		this.element.style.color = color;
+	}
+	get textColor () {
+		return this.element.style.color;
+	}
+	
 	/**
 	 * Make animation effects
 	 * TODO use async/await
