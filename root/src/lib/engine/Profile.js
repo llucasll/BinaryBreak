@@ -3,6 +3,9 @@
  * and can be changed dynamically
  * @see Entity
  */
+
+import { classChain } from "../utils.js";
+
 export default class Profile {
 	/**
 	 * Entity's value, when linked with this Profile
@@ -30,7 +33,10 @@ export default class Profile {
 	constructor (entity) {
 		this.#entity = entity;
 		
-		Object.assign(entity, this.constructor.defaults);
+		// for (let constructor of [ ...classChain(this) ].reverse())
+		const constructors = [ ...classChain(this) ];
+		for (let i=constructors.length-1; i>=0; i--)
+			Object.assign(entity, constructors[i].defaults);
 	}
 	
 	/**
@@ -38,8 +44,8 @@ export default class Profile {
 	 * @param {Entity} collider entity that had collided with this.
 	 */
 	collided (collider) {
-		for (let c=collider.profile.constructor; c!==Function.prototype; c=Object.getPrototypeOf(c)) {
-			const collisionHandler = this.colliders[c.symbol];
+		for (let constructor of classChain(collider.profile)) {
+			const collisionHandler = this.colliders?.[constructor.symbol];
 			if (collisionHandler)
 				return collisionHandler.call(this, collider);
 		}
