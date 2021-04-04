@@ -3,7 +3,7 @@ import Profile from "../lib/engine/Profile.js";
 import { Movement } from "../lib/engine/Movement.js";
 import Shape from "../lib/engine/Shape.js";
 
-import { Brick, SolidBrick } from "./Brick.js";
+import { Brick } from "./Brick.js";
 import { InvisiblePad, Pad } from "./Pad.js";
 import objects from "../gameObjects.js";
 
@@ -45,8 +45,6 @@ export class Ball extends Profile {
 			//
 			// const iterator = gen(["a", "b", "c"]);
 			// const result = [...iterator];
-		},
-		[ SolidBrick.symbol ]: collider => {
 			this.runCollision('revert', collider);
 		},
 	};

@@ -21,7 +21,7 @@ export class Pad2 extends Pad {
 	};
 	
 	act () {
-		console.log(this.entity.x);
+		// console.log(this.entity.x);
 	}
 }
 

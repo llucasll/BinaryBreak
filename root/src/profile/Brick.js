@@ -5,8 +5,8 @@ import Shape from "../lib/engine/Shape.js";
 
 import { Ball } from "./Ball.js";
 import data from "../data.js";
-import { One, Zero } from "./Item.js";
-import { rand } from "../lib/utils.js";
+import Item, { One, Zero } from "./Item.js";
+import { rand, toArray } from "../lib/utils.js";
 import config from "../lib/engine/config.js";
 
 export class Brick extends Profile {
@@ -34,9 +34,24 @@ export class Brick extends Profile {
 	
 	colliders = {
 		[ Ball.symbol ]: collider => {
-			this.entity.dieSlowly();
+			const bit = [ Zero, One, null, null ];
+			this.spawnAndDieSlowly(bit);
 		}
 	};
+	
+	spawn (items) {
+		const constructor = rand(toArray(items));
+		if (!constructor)
+			return;
+		
+		const item = new Entity(constructor);
+		item.x = this.entity.x + this.entity.w/2 - item.w/2;
+		item.y = this.entity.y;
+	}
+	spawnAndDieSlowly (items) {
+		this.entity.dieSlowly();
+		this.spawn(items);
+	}
 	
 	replacing (next) {
 		data.score++;
@@ -54,9 +69,12 @@ export class SolidBrick extends Brick {
 		color: 'lightgreen',
 		shape: Shape.rectangle,
 	};
-	collided (collider) { // TODO refactor to use colliders
-		this.entity.profile = Brick;
-	}
+	
+	colliders = {
+		[ Ball.symbol ]: collider => {
+			this.transform(Brick);
+		}
+	};
 }
 
 export class HardBrick extends SolidBrick {
@@ -64,9 +82,12 @@ export class HardBrick extends SolidBrick {
 		color: 'green',
 		shape: Shape.rectangle,
 	};
-	collided (collider) { // TODO refactor to use colliders
-		this.entity.profile = SolidBrick;
-	}
+	
+	colliders = {
+		[ Ball.symbol ]: collider => {
+			this.transform(SolidBrick);
+		}
+	};
 }
 
 export class SpecialBrick extends SolidBrick {
@@ -74,11 +95,10 @@ export class SpecialBrick extends SolidBrick {
 		color: 'purple',
 		shape: Shape.rectangle,
 	};
-	collided (collider) { // TODO refactor to use colliders
-		this.entity.dieSlowly();
-		
-		const item = new Entity(rand([ Zero, One ]));
-		item.x = this.entity.x + this.entity.w/2 - item.w/2;
-		item.y = this.entity.y;
-	}
+	
+	colliders = {
+		[ Ball.symbol ]: collider => {
+			this.spawnAndDieSlowly(Item.all);
+		}
+	};
 }

@@ -12,12 +12,13 @@ export default objects;
 
 export function init () {
 	Object.assign(objects, {
+		lives: new Entity(),
+		score: new Entity(null, { x: 80 }),
+		
 		pad: new Entity(Pad, { pos: [ 45 , 95 ] }),
 		balls: [ new Entity(Ball) ],
 		bricks: [],
-		
-		score: new Entity(null, { x: 80 }),
-		lives: new Entity(),
+		items: [],
 	});
 	
 	objects.balls[0].profile.init();

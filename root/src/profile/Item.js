@@ -12,6 +12,11 @@ export default class Item extends Profile {
 		speed: [ 0, 20 ],
 	};
 	
+	constructor (entity) {
+		super(entity);
+		objects.items.push(this);
+	}
+	
 	colliders = {
 		[ Pad.symbol ]: collider => {
 			this.entity.die();
@@ -54,5 +59,20 @@ export class One extends Item {
 		data.score++;
 	}
 }
+
+export class Life extends Item {
+	static defaults = {
+		image: 'floppy',
+	};
+	
+	colliders = {
+		[ Pad.symbol ]: collider => {
+			this.entity.die();
+			data.lives++;
+		},
+	};
+}
+
+Item.all = [ Life ];
 
 Item.prototype.move = Movement.die;
