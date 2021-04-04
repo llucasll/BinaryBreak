@@ -272,6 +272,9 @@ export default class Entity {
 	 * @see {@link Profile}
 	 */
 	set profile (Profile) {
+		if (this.profile?.constructor === Profile)
+			return;
+		
 		this.profile?.replacing?.(Profile);
 		
 		this.#internal.profile = Profile?

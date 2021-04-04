@@ -52,6 +52,7 @@ export class Ball extends Profile {
 	};
 	
 	init (pad = objects.pad) {
+		pad.profile.transform(Pad);
 		this.entity.pos = [ pad.x + pad.w/2 - this.entity.w/2, pad.y - this.entity.h ];
 		this.entity.speed = [ 0, 0 ];
 		pad.stalker = this.entity;

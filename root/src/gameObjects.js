@@ -11,7 +11,7 @@ export default objects;
 
 export function init () {
 	Object.assign(objects, {
-		pad: new Entity(Pad),
+		pad: new Entity(Pad, { pos: [ 45 , 95 ] }),
 		balls: [ new Entity(Ball) ],
 		bricks: [],
 		

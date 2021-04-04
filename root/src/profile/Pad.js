@@ -7,14 +7,13 @@ export class Pad extends Profile {
 	static defaults = {
 		size: [ 10, 2 ],
 		color: 'white',
-		pos: [ 45 , 95 ],
 		shape: Shape.rectangle,
 	};
 }
 
 Pad.prototype.move = Movement.stop;
 
-export class Pad2 extends Profile {
+export class Pad2 extends Pad {
 	static defaults = {
 		// size: [ 10, 2 ],
 		color: 'green',
@@ -30,7 +29,5 @@ export class InvisiblePad extends Pad {
 	static defaults = {
 		color: 'grey',
 	};
-	collided (collider) {
-	}
 	//objects.ball.colliders.remove(Pad);
 }
