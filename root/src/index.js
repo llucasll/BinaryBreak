@@ -13,13 +13,8 @@ document.title = 'Binary Break';
 
 Entity.board = Native('div', {
 	parent: document.body,
-	style: {
-		width: '80vmin',
-		height: '80vmin',
-		
-		position: 'relative',
-		
-		border: '1px solid blue',
+	props: {
+		className: 'board',
 	},
 });
 

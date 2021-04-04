@@ -1,3 +1,22 @@
 {
-	"fps": 30
+	"media": {
+		"prefix": "media/",
+		"suffix": ".png"
+	},
+	"scoreLength": 3,
+	"bricks": {
+		"area": {
+			"dy": 10,
+			"x": 100,
+			"y": 20
+		},
+		"amount": {
+			"x": 10,
+			"y": 4
+		},
+		"margin": 1
+	},
+	"profiles": {
+	
+	}
 }

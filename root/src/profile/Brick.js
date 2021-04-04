@@ -7,30 +7,20 @@ import { Ball } from "./Ball.js";
 import data from "../data.js";
 import { One, Zero } from "./Item.js";
 import { rand } from "../lib/utils.js";
+import config from "../lib/engine/config.js";
 
 export class Brick extends Profile {
-	static bricksArea = {
-		dy: 10,
-		x: 100,
-		y: 20,
-	};
-	static amount = {
-		x: 10,
-		y: 4,
-	};
-	static margin = 1;
-	
 	static insertBrick (x, y, profile=Brick) {
 		const brick = new Entity(profile);
 		
 		const size = {
-			x: (Brick.bricksArea.x - Brick.margin*Brick.amount.x)/Brick.amount.x,
-			y: (Brick.bricksArea.y - Brick.margin*(Brick.amount.y+2))/Brick.amount.y,
+			x: (Brick.area.x - Brick.margin*Brick.amount.x)/Brick.amount.x,
+			y: (Brick.area.y - Brick.margin*(Brick.amount.y+2))/Brick.amount.y,
 		};
 		
 		brick.pos = [
 			size.x * x + Brick.margin*x + Brick.margin,
-			size.y * y + Brick.margin*y + Brick.bricksArea.dy,
+			size.y * y + Brick.margin*y + Brick.area.dy,
 		];
 		brick.size = [ size.x, size.y ];
 		
@@ -56,6 +46,8 @@ export class Brick extends Profile {
 		data.score++;
 	}
 }
+
+Object.assign(Brick, config.bricks);
 
 export class SolidBrick extends Brick {
 	static defaults = {

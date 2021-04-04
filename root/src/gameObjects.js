@@ -4,6 +4,7 @@ import { Ball } from "./profile/Ball.js";
 import data from "./data.js";
 import { Brick, HardBrick, SolidBrick, SpecialBrick } from "./profile/Brick.js";
 import { rand } from "./lib/utils.js";
+import config from "./lib/engine/config.js";
 
 const objects = {};
 
@@ -28,9 +29,9 @@ export function init () {
 		score: 0,
 	});
 	
-	for (let j=0; j<Brick.amount.y; j++) {
+	for (let j=0; j<config.bricks.amount.y; j++) {
 		objects.bricks[j] = [];
-		for (let i=0; i<Brick.amount.x; i++) {
+		for (let i=0; i<config.bricks.amount.x; i++) {
 			objects.bricks[j][i] = Brick.insertBrick(i, j, rand([ Brick, Brick, Brick, SolidBrick, HardBrick, SpecialBrick ]));
 		}
 	}

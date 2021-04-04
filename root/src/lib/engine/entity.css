@@ -1,0 +1,15 @@
+.entity {
+	position: absolute;
+	display: flex;
+	
+	left: 0;
+	top: 0;
+	
+	/*text-align: center;*/
+	/*vertical-align: center;*/
+	justify-content: center;
+	align-items: center;
+	
+	background-size: cover;
+	border-radius: 20px;
+}

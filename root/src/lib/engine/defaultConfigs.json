@@ -1,0 +1,8 @@
+{
+	"fps": 30,
+	"entity": {
+		"font": "\"Courier New\", monospace",
+		"textSize": "2em",
+		"textColor": "white"
+	}
+}

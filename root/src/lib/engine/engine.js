@@ -1,6 +1,6 @@
-import { configs } from "../../data.js";
+import config from "./config.js";
 
-let fps = configs.fps;
+let fps = config.fps;
 let timeoutID;
 
 export const entities = [];

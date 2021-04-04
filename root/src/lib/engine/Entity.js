@@ -4,6 +4,7 @@ import { atMost, healthyInterval, removeFromArray } from "../utils.js";
 import * as turn from "./engine.js";
 import { getFps } from "./engine.js";
 import { testCollision } from "./Shape.js";
+import config from "./config.js";
 
 function xy (x, y) {
 	return Object.assign([ x, y ], { x, y });
@@ -20,34 +21,16 @@ export default class Entity {
 	/* DEFAULTS */
 	
 	static board;
-	// text font
-	static font = '"Courier New", monospace';
-	static textSize = '2em';
-	static textColor = 'white';
-	
-	static mediaPrefix = 'media/';
-	static mediaSuffix = '.png';
 	
 	static buildElement () {
 		return Native('div', {
+			props: {
+				className: 'entity',
+			},
 			style: {
-				position: 'absolute',
-				
-				left: '0%',
-				top: '0%',
-				
-				fontFamily: Entity.font,
-				fontSize: Entity.textSize,
-				color: Entity.textColor,
-				// textAlign: 'center',
-				// verticalAlign: 'center',
-				display: 'flex',
-				justifyContent: 'center',
-				alignItems: 'center',
-				
-				backgroundSize: 'cover',
-				
-				borderRadius: '20px',
+				fontFamily: config.entity.font,
+				fontSize: config.entity.textSize,
+				color: config.entity.textColor,
 			},
 		});
 	}
@@ -225,9 +208,9 @@ export default class Entity {
 	
 	set image (value) {
 		this.element.style.backgroundImage = 'url('
-			+ Entity.mediaPrefix
+			+ config.media.prefix
 			+ value
-			+ Entity.mediaSuffix
+			+ config.media.suffix
 		+ ')';
 	}
 	get image () { return this.element.style.backgroundImage }

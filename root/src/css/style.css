@@ -1,6 +1,16 @@
 @import "reset.css";
+@import "../lib/engine/entity.css";
 
 body {
 	background: black;
 	color: white;
+}
+
+.board {
+	width: 80vmin;
+	height: 80vmin;
+	
+	position: relative;
+	
+	border: 1px solid blue;
 }
