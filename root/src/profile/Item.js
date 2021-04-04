@@ -49,6 +49,10 @@ export class One extends Item {
 			collider.profile.transform(Pad);
 		},
 	};
+	
+	die () {
+		data.score++;
+	}
 }
 
 Item.prototype.move = Movement.die;

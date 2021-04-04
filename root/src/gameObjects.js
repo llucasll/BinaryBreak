@@ -21,9 +21,10 @@ export function init () {
 	
 	objects.balls[0].profile.init();
 
-	// TODO if debug
-	Object.assign(window, objects);
-	window.objects = objects;
+	if (config.debug) {
+		Object.assign(window, objects);
+		window.objects = objects;
+	}
 	
 	Object.assign(data, {
 		score: 0,

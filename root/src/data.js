@@ -10,6 +10,8 @@ const data = {
 	},
 };
 
-window.data = data; // TODO if debug
+if (config.debug) {
+	window.data = data;
+}
 
 export default data;

@@ -5,6 +5,7 @@
  */
 
 import { classChain, prototypeChain } from "../utils.js";
+import { Movement } from "./Movement.js";
 
 export default class Profile {
 	/**
@@ -63,3 +64,5 @@ export default class Profile {
 		return this.colliders[collision]?.call(this, collider);
 	}
 }
+
+Profile.prototype.move = Movement.die;

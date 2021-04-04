@@ -4,7 +4,7 @@ export const Movement = {
 	infinity () {
 		return true;
 	},
-	die (x, y) { // TODO make it default
+	die (x, y) {
 		return (
 			x > 100 // right
 			|| y > 100 // bottom
