@@ -4,7 +4,7 @@ import { Movement } from "../lib/engine/Movement.js";
 import Shape from "../lib/engine/Shape.js";
 
 import { Brick, SolidBrick } from "./Brick.js";
-import { Pad } from "./Pad.js";
+import { InvisiblePad, Pad } from "./Pad.js";
 import objects from "../gameObjects.js";
 
 export class Ball extends Profile {
@@ -21,6 +21,11 @@ export class Ball extends Profile {
 		},
 		[ Pad.symbol ]: collider => {
 			this.runCollision('revert', collider);
+			//this.runCollision.revert(collider); // TODO
+		},
+		[ InvisiblePad.symbol ]: collider => {
+			//this.runCollision(Pad.symbol, collider);
+			//this.runCollision[Pad.symbol](collider); // TODO
 		},
 		[ Brick.symbol ]: collider => {
 			// healthyInterval(

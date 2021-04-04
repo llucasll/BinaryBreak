@@ -25,3 +25,12 @@ export class Pad2 extends Profile {
 		console.log(this.entity.x);
 	}
 }
+
+export class InvisiblePad extends Pad {
+	static defaults = {
+		color: 'grey',
+	};
+	collided (collider) {
+	}
+	//objects.ball.colliders.remove(Pad);
+}
