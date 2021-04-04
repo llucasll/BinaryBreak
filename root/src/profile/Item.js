@@ -42,11 +42,12 @@ export class One extends Item {
 	colliders = {
 		[ Pad.symbol ]: collider => {
 			this.entity.die();
-			if (collider.profile instanceof InvisiblePad)
-				collider.profile.transform(Pad);
-			else if (collider.profile instanceof Pad)
-				collider.profile.transform(Pad2);
-			},
+			collider.profile.transform(Pad2);
+		},
+		[ InvisiblePad.symbol ]: collider => {
+			this.entity.die();
+			collider.profile.transform(Pad);
+		},
 	};
 }
 
