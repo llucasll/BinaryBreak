@@ -272,7 +272,7 @@ export default class Entity {
 	 * @see {@link Profile}
 	 */
 	set profile (Profile) {
-		this.profile?.replacing(Profile);
+		this.profile?.replacing?.(Profile);
 		
 		this.#internal.profile = Profile?
 			(Profile instanceof Function? new Profile(this): Profile)

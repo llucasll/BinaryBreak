@@ -44,7 +44,7 @@ export class One extends Item {
 			this.entity.die();
 			if (collider.profile instanceof InvisiblePad)
 				collider.profile.transform(Pad);
-			if (collider.profile instanceof Pad)
+			else if (collider.profile instanceof Pad)
 				collider.profile.transform(Pad2);
 			},
 	};
