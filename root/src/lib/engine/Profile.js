@@ -4,7 +4,7 @@
  * @see Entity
  */
 
-import { classChain } from "../utils.js";
+import { classChain, prototypeChain } from "../utils.js";
 
 export default class Profile {
 	/**
@@ -44,10 +44,12 @@ export default class Profile {
 	 * @param {Entity} collider entity that had collided with this.
 	 */
 	collided (collider) {
-		for (let constructor of classChain(collider.profile)) {
-			const collisionHandler = this.colliders?.[constructor.symbol];
-			if (collisionHandler)
-				return collisionHandler.call(this, collider);
+		for (let proto of prototypeChain(this)) {
+			for (let colliderClass of classChain(collider.profile)) {
+				const collisionHandler = proto.colliders?.[colliderClass.symbol];
+				if (collisionHandler)
+					return collisionHandler.call(this, collider);
+			}
 		}
 		
 		return; // no handler

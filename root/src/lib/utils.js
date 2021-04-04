@@ -66,6 +66,7 @@ export const keepInRange = (proposed, min=-Infinity, max=Infinity) =>
 	Math.max(Math.min(proposed, max), min);
 
 export function* prototypeChain (obj) {
+	yield obj;
 	for (let proto=Object.getPrototypeOf(obj); proto != null; proto = Object.getPrototypeOf(proto))
 		yield proto;
 }
@@ -74,3 +75,5 @@ export function* classChain (obj) {
 	for (let proto of prototypeChain(obj))
 		yield proto.constructor;
 }
+
+export const noop = _ => _;

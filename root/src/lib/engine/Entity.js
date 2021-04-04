@@ -331,6 +331,6 @@ export default class Entity {
 				return true;
 			}
 		});
-		this.profile.collided = _ => _;
+		this.profile.collided = null; // TODO
 	}
 }
