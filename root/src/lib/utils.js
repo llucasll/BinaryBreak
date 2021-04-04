@@ -64,3 +64,13 @@ export const atMost = (proposed, limit, old) =>
 
 export const keepInRange = (proposed, min=-Infinity, max=Infinity) =>
 	Math.max(Math.min(proposed, max), min);
+
+export function* prototypeChain (obj) {
+	for (let proto=Object.getPrototypeOf(obj); proto != null; proto = Object.getPrototypeOf(proto))
+		yield proto;
+}
+
+export function* classChain (obj) {
+	for (let proto of prototypeChain(obj))
+		yield proto.constructor;
+}

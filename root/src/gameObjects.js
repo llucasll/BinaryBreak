@@ -31,7 +31,7 @@ export function init () {
 	for (let j=0; j<Brick.amount.y; j++) {
 		objects.bricks[j] = [];
 		for (let i=0; i<Brick.amount.x; i++) {
-			objects.bricks[j][i] = Brick.insertBrick(i, j, rand([ SpecialBrick ]));
+			objects.bricks[j][i] = Brick.insertBrick(i, j, rand([ Brick, Brick, Brick, SolidBrick, HardBrick, SpecialBrick ]));
 		}
 	}
 }
