@@ -5,10 +5,11 @@ import { InvisiblePad, Pad, Pad2 } from "./Pad.js";
 import Shape from "../lib/engine/Shape.js";
 
 export default class Item extends Profile {
+	static shape = Shape.rectangle;
+	
 	static defaults = {
 		color: '',
 		size: [ 8, 8 ],
-		shape: Shape.rectangle,
 		speed: [ 0, 20 ],
 	};
 	

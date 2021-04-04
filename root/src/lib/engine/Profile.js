@@ -6,6 +6,7 @@
 
 import { classChain, prototypeChain } from "../utils.js";
 import { Movement } from "./Movement.js";
+import { convertTriangle } from "../geometry.js";
 
 export default class Profile {
 	/**
@@ -26,6 +27,11 @@ export default class Profile {
 	#entity;
 	get entity () { return this.#entity }
 	
+	// #shape;
+	// get shape () { return this.#shape ?? this.constructor.shape }
+	// set shape (shape) { return this.#shape }
+	shape = this.constructor.shape;
+	
 	/**
 	 * Default collision handlers (a empty mapper)
 	 */
@@ -43,13 +49,14 @@ export default class Profile {
 	/**
 	 * Default collision behaviour
 	 * @param {Entity} collider entity that had collided with this.
+	 * @param relativePos relative position of collider from this
 	 */
-	collided (collider) {
+	collided (collider, relativePos) {
 		for (let proto of prototypeChain(this)) {
 			for (let colliderClass of classChain(collider.profile)) {
 				const collisionHandler = proto.colliders?.[colliderClass.symbol];
 				if (collisionHandler)
-					return collisionHandler.call(this, collider);
+					return collisionHandler.call(this, collider, relativePos);
 			}
 		}
 		
@@ -60,8 +67,12 @@ export default class Profile {
 		this.entity.profile = Profile;
 	}
 	
-	runCollision (collision, collider) {
-		return this.colliders[collision]?.call(this, collider);
+	runCollision (collision, collider, ...args) {
+		return this.colliders[collision]?.call(this, collider, ...args);
+	}
+	
+	updateSpeedAngle (angle) {
+		this.entity.speed = convertTriangle(this.entity.speed, angle);
 	}
 }
 

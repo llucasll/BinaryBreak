@@ -10,6 +10,7 @@ import objects, { init } from "./gameObjects.js";
 import { Pad, Pad2 } from "./profile/Pad.js";
 import { rand } from "./lib/utils.js";
 import config from "./lib/engine/config.js";
+import { convertTriangle, xy } from "./lib/geometry.js";
 
 document.title = 'Binary Break';
 
@@ -50,10 +51,11 @@ keyboard.setKeydownListener({
 	ArrowLeft: _ => objects.pad.acceleration = [ -50, 0, 50, 0 ],
 	ArrowRight: _ => objects.pad.acceleration = [ 50 , 0, 50, 0 ],
 	' ': _ => {
-		//ball.die();
-		//ball = new Entity(Ball);
-		if (objects.pad.stalker === objects.balls[0])
-			objects.balls[0].speed = [ 20, -10 ];
+		if (objects.pad.stalker === objects.balls[0]) {
+			const angle = objects.pad.relativePosition(objects.balls[0]);
+			
+			objects.balls[0].speed = convertTriangle(xy(...[ 20, -10 ]), angle);
+		}
 		objects.pad.stalker = null;
 	},
 	g: _ => objects.pad.profile = Pad2,

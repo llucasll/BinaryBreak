@@ -5,13 +5,7 @@ import * as turn from "./engine.js";
 import { getFps } from "./engine.js";
 import { testCollision } from "./Shape.js";
 import config from "./config.js";
-
-function xy (x, y) {
-	return Object.assign([ x, y ], { x, y });
-}
-function wh (w, h) {
-	return Object.assign([ w, h ], { w, h });
-}
+import { wh, xy } from "../geometry.js";
 
 /**
  * A engine's object body.
@@ -124,9 +118,9 @@ export default class Entity {
 	
 	/* SIZE */
 	
-	get w () { return this.size.w }
+	get w () { return this.size.w ?? this.element.clientWidth }
 	set w (value) { this.size = [ value, undefined ] }
-	get h () { return this.size.h }
+	get h () { return this.size.h ?? this.element.clientHeight }
 	set h (value) { this.size = [ undefined, value ] }
 	
 	set size ([ w=this.size.w, h=this.size.h ]) {
@@ -138,6 +132,29 @@ export default class Entity {
 		return wh(
 			parseFloat(this.element.style.width),
 			parseFloat(this.element.style.height),
+		);
+	}
+	
+	get center () {
+		return xy(
+			this.x + this.w/2,
+			this.y + this.h/2
+		);
+	}
+	set center ([ x, y, w=this.size.w, h=this.size.h ]) {
+		this.pos = [
+			x - w/2,
+			y - h/2,
+		];
+	}
+	/**
+	 * @param {Entity} compared another Entity to test
+	 * @return relative position of collider from this
+	 */
+	relativePosition (compared) {
+		return xy(
+			compared.center.x - this.center.x,
+			compared.center.y - this.center.y
 		);
 	}
 	
@@ -273,17 +290,17 @@ export default class Entity {
 	}
 	get profile () { return this.#internal.profile }
 
-	set stalker (stalker) {
-		this.#internal.stalker = stalker;
-	}
-	get stalker () {
-		return this.#internal.stalker;
-	}
+	// set stalker (stalker) {
+	// 	this.#internal.stalker = stalker;
+	// }
+	// get stalker () {
+	// 	return this.#internal.stalker;
+	// }
 	
 	checkCollision (obj) {
 		if (testCollision(this, obj)) {
-			this.profile.collided?.(obj);
-			obj.profile.collided?.(this);
+			this.profile.collided?.(obj, obj.relativePosition(this));
+			obj.profile.collided?.(this, this.relativePosition(obj));
 		}
 	}
 	
@@ -324,6 +341,8 @@ export default class Entity {
 				return true;
 			}
 		});
-		this.profile.collided = null; // TODO
+		
+		if (this.profile)
+			this.profile.shape = null;
 	}
 }

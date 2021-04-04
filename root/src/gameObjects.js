@@ -15,7 +15,7 @@ export function init () {
 		lives: new Entity(null, { pos: [ 3, 1.5 ] }),
 		score: new Entity(null, { pos: [ 86, 1.5 ] }),
 		
-		pad: new Entity(Pad, { pos: [ 45 , 95 ] }),
+		pad: new Entity(Pad, { y: 95, center: [ 50 ] }),
 		balls: [ new Entity(Ball) ],
 		bricks: [],
 		items: [],

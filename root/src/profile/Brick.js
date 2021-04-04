@@ -27,9 +27,10 @@ export class Brick extends Profile {
 		return brick;
 	}
 	
+	static shape = Shape.rectangle;
+	
 	static defaults = {
 		color: 'white',
-		shape: Shape.rectangle, // TODO it's Profile's attribute
 	};
 	
 	colliders = {

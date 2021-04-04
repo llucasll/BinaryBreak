@@ -8,26 +8,34 @@ import { InvisiblePad, Pad } from "./Pad.js";
 import objects from "../gameObjects.js";
 
 export class Ball extends Profile {
+	static shape = Shape.rectangle;
+	
 	static defaults = {
 		size: [ 8, 8 ],
 		pos: [ 45, 80 ],
 		image: 'ball',
-		shape: Shape.rectangle,
 	};
 	
 	colliders = {
-		revert (collider) {
-			this.revert(collider);
-		},
-		[ Pad.symbol ]: collider => {
-			this.runCollision('revert', collider);
+		// revert (collider, angle) {
+		// 	this.revert(collider, angle);
+		// },
+		[ Pad.symbol ]: (collider, angle) => {
+			// this.runCollision('revert', collider, angle);
+			
+			this.updateSpeedAngle(angle);
+			
 			//this.runCollision.revert(collider); // TODO
 		},
 		[ InvisiblePad.symbol ]: collider => {
 			//this.runCollision(Pad.symbol, collider);
 			//this.runCollision[Pad.symbol](collider); // TODO
 		},
-		[ Brick.symbol ]: collider => {
+		[ Brick.symbol ]: (collider, angle) => {
+			// this.runCollision('revert', collider, angle);
+			
+			this.updateSpeedAngle(angle);
+			
 			// healthyInterval(
 			// 	(function* () {
 			// 		const profiles = [a, b, b];
@@ -45,7 +53,6 @@ export class Ball extends Profile {
 			//
 			// const iterator = gen(["a", "b", "c"]);
 			// const result = [...iterator];
-			this.runCollision('revert', collider);
 		},
 	};
 	
@@ -56,28 +63,28 @@ export class Ball extends Profile {
 		pad.stalker = this.entity;
 	}
 	
-	revert (collider) {
-		const { x, y } = this.entity.speed;
-		
-		const top = {
-			self: this.entity.y,
-			collider: collider.y,
-		};
-		const bottom = {
-			self: this.entity.y + this.entity.h,
-			collider: collider.y + collider.h,
-		};
-		
-		const revert = (y<0 && top.self > top.collider)
-			|| (y>0 && bottom.self < bottom.collider)
-		
-		if (revert) {
-			this.entity.speed = [ x, -y ];
-		}
-	}
+	// revert (collider, angle) {
+	// 	const { x, y } = this.entity.speed;
+	//
+	// 	const top = {
+	// 		self: this.entity.y,
+	// 		collider: collider.y,
+	// 	};
+	// 	const bottom = {
+	// 		self: this.entity.y + this.entity.h,
+	// 		collider: collider.y + collider.h,
+	// 	};
+	//
+	// 	const revert = (y<0 && top.self > top.collider)
+	// 		|| (y>0 && bottom.self < bottom.collider);
+	//
+	// 	if (revert) {
+	// 		this.entity.speed = convertTriangle({ x, y }, angle);
+	// 	}
+	// }
 	
 	die () {
-		console.log("Ball is died");
+		console.log("Ball has died/is dead");
 		
 		data.lives--;
 		this.init();

@@ -4,10 +4,11 @@ import { Movement } from "../lib/engine/Movement.js";
 import Shape from "../lib/engine/Shape.js";
 
 export class Pad extends Profile {
+	static shape = Shape.rectangle;
+	
 	static defaults = {
 		size: [ 10, 2 ],
 		color: 'white',
-		shape: Shape.rectangle,
 	};
 }
 
