@@ -81,6 +81,7 @@ export class Ball extends Profile {
 	die () {
 		console.log("Ball is died");
 		
+		data.lives--;
 		this.init();
 		
 		return false;

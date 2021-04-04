@@ -17,6 +17,7 @@ export function init () {
 		bricks: [],
 		
 		score: new Entity(null, { x: 80 }),
+		lives: new Entity(),
 	});
 	
 	objects.balls[0].profile.init();
@@ -28,6 +29,7 @@ export function init () {
 	
 	Object.assign(data, {
 		score: 0,
+		lives: config.initialLives,
 	});
 	
 	for (let j=0; j<config.bricks.amount.y; j++) {

@@ -8,6 +8,12 @@ const data = {
 	set score (val) {
 		objects.score.text = String(val).padStart(config.scoreLength, '0');
 	},
+	get lives () {
+		return Number(objects.lives.text);
+	},
+	set lives (val) {
+		objects.lives.text = val;
+	},
 };
 
 if (config.debug) {
