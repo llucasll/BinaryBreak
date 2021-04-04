@@ -1,15 +1,21 @@
 .entity {
+	/* BOX MODEL */
 	position: absolute;
 	display: flex;
 	
+	/* INITIAL POSITION, TO PREVENT BUGS */
 	left: 0;
 	top: 0;
 	
+	/* TEXT */
 	/*text-align: center;*/
 	/*vertical-align: center;*/
 	justify-content: center;
 	align-items: center;
+	overflow: hidden;
+	white-space: nowrap;
 	
+	/* BACKGROUND */
 	background-size: cover;
 	border-radius: 20px;
 }

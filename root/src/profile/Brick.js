@@ -54,7 +54,7 @@ export class SolidBrick extends Brick {
 		color: 'lightgreen',
 		shape: Shape.rectangle,
 	};
-	collided (collider) {
+	collided (collider) { // TODO refactor to use colliders
 		this.entity.profile = Brick;
 	}
 }
@@ -64,7 +64,7 @@ export class HardBrick extends SolidBrick {
 		color: 'green',
 		shape: Shape.rectangle,
 	};
-	collided (collider) {
+	collided (collider) { // TODO refactor to use colliders
 		this.entity.profile = SolidBrick;
 	}
 }
@@ -74,7 +74,7 @@ export class SpecialBrick extends SolidBrick {
 		color: 'purple',
 		shape: Shape.rectangle,
 	};
-	collided (collider) {
+	collided (collider) { // TODO refactor to use colliders
 		this.entity.dieSlowly();
 		
 		const item = new Entity(rand([ Zero, One ]));
