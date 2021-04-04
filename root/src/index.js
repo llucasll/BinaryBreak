@@ -8,6 +8,8 @@ import * as keyboard from "./lib/engine/keyboard.js";
 import objects, { init } from "./gameObjects.js";
 
 import { Pad, Pad2 } from "./profile/Pad.js";
+import { rand } from "./lib/utils.js";
+import config from "./lib/engine/config.js";
 
 document.title = 'Binary Break';
 
@@ -15,6 +17,28 @@ Entity.board = Native('div', {
 	parent: document.body,
 	props: {
 		className: 'board',
+	},
+	style: {
+		backgroundImage:
+			'url('
+			+ config.media.prefix
+			+ rand([
+				/* ELIMINATED ROUND 1 */
+				// 'background/abstract',
+				// 'background/fast',
+				// 'background/horizontal',
+				
+				/* ELIMINATED ROUND 2 */
+				// 'background/code',
+				// 'background/anotherAlphabet',
+				// 'background/dataConcept',
+				
+				/* FINALISTS */
+				'background/movingAway',
+				'background/small',
+				'background/simple', // standard
+			])
+			+ '.gif)',
 	},
 });
 

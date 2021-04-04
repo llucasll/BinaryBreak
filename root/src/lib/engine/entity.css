@@ -19,3 +19,8 @@
 	background-size: cover;
 	border-radius: 20px;
 }
+
+.board {
+	position: relative;
+	background-size: cover;
+}
