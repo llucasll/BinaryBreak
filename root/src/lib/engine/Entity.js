@@ -343,6 +343,6 @@ export default class Entity {
 		});
 		
 		if (this.profile)
-			this.profile.shape = null;
+			delete this.profile.shape;
 	}
 }

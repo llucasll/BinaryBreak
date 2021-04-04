@@ -4,9 +4,9 @@
  * @see Entity
  */
 
-import { classChain, prototypeChain } from "../utils.js";
+import { classChain, prototypeChain, toArray } from "../utils.js";
 import { Movement } from "./Movement.js";
-import { convertTriangle } from "../geometry.js";
+import { convertTriangle, xy } from "../geometry.js";
 
 export default class Profile {
 	/**
@@ -71,8 +71,9 @@ export default class Profile {
 		return this.colliders[collision]?.call(this, collider, ...args);
 	}
 	
-	updateSpeedAngle (angle) {
-		this.entity.speed = convertTriangle(this.entity.speed, angle);
+	updateSpeedAngle (angle, speed) {
+		const current = speed? xy(toArray(speed)) : this.entity.speed;
+		this.entity.speed = convertTriangle(current, angle);
 	}
 }
 

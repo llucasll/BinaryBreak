@@ -50,9 +50,13 @@ export function convertTriangle (original, proportions) {
 /* UTILITY FUNCTIONS */
 
 export function xy (x, y) {
+	x ||= 0;
+	y ||= 0;
 	return Object.assign([ x, y ], { x, y });
 }
 
 export function wh (w, h) {
+	w ||= 0;
+	h ||= 0;
 	return Object.assign([ w, h ], { w, h });
 }
