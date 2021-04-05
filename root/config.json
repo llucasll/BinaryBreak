@@ -2,6 +2,12 @@
 	"debug": true,
 	"scoreLength": 3,
 	"initialLives": 3,
+	"size":{
+	
+	},
+	"speed": {
+	
+	},
 	"media": {
 		"prefix": "media/",
 		"suffix": ".png"

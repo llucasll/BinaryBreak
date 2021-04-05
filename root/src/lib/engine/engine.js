@@ -11,12 +11,16 @@ export const accelerating = [];
 export const setFps = rate => fps = rate;
 export const getFps = _ => fps;
 
+export let running = false;
+
 export function start (now=Date.now()) {
 	timeoutID = setTimeout(turn, 1000/fps, now);
+	running = true;
 }
 
 export function pause () {
 	clearTimeout(timeoutID);
+	running = false;
 }
 
 /**

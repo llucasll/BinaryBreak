@@ -6,7 +6,8 @@ import config from "./lib/engine/config.js";
 import objects, { init } from "./gameObjects.js";
 
 import { Pad, Pad2 } from "./profile/Pad.js";
-import { rand } from "./lib/utils.js";
+import { keepInRange, rand } from "./lib/utils.js";
+import Native from "./lib/Native.js";
 
 document.title = 'Binary Break';
 
@@ -36,10 +37,36 @@ new Board({ background:
 
 init();
 
+const audio = Native('audio', { // or video
+	parent: document.body,
+	props: {
+		autoplay: true,
+		// controls: true,
+		// muted: true,
+		loop: true,
+	},
+	children: Native('source', {
+		props: {
+			src: 'media/1. Downtown Owl - Just Chillin  (320).mp3',
+			type: 'audio/mpeg',
+		},
+	}),
+});
+// await audio.play();
+// audio.muted = false;
+window.audio = audio;
+// document.onload = _ => {
+// 	console.log('loaded');
+// 	audio.play();
+// }
+audio.onvolumechange = _ => console.log(audio.volume);
+
 keyboard.setKeydownListener({
 	ArrowLeft: _ => objects.pad.acceleration = [ -50, 0, 50, 0 ],
 	ArrowRight: _ => objects.pad.acceleration = [ 50 , 0, 50, 0 ],
 	' ': _ => {
+		audio.play();
+		
 		if (objects.pad.stalker === objects.balls[0]) {
 			const angle = objects.pad.relativePosition(objects.balls[0]);
 			
@@ -50,6 +77,12 @@ keyboard.setKeydownListener({
 	g: _ => objects.pad.profile = Pad2,
 	w: _ => objects.pad.profile = Pad,
 	x: _ => objects.balls[0].profile = Pad,
+	m: _ => audio.paused? audio.play() : audio.pause(),
+	p: _ => engine.running? engine.pause() : engine.start(),
+	// '-': _ => audio.volume -= .1,
+	// '+': _ => audio.volume += .1,
+	'-': _ => audio.volume = keepInRange(audio.volume - .1, 0, 1),
+	'+': _ => audio.volume = keepInRange(audio.volume + .1, 0, 1),
 });
 
 keyboard.setKeyupListener({
