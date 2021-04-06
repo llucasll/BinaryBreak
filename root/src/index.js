@@ -40,7 +40,7 @@ init();
 const audio = Native('audio', { // or video
 	parent: document.body,
 	props: {
-		autoplay: true,
+		// autoplay: true,
 		// controls: true,
 		// muted: true,
 		loop: true,
@@ -55,6 +55,7 @@ const audio = Native('audio', { // or video
 // await audio.play();
 // audio.muted = false;
 window.audio = audio;
+window.onclick = _ => audio.play();
 // document.onload = _ => {
 // 	console.log('loaded');
 // 	audio.play();
