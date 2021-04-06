@@ -100,7 +100,6 @@ export default class Entity {
 			parseFloat(this.element.style.left),
 			parseFloat(this.element.style.top),
 		);
-		
 		// const { left, top } = this.element.style;
 		//
 		// return [

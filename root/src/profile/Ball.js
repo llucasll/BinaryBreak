@@ -101,4 +101,10 @@ export class Ball extends Profile {
 	}
 }
 
+export class BlueBall extends Profile {
+	static  defaults = {
+		image: 'BlueBall',
+	}
+}
+
 Ball.prototype.move = Movement.bounceOrFall;
