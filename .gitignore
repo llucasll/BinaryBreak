@@ -2,8 +2,8 @@
 node_modules
 
 # Automatically compiled files from TS
-#root/**/*.js
-root/**/*.js.map
+#dist/**/*.js
+#dist/**/*.js.map
 
 # Explicity include all playground files
-!root/src/playground/**/*
+!dist/src/playground/**/*

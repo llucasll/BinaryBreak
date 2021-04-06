@@ -17,7 +17,7 @@
 		}
 	],
 	"scripts": {
-		"start": "npx serve -s root"
+		"start": "npx serve -s dist"
 	},
 	"dependencies": {
 		"serve": "^11.3.2"
