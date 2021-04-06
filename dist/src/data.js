@@ -23,7 +23,7 @@ const data = {
 		
 		if (difference > 0)
 			for (let i=0; i<difference; i++) {
-				const entity = new Entity(null, { image: 'ball' });
+				const entity = new Entity(null, { image: config.sprites.balls.red });
 				privateProps.livesChildren.push(entity)
 				objects.lives.element.append(entity.element);
 			}
