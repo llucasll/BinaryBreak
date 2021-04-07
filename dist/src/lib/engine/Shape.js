@@ -10,15 +10,10 @@ export default Shape;
 export const collided = {
 	[Shape.rectangle]: {
 		[Shape.rectangle] (self, testing) {
-			const rect2 = Rectangle(testing);
-			const rect1 = Rectangle(self);
-			
-			for (const p of rect2) {
-				if (pointInsideRectangle(p, [ rect1[0], rect1[3] ]))
-					return true;
-			}
-			
-			return false;
+			return self.x < testing.x + testing.w &&
+				self.x + self.w > testing.x &&
+				self.y < testing.y + testing.h &&
+				self.y + self.h > testing.y;
 		},
 	},
 	[Shape.circle]: {

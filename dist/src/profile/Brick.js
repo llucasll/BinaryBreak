@@ -14,12 +14,12 @@ export class Brick extends Profile {
 		const brick = new Entity(profile);
 		
 		const size = {
-			x: (Brick.area.x - Brick.margin*Brick.amount.x)/Brick.amount.x,
+			x: (Brick.area.x - Brick.margin*(Brick.amount.x + 2))/Brick.amount.x,
 			y: (Brick.area.y - Brick.margin*(Brick.amount.y+2))/Brick.amount.y,
 		};
 		
 		brick.pos = [
-			size.x * x + Brick.margin*x + Brick.margin,
+			size.x * x + Brick.margin*x + Brick.margin*1.5,
 			size.y * y + Brick.margin*y + Brick.area.dy,
 		];
 		brick.size = [ size.x, size.y ];

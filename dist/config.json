@@ -3,7 +3,7 @@
 	"scoreLength": 3,
 	"initialLives": 3,
 	"size":{
-	
+		"wall": 0.5
 	},
 	"speed": {
 	
