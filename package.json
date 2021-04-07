@@ -17,9 +17,11 @@
 		}
 	],
 	"scripts": {
-		"start": "npx serve -s root"
+		"start": "npx serve -s dist",
+		"deploy": "npx push-dir --dir=dist --branch=gh-pages"
 	},
 	"dependencies": {
+		"push-dir": "^0.4.1",
 		"serve": "^11.3.2"
 	}
 }

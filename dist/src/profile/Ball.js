@@ -6,6 +6,7 @@ import Shape from "../lib/engine/Shape.js";
 import { Brick } from "./Brick.js";
 import { InvisiblePad, Pad } from "./Pad.js";
 import objects from "../gameObjects.js";
+import config from "../lib/engine/config.js";
 
 export class Ball extends Profile {
 	static shape = Shape.rectangle;
@@ -13,7 +14,7 @@ export class Ball extends Profile {
 	
 	static defaults = {
 		size: [ 8, 8 ],
-		image: 'ball',
+		image: config.sprites.balls.red,
 	};
 	
 	colliders = {
@@ -105,6 +106,6 @@ export class Ball extends Profile {
 
 export class BlueBall extends Ball {
 	static defaults = {
-		image: 'BlueBall',
+		image: config.sprites.balls.blue,
 	}
 }

@@ -1,0 +1,42 @@
+{
+	"debug": true,
+	"scoreLength": 3,
+	"initialLives": 3,
+	"size":{
+	
+	},
+	"speed": {
+	
+	},
+	"sprites": {
+		"balls": {
+			"black": "balls/Billiard_Balls_01_Black_512x512",
+			"blue": "balls/Billiard_Balls_01_Blue_512x512",
+			"brown": "balls/Billiard_Balls_01_Brown_512x512",
+			"green": "balls/Billiard_Balls_01_Green_512x512",
+			"pink": "balls/Billiard_Balls_01_Green_512x512",
+			"red": "balls/Billiard_Balls_01_Red_512x512",
+			"white": "balls/Billiard_Balls_01_White_512x512",
+			"yellow": "balls/Billiard_Balls_01_Yellow_512x512"
+		}
+	},
+	"media": {
+		"prefix": "media/",
+		"suffix": ".png"
+	},
+	"bricks": {
+		"area": {
+			"dy": 10,
+			"x": 100,
+			"y": 20
+		},
+		"amount": {
+			"x": 10,
+			"y": 4
+		},
+		"margin": 1
+	},
+	"profiles": {
+	
+	}
+}
