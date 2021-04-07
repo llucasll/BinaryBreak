@@ -65,6 +65,29 @@ export const atMost = (proposed, limit, old) =>
 export const keepInRange = (proposed, min=-Infinity, max=Infinity) =>
 	Math.max(Math.min(proposed, max), min);
 
+// export function outsideRange (old, proposed, min, max) {
+// 	if (proposed < min || proposed > max)
+// 		return proposed;
+//
+// 	if (old < proposed)
+// 		return min;
+//
+// 	return max;
+// }
+export function outsideRange (old, proposed, min, max) {
+	if (old < proposed) {
+		if (old > max)
+			return proposed;
+		
+		return keepInRange(proposed, -Infinity, min);
+	}
+	
+	if (old < min)
+		return proposed;
+	return keepInRange(proposed, max, Infinity);
+}
+window.outsideRange = outsideRange;
+
 export function* prototypeChain (obj) {
 	yield obj;
 	for (let proto=Object.getPrototypeOf(obj); proto != null; proto = Object.getPrototypeOf(proto))

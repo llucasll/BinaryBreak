@@ -1,5 +1,5 @@
 import Native from "../Native.js";
-import { atMost, healthyInterval, removeFromArray } from "../utils.js";
+import { atMost, healthyInterval, outsideRange, removeFromArray } from "../utils.js";
 
 import * as turn from "./engine.js";
 import { getFps } from "./engine.js";
@@ -196,7 +196,7 @@ export default class Entity {
 	
 	/* COLLISION */
 	
-	ignoreCollision = {
+	ignoreColliders = {
 		always: [],
 		once: [],
 		colliding: [],
@@ -284,25 +284,65 @@ export default class Entity {
 	// 	return this.#internal.stalker;
 	// }
 	
-	treatIgnoreCollision (obj) {
-		const { always, once } = this.ignoreCollision;
+	ignoreCollision (obj) {
+		const { always, once } = this.ignoreColliders;
 		
 		if (always.includes(obj))
-			return false;
+			return true;
 		
 		if (once.includes(obj)) {
 			removeFromArray(once, obj);
-			return false;
+			return true;
 		}
+		
+		return false;
+	}
+	
+	collide (obj) {
+		if (!obj.ignoreCollision(this))
+			obj.profile.collided?.(this, this.relativePosition(obj));
+		if (!this.ignoreCollision(obj))
+			return this.profile.collided?.(obj, obj.relativePosition(this));
 		
 		return true;
 	}
 	
-	checkCollision (obj) {
-		if (this.treatIgnoreCollision(obj))
-			this.profile.collided?.(obj, obj.relativePosition(this));
-		if (obj.treatIgnoreCollision(this))
-			obj.profile.collided?.(this, this.relativePosition(obj));
+	// uncollide (x, y, obj) {
+	// 	const distanceX = this.w/2 + obj.w/2;
+	// 	const distanceY = this.h/2 + obj.h/2;
+	//
+	// 	this.center = [
+	// 		outsideRange(x, this.center.x, obj.center.x-distanceX, obj.center.x+distanceX),
+	// 		outsideRange(y, this.center.y, obj.center.y-distanceY, obj.center.x+distanceY),
+	// 	];
+	// }
+	
+	uncollide (x, y, obj) {
+		const dx = this.center.x - x;
+		const dy = this.center.y - y;
+		
+		const distanceX = this.w / 2 + obj.w / 2;
+		const newX = outsideRange(x, this.center.x, obj.center.x - distanceX, obj.center.x + distanceX);
+		const distanceY = this.h / 2 + obj.h / 2;
+		const newY = outsideRange(y, this.center.y, obj.center.y - distanceY, obj.center.y + distanceY);
+		
+		this.center = [ x, y ];
+		
+		// debugger
+		
+		this.move(dx);
+		if (testCollision(this, obj)) {
+			if (Math.abs(this.center.x - newX) > 2)
+				debugger
+			this.center = [ newX, y ];
+		}
+		
+		this.move(0, dy);
+		if (testCollision(this, obj)) {
+			if (Math.abs(this.center.y - newY) > 2)
+				debugger
+			this.center = [ newX, newY ];
+		}
 	}
 	
 	constructor (Profile=null, defaultProps={}, board=this.board) {

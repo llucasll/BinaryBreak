@@ -1,3 +1,7 @@
+window.addEventListener('DOMContentLoaded', (event) => {
+	console.log('DOM fully loaded and parsed');
+});
+
 import * as engine from './lib/engine/engine.js';
 import * as keyboard from "./lib/engine/keyboard.js";
 import Board from "./lib/engine/Board.js";
@@ -71,7 +75,7 @@ keyboard.setKeydownListener({
 		if (objects.pad.stalker === objects.balls[0]) {
 			const angle = objects.pad.relativePosition(objects.balls[0]);
 			
-			objects.balls[0].profile.updateSpeedAngle(angle, 20);
+			objects.balls[0].profile.updateSpeedAngle(angle, 30);
 		}
 		delete objects.pad.stalker;
 	},

@@ -61,7 +61,7 @@ export default class Profile {
 			}
 		}
 		
-		return; // no handler
+		return true; // no handler
 	}
 	
 	transform (Profile) {
