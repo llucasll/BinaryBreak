@@ -5,7 +5,7 @@ import data from "./data.js";
 import { Brick, HardBrick, SolidBrick, SpecialBrick } from "./profile/Brick.js";
 import { rand } from "./lib/utils.js";
 import config from "./lib/engine/config.js";
-import { DivWall, Wall } from "./profile/Wall.js";
+import { BottomWall, HorizontalWall, VerticalWall } from "./profile/Wall.js";
 
 const objects = {};
 
@@ -22,26 +22,11 @@ export function init () {
 		items: [],
 		
 		wall: {
-			top: new Entity(Wall, {
-				// pos: [ ,  ],
-				size: [ 100, config.size.wall ],
-			}),
-			left: new Entity(Wall, {
-				// pos: [ ,  ],
-				size: [ config.size.wall, 100 ],
-			}),
-			right: new Entity(Wall, {
-				pos: [ 100 - config.size.wall ],
-				size: [ config.size.wall, 100 ],
-			}),
-			bottom: new Entity(Wall, {
-				pos: [ 0, 100 - config.size.wall ],
-				size: [ 100, config.size.wall ],
-			}),
-			div: new Entity(DivWall, {
-				pos: [ 0, config.bricks.area.dy-config.bricks.margin*2 ],
-				size: [ 100, config.size.wall ],
-			}),
+			top: new Entity(HorizontalWall),
+			left: new Entity(VerticalWall),
+			right: new Entity(VerticalWall, { x: 100 - config.size.wall, }),
+			bottom: new Entity(BottomWall, { y: 100 - config.size.wall, }),
+			div: new Entity(HorizontalWall, { y: config.bricks.area.dy - config.bricks.margin*2 }),
 		},
 	});
 	

@@ -2,6 +2,7 @@ import Profile from "../lib/engine/Profile.js";
 
 import { Movement } from "../lib/engine/Movement.js";
 import Shape from "../lib/engine/Shape.js";
+import { Wall } from "./Wall.js";
 
 export class Pad extends Profile {
 	static shape = Shape.rectangle;
@@ -11,6 +12,11 @@ export class Pad extends Profile {
 		size: [ 10, 2 ],
 		color: 'white',
 	};
+	colliders = {
+		[ Wall.symbol ]: _ => {
+			this.entity.stopMovement();
+		},
+	}
 }
 
 export class Pad2 extends Pad {

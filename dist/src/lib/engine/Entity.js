@@ -57,40 +57,15 @@ export default class Entity {
 	set y (value) { this.pos = [ undefined, value ] }
 	
 	set pos ([ x=this.pos.x, y=this.pos.y ]) {
-		if (this.profile?.move) {
-			const result = this.profile.move(x, y);
-			
-			if (result === false) {
-				this.speed = [ 0, 0 ];
-				this.acceleration = [ 0, 0, 0, 0 ];
-				
-				return;
-			}
-			if (result === null)
-				return this.die();
-			if (Array.isArray(result)) {
-				const [ newX, newY, clearSpeed ] = result;
-				
-				if (clearSpeed) {
-					const { x: vx, y: vy } = this.speed;
-					this.speed = [
-						newX !== x? 0 : vx,
-						newY !== y? 0 : vy,
-					];
-					
-					const { x: ax, y: ay, maxX, maxY } = this.acceleration;
-					this.acceleration = [
-						newX !== x? 0 : ax,
-						newY !== y? 0 : ay,
-						newX !== x? 0 : maxX,
-						newY !== y? 0 : maxY,
-					];
-				}
-				
-				x = newX;
-				y = newY;
-			}
-		}
+		const outside = (
+			x > 100 // right
+			|| y > 100 // bottom
+			|| x + this.w < 0 // left
+			|| y + this.h < 0 // top
+		);
+		
+		if (outside)
+			return this.die();
 		
 		this.element.style.left = x + '%';
 		this.element.style.top = y + '%';
@@ -214,6 +189,19 @@ export default class Entity {
 			this.acceleration = [ 0, 0, 0, 0 ];
 	}
 	
+	stopMovement () {
+		this.speed = [ 0, 0 ];
+		this.acceleration = [ 0, 0, 0, 0 ];
+	}
+	
+	/* COLLISION */
+	
+	ignoreCollision = {
+		always: [],
+		once: [],
+		colliding: [],
+	};
+	
 	/* CONTENT */
 	
 	set text (value) { this.element.innerText = value }
@@ -296,11 +284,25 @@ export default class Entity {
 	// 	return this.#internal.stalker;
 	// }
 	
-	checkCollision (obj) {
-		if (testCollision(this, obj)) {
-			this.profile.collided?.(obj, obj.relativePosition(this));
-			obj.profile.collided?.(this, this.relativePosition(obj));
+	treatIgnoreCollision (obj) {
+		const { always, once } = this.ignoreCollision;
+		
+		if (always.includes(obj))
+			return false;
+		
+		if (once.includes(obj)) {
+			removeFromArray(once, obj);
+			return false;
 		}
+		
+		return true;
+	}
+	
+	checkCollision (obj) {
+		if (this.treatIgnoreCollision(obj))
+			this.profile.collided?.(obj, obj.relativePosition(this));
+		if (obj.treatIgnoreCollision(this))
+			obj.profile.collided?.(this, this.relativePosition(obj));
 	}
 	
 	constructor (Profile=null, defaultProps={}, board=this.board) {

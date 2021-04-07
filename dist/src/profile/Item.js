@@ -6,6 +6,7 @@ import Shape from "../lib/engine/Shape.js";
 import { rand, removeFromArray } from "../lib/utils.js";
 import objects from "../gameObjects.js";
 import { BlueBall } from "./Ball.js";
+import { BottomWall } from "./Wall.js";
 
 export default class Item extends Profile {
 	static shape = Shape.rectangle;
@@ -24,6 +25,9 @@ export default class Item extends Profile {
 	
 	colliders = {
 		[ Pad.symbol ]: collider => {
+			this.entity.die();
+		},
+		[ BottomWall.symbol ]: _ => {
 			this.entity.die();
 		},
 	};

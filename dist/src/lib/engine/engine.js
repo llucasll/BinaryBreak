@@ -1,9 +1,11 @@
 import config from "./config.js";
+import { testCollision } from "./Shape.js";
+import { removeFromArray } from "../utils.js";
 
 let fps = config.fps;
 let timeoutID;
 
-export const entities = [];
+export const entities = []; // TODO move to a static array inside Entity class
 export const moving = [];
 export const accelerating = [];
 // export const animated = [];
@@ -40,7 +42,12 @@ function turn (lastTime) {
 		obj.move(obj.speed.x * elapsed, obj.speed.y * elapsed);
 		
 		for (const testing of entities) {
-			obj.checkCollision(testing);
+			if (testCollision(obj, testing))
+				obj.checkCollision(testing);
+			else {
+				removeFromArray(obj.ignoreCollision.colliding, testing);
+				removeFromArray(testing.ignoreCollision.colliding, obj);
+			}
 		}
 		if (obj.stalker) {
 			obj.stalker.move(obj.speed.x * elapsed, obj.speed.y * elapsed);

@@ -42,7 +42,7 @@ export default class Profile {
 		this.#entity = entity;
 		
 		// for (let constructor of [ ...classChain(this) ].reverse())
-		const constructors = [ ...classChain(this) ];
+		const constructors = [ ...classChain(this) ]; // TODO classChain returning duplicated entries
 		for (let i=constructors.length-1; i>=0; i--)
 			Object.assign(entity, constructors[i].defaults);
 	}

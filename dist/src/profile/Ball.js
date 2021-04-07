@@ -7,7 +7,7 @@ import { Brick } from "./Brick.js";
 import { InvisiblePad, Pad } from "./Pad.js";
 import objects from "../gameObjects.js";
 import config from "../lib/engine/config.js";
-import { DivWall } from "./Wall.js";
+import { BottomWall, HorizontalWall, VerticalWall } from "./Wall.js";
 
 export class Ball extends Profile {
 	static shape = Shape.rectangle;
@@ -19,8 +19,20 @@ export class Ball extends Profile {
 	};
 	
 	colliders = {
-		[ DivWall.symbol ]: (collider, angle) => {
-			this.revert(collider);
+		[ HorizontalWall.symbol ]: (collider, angle) => {
+			const { x, y } = this.entity.speed;
+			this.entity.speed = [ x, -y ];
+			
+			this.entity.ignoreCollision.colliding.push(collider);
+		},
+		[ VerticalWall.symbol ]: (collider, angle) => {
+			const { x, y } = this.entity.speed;
+			
+			this.entity.speed = [ -x, y ];
+			this.entity.ignoreCollision.colliding.push(collider);
+		},
+		[ BottomWall.symbol ]: (collider, angle) => { // TODO replace this function with null
+		
 		},
 		[ Pad.symbol ]: (collider, angle) => {
 			// this.runCollision('revert', collider, angle);
@@ -28,7 +40,7 @@ export class Ball extends Profile {
 			
 			this.updateSpeedAngle(angle);
 		},
-		[ InvisiblePad.symbol ]: collider => {
+		[ InvisiblePad.symbol ]: collider => { // TODO replace this function with null
 			//this.runCollision(Pad.symbol, collider);
 			//this.runCollision[Pad.symbol](collider); // TODO
 		},
@@ -67,26 +79,46 @@ export class Ball extends Profile {
 		pad.stalker = this.entity;
 	}
 	
-	revert (collider) {
-		const { x, y } = this.entity.speed;
-		
-		const top = {
-			self: this.entity.y,
-			collider: collider.y,
-		};
-		const bottom = {
-			self: this.entity.y + this.entity.h,
-			collider: collider.y + collider.h,
-		};
-		
-		const revert = (y<0 && top.self < bottom.collider)
-			|| (y>0 && bottom.self > top.collider);
-		debugger
-		
-		if (revert) {
-			this.entity.speed = [ x, -y ];
-		}
-	}
+	// revertVertical (collider) {
+	// 	const { x, y } = this.entity.speed;
+	//
+	// 	const top = {
+	// 		self: this.entity.y,
+	// 		collider: collider.y,
+	// 	};
+	// 	const bottom = {
+	// 		self: this.entity.y + this.entity.h,
+	// 		collider: collider.y + collider.h,
+	// 	};
+	//
+	// 	const revert = (y<0 && top.self < bottom.collider)
+	// 		|| (y>0 && bottom.self > top.collider);
+	//
+	// 	if (revert) {
+	// 		this.entity.speed = [ x, -y ];
+	// 	}
+	// }
+	//
+	// revertHorizontal (collider) {
+	// 	const { x, y } = this.entity.speed;
+	//
+	// 	const left = {
+	// 		self: this.entity.x,
+	// 		collider: collider.x,
+	// 	};
+	// 	const right = {
+	// 		self: this.entity.x + this.entity.w,
+	// 		collider: collider.x + collider.w,
+	// 	};
+	//
+	// 	const revert = (x<0 && left.self < right.collider)
+	// 		|| (x>0 && right.self > left.collider);
+	// 	debugger
+	//
+	// 	if (revert) {
+	// 		this.entity.speed = [ -x, y ];
+	// 	}
+	// }
 	
 	act () {
 		const before = this.entity.center.x < objects.pad.x && (this.entity.speed.x < 0);
