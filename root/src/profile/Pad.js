@@ -5,14 +5,13 @@ import Shape from "../lib/engine/Shape.js";
 
 export class Pad extends Profile {
 	static shape = Shape.rectangle;
+	static move = Movement.stop;
 	
 	static defaults = {
 		size: [ 10, 2 ],
 		color: 'white',
 	};
 }
-
-Pad.prototype.move = Movement.stop;
 
 export class Pad2 extends Pad {
 	static defaults = {

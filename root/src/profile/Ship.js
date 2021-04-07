@@ -3,20 +3,22 @@ import { Movement } from "../lib/engine/Movement.js";
 import Entity from "../lib/engine/Entity.js";
 
 class Ship extends Profile {
+	static move = Movement.bounce;
+	
 	static defaults = {
 		size: [ 10, 10 ],
 		image: 'ship',
 		speed: [ -7 ],
 	};
-	move = Movement.bounce;
 }
 class Bullet extends Profile {
+	static move = Movement.die;
+	
 	static defaults = {
 		size: [ 5, 5 ],
 		image: 'bullet',
 		speed: [ 0, -7 ],
 	};
-	move = Movement.die;
 }
 
 const ship = new Entity(Ship);

@@ -9,10 +9,10 @@ import objects from "../gameObjects.js";
 
 export class Ball extends Profile {
 	static shape = Shape.rectangle;
+	static move = Movement.bounceOrFall;
 	
 	static defaults = {
 		size: [ 8, 8 ],
-		pos: [ 45, 80 ],
 		image: 'ball',
 	};
 	
@@ -58,6 +58,8 @@ export class Ball extends Profile {
 	
 	init (pad = objects.pad) {
 		pad.profile.transform(Pad);
+		if (this.constructor !== Ball)
+			this.transform(Ball);
 		this.entity.pos = [ pad.x + pad.w/2 - this.entity.w/2, pad.y - this.entity.h ];
 		// this.entity.speed = [ 0, 0 ];
 		this.entity.speed = [ 7, 0 ];
@@ -101,10 +103,8 @@ export class Ball extends Profile {
 	}
 }
 
-export class BlueBall extends Profile {
-	static  defaults = {
+export class BlueBall extends Ball {
+	static defaults = {
 		image: 'BlueBall',
 	}
 }
-
-Ball.prototype.move = Movement.bounceOrFall;

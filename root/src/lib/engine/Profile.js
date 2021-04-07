@@ -31,6 +31,7 @@ export default class Profile {
 	// get shape () { return this.#shape ?? this.constructor.shape }
 	// set shape (shape) { return this.#shape }
 	shape = this.constructor.shape;
+	move = this.constructor.move;
 	
 	/**
 	 * Default collision handlers (a empty mapper)

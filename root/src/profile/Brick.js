@@ -60,6 +60,7 @@ export class Brick extends Profile {
 	
 	die () {
 		data.score++;
+		// TODO remove from objects.bricks
 	}
 }
 

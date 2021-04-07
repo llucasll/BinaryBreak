@@ -3,10 +3,13 @@ import Profile from "../lib/engine/Profile.js";
 import { Movement } from "../lib/engine/Movement.js";
 import { InvisiblePad, Pad, Pad2 } from "./Pad.js";
 import Shape from "../lib/engine/Shape.js";
-import { rand } from "../lib/utils.js";
+import { rand, removeFromArray } from "../lib/utils.js";
+import objects from "../gameObjects.js";
+import { BlueBall } from "./Ball.js";
 
 export default class Item extends Profile {
 	static shape = Shape.rectangle;
+	static move = Movement.die;
 	
 	static defaults = {
 		color: '',
@@ -16,7 +19,7 @@ export default class Item extends Profile {
 	
 	constructor (entity) {
 		super(entity);
-		objects.items.push(this);
+		objects.items.push(this.entity);
 	}
 	
 	colliders = {
@@ -24,6 +27,10 @@ export default class Item extends Profile {
 			this.entity.die();
 		},
 	};
+	
+	die () {
+		removeFromArray(objects.items, this.entity);
+	}
 }
 
 export class Zero extends Item {
@@ -75,7 +82,7 @@ export class Life extends Item {
 	};
 }
 
-export class UnknownElement extends Item {
+export class UnknownItem extends Item {
 	static defaults = {
 		text: '?',
 		textColor: 'yellow',
@@ -84,11 +91,9 @@ export class UnknownElement extends Item {
 	colliders = {
 		[ Pad.symbol ]: collider => {
 			this.entity.die();
-			balls.profile.transform(rand( [ 'BlueBall' ] ));
+			objects.balls[0].profile.transform(rand([ BlueBall ]));
 		},
 	};
 }
 
-Item.all = [ Life ];
-
-Item.prototype.move = Movement.die;
+Item.all = [ Life, UnknownItem ];
