@@ -91,9 +91,9 @@ export default class Entity {
 	
 	/* SIZE */
 	
-	get w () { return this.size.w ?? this.element.clientWidth }
+	get w () { return this.size.w }
 	set w (value) { this.size = [ value, undefined ] }
-	get h () { return this.size.h ?? this.element.clientHeight }
+	get h () { return this.size.h }
 	set h (value) { this.size = [ undefined, value ] }
 	
 	set size ([ w=this.size.w, h=this.size.h ]) {
@@ -103,8 +103,8 @@ export default class Entity {
 	
 	get size () {
 		return wh(
-			parseFloat(this.element.style.width),
-			parseFloat(this.element.style.height),
+			this.element.clientWidth / this.element.parentElement.clientWidth * 100,
+			this.element.clientHeight / this.element.parentElement.clientHeight * 100,
 		);
 	}
 	
@@ -115,6 +115,11 @@ export default class Entity {
 		);
 	}
 	set center ([ x, y, w=this.size.w, h=this.size.h ]) {
+		if (x === null)
+			x = this.center.x;
+		if (y === null)
+			y = this.center.y;
+		
 		this.pos = [
 			x - w/2,
 			y - h/2,
@@ -215,7 +220,15 @@ export default class Entity {
 		colliding: [],
 	};
 	
-	/* CONTENT */
+	/* APPEARANCE */
+	
+	// TEXT
+	set font (value) { this.element.style.fontFamily = value }
+	get font () { return this.element.style.fontFamily }
+	set textSize (value) { this.element.style.fontSize = value }
+	get textSize () { return this.element.style.fontSize }
+	set textColor (color) { this.element.style.color = color }
+	get textColor () { return this.element.style.color }
 	
 	set text (value) {
 		this.element.innerText = value;
@@ -239,9 +252,6 @@ export default class Entity {
 	
 	set opacity (value) { this.element.style.opacity = (value/100).toString() }
 	get opacity () { return (this.element.style.opacity || 1) * 100 }
-	
-	set textColor (color) { this.element.style.color = color }
-	get textColor () { return this.element.style.color }
 	
 	set rounded (enable) {
 		this.element.style.borderRadius = enable? '20px' : 'unset'; // TODO
