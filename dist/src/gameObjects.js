@@ -32,7 +32,7 @@ export function init () {
 	
 	objects.balls[0].profile.init();
 
-	if (config.debug) {
+	if (config.development?.debug) {
 		Object.assign(window, objects);
 		window.objects = objects;
 	}

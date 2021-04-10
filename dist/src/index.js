@@ -57,7 +57,7 @@ const audio = Native('audio', { // or video
 	}),
 });
 
-let audioStarted = config.development.disableMusic;
+let audioStarted = config.development?.disableMusic;
 
 function startAudio () {
 	if (audioStarted)

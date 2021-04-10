@@ -11,7 +11,7 @@ export const isPositive = x => Object.is(x, Math.abs(x));
 export const signal = x => isPositive(x)? 1 : -1;
 
 export function debug () {
-	if (globalThis.debug) {
+	if (globalThis.debug) { // TODO config.development?.debug (?)
 		debugger;
 	}
 }
@@ -97,6 +97,24 @@ export function* prototypeChain (obj) { // TODO
 export function* classChain (obj) { // TODO classChain returning duplicated entries
 	for (let proto of prototypeChain(obj))
 		yield proto.constructor;
+}
+
+export function tryExpression (f, fallback) {
+	try {
+		return f();
+	}
+	catch (e) {
+		return fallback;
+	}
+}
+
+export async function asyncTryExpression (f, fallback) {
+	try {
+		return await f();
+	}
+	catch (e) {
+		return fallback;
+	}
 }
 
 export const noop = _ => _;

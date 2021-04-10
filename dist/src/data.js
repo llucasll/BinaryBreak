@@ -41,7 +41,7 @@ const data = {
 	},
 };
 
-if (config.debug) {
+if (config.development?.debug) {
 	window.data = data;
 }
 
