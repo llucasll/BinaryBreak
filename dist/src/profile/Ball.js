@@ -1,6 +1,5 @@
 import Profile from "../lib/engine/Profile.js";
 
-import { Movement } from "../lib/engine/Movement.js";
 import Shape from "../lib/engine/Shape.js";
 
 import { Brick } from "./Brick.js";
@@ -11,7 +10,6 @@ import { BottomWall, HorizontalWall, VerticalWall } from "./Wall.js";
 
 export class Ball extends Profile {
 	static shape = Shape.rectangle;
-	static move = Movement.bounceOrFall;
 	
 	static defaults = {
 		size: [ 8, 8 ],

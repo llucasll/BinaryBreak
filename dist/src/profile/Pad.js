@@ -1,12 +1,10 @@
 import Profile from "../lib/engine/Profile.js";
 
-import { Movement } from "../lib/engine/Movement.js";
 import Shape from "../lib/engine/Shape.js";
 import { Wall } from "./Wall.js";
 
 export class Pad extends Profile {
 	static shape = Shape.rectangle;
-	static move = Movement.stop;
 	
 	static defaults = {
 		size: [ 10, 2 ],

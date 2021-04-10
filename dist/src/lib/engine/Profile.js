@@ -5,7 +5,6 @@
  */
 
 import { classChain, prototypeChain, toArray } from "../utils.js";
-import { Movement } from "./Movement.js";
 import { convertTriangle, xy } from "../geometry.js";
 
 export default class Profile {
@@ -128,5 +127,3 @@ export default class Profile {
 		this.entity.speed = convertTriangle(current, angle);
 	}
 }
-
-Profile.prototype.move = Movement.die;

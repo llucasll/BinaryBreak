@@ -1,10 +1,7 @@
 import Profile from "../lib/engine/Profile.js";
-import { Movement } from "../lib/engine/Movement.js";
 import Entity from "../lib/engine/Entity.js";
 
 class Ship extends Profile {
-	static move = Movement.bounce;
-	
 	static defaults = {
 		size: [ 10, 10 ],
 		image: 'ship',
@@ -12,8 +9,6 @@ class Ship extends Profile {
 	};
 }
 class Bullet extends Profile {
-	static move = Movement.die;
-	
 	static defaults = {
 		size: [ 5, 5 ],
 		image: 'bullet',

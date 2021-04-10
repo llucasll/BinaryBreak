@@ -1,6 +1,5 @@
 import Profile from "../lib/engine/Profile.js";
 
-import { Movement } from "../lib/engine/Movement.js";
 import { InvisiblePad, Pad, Pad2 } from "./Pad.js";
 import Shape from "../lib/engine/Shape.js";
 import { rand, removeFromArray } from "../lib/utils.js";
@@ -10,7 +9,6 @@ import { BottomWall } from "./Wall.js";
 
 export default class Item extends Profile {
 	static shape = Shape.rectangle;
-	static move = Movement.die;
 	
 	static defaults = {
 		color: '',
