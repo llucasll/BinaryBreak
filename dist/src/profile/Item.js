@@ -14,6 +14,7 @@ export default class Item extends Profile {
 	
 	static defaults = {
 		color: '',
+		// rounded: false,
 		size: [ 8, 8 ],
 		speed: [ 0, 20 ],
 	};
@@ -24,7 +25,7 @@ export default class Item extends Profile {
 	}
 	
 	colliders = {
-		[ Pad.symbol ]: collider => {
+		[ Pad.symbol ]: _ => {
 			this.entity.die();
 		},
 		[ BottomWall.symbol ]: _ => {
@@ -79,7 +80,7 @@ export class Life extends Item {
 	};
 	
 	colliders = {
-		[ Pad.symbol ]: collider => {
+		[ Pad.symbol ]: _ => {
 			this.entity.die();
 			data.lives++;
 		},
@@ -93,7 +94,7 @@ export class UnknownItem extends Item {
 	};
 	
 	colliders = {
-		[ Pad.symbol ]: collider => {
+		[ Pad.symbol ]: _ => {
 			this.entity.die();
 			objects.balls[0].profile.transform(rand([ BlueBall ]));
 		},

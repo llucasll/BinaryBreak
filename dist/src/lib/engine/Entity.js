@@ -217,7 +217,10 @@ export default class Entity {
 	
 	/* CONTENT */
 	
-	set text (value) { this.element.innerText = value }
+	set text (value) {
+		this.element.innerText = value;
+		this.rounded = false;
+	}
 	get text () { return this.element.innerText }
 	
 	set color (value) { this.element.style.backgroundColor = value }
@@ -229,22 +232,21 @@ export default class Entity {
 			+ value
 			+ config.media.suffix
 		+ ')';
+		
+		this.rounded = false;
 	}
 	get image () { return this.element.style.backgroundImage }
 	
-	set opacity (value) {
-		this.element.style.opacity = (value/100).toString();
-	}
-	get opacity () {
-		return (this.element.style.opacity || 1) * 100;
-	}
+	set opacity (value) { this.element.style.opacity = (value/100).toString() }
+	get opacity () { return (this.element.style.opacity || 1) * 100 }
 	
-	set textColor (color) {
-		this.element.style.color = color;
+	set textColor (color) { this.element.style.color = color }
+	get textColor () { return this.element.style.color }
+	
+	set rounded (enable) {
+		this.element.style.borderRadius = enable? '20px' : 'unset'; // TODO
 	}
-	get textColor () {
-		return this.element.style.color;
-	}
+	get rounded () { return this.element.style.borderRadius !== '' }
 	
 	/**
 	 * Make animation effects
@@ -289,13 +291,6 @@ export default class Entity {
 			: null;
 	}
 	get profile () { return this.#internal.profile }
-
-	// set stalker (stalker) {
-	// 	this.#internal.stalker = stalker;
-	// }
-	// get stalker () {
-	// 	return this.#internal.stalker;
-	// }
 	
 	ignoreCollision (obj) {
 		const { always, once } = this.ignoreColliders;

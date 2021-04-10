@@ -58,6 +58,8 @@ export default class Profile {
 				const collisionHandler = proto.colliders?.[colliderClass.symbol];
 				if (collisionHandler)
 					return collisionHandler.call(this, collider, relativePos);
+				if (collisionHandler === null)
+					return true;
 			}
 		}
 		

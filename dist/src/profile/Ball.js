@@ -19,17 +19,15 @@ export class Ball extends Profile {
 	};
 	
 	colliders = {
-		[ HorizontalWall.symbol ]: (collider, angle) => {
+		[ HorizontalWall.symbol ]: collider => {
 			this.bounce(collider, 'y', this.entity.speed);
 			return true;
 		},
-		[ VerticalWall.symbol ]: (collider, angle) => {
+		[ VerticalWall.symbol ]: collider => {
 			this.bounce(collider, 'x', this.entity.speed);
 			return true;
 		},
-		[ BottomWall.symbol ]: (collider, angle) => { // TODO replace this function with null
-			return true; // cancel uncollission
-		},
+		[ BottomWall.symbol ]: null,
 		[ Pad.symbol ]: (collider, angle) => {
 			// this.runCollision('revert', collider, angle);
 			//this.runCollision.revert(collider); // TODO
@@ -38,10 +36,11 @@ export class Ball extends Profile {
 			
 			// return true;
 		},
-		[ InvisiblePad.symbol ]: collider => { // TODO replace this function with null
-			//this.runCollision(Pad.symbol, collider);
-			//this.runCollision[Pad.symbol](collider); // TODO
-		},
+		[ InvisiblePad.symbol ]: null,
+		// [ InvisiblePad.symbol ]: collider => {
+		// 	//this.runCollision(Pad.symbol, collider);
+		// 	//this.runCollision[Pad.symbol](collider); // TODO
+		// },
 		[ Brick.symbol ]: (collider, angle) => {
 			this.updateSpeedAngle(angle);
 			// return true;
