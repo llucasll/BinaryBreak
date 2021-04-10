@@ -1,6 +1,5 @@
 {
 	"fps": 30,
-	"debug": false,
 	"entity": {
 		"font": "\"Courier New\", monospace",
 		"textSize": "2em",

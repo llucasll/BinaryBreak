@@ -8,4 +8,4 @@ node_modules
 # Explicity include all playground files
 !dist/src/playground/**/*
 
-dist/config.development.json
+#dist/config.development.json

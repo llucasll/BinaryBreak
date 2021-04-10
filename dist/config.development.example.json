@@ -1,0 +1,7 @@
+{
+	"testProduction": false,
+	"development": {
+		"disableMusic": true,
+		"debug": true
+	}
+}
