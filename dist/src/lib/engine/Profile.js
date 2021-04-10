@@ -36,6 +36,13 @@ export default class Profile {
 	 * Default collision handlers (a empty mapper)
 	 */
 	colliders = {};
+	/**
+	 * Collision handlers
+	 */
+	// colliders = [ ...prototypeChain(this) ]
+	// 	.reduce((previous, current) => {
+	// 		return Object.assign(previous, current.colliders)
+	// 	}, {});
 	
 	constructor (entity) {
 		this.#entity = entity;
@@ -52,14 +59,12 @@ export default class Profile {
 	 * @param relativePos relative position of collider from this
 	 */
 	collided (collider, relativePos) {
-		for (let proto of prototypeChain(this)) {
-			for (let colliderClass of classChain(collider.profile)) {
-				const collisionHandler = proto.colliders?.[colliderClass.symbol];
-				if (collisionHandler)
-					return collisionHandler.call(this, collider, relativePos);
-				if (collisionHandler === null)
-					return true;
-			}
+		for (let colliderClass of classChain(collider.profile)) {
+			const collisionHandler = this.colliders[colliderClass.symbol];
+			if (collisionHandler)
+				return collisionHandler.call(this, collider, relativePos);
+			if (collisionHandler === null)
+				return true;
 		}
 		
 		return true; // no handler
@@ -114,7 +119,12 @@ export default class Profile {
 		this.entity[axis] -= Math.sign(speed) * back;
 	}
 	
-	transform (Profile) {
+	transform (Profile, force=false) {
+		if (force) {
+			this.entity.updateProfile(Profile);
+			return;
+		}
+		
 		this.entity.profile = Profile;
 	}
 	

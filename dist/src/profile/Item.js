@@ -5,7 +5,8 @@ import Shape from "../lib/engine/Shape.js";
 import { rand, removeFromArray } from "../lib/utils.js";
 import objects from "../gameObjects.js";
 import { BlueBall } from "./Ball.js";
-import { BottomWall } from "./Wall.js";
+import { BottomWall, Shield } from "./Wall.js";
+import Entity from "../lib/engine/Entity.js";
 
 export default class Item extends Profile {
 	static shape = Shape.rectangle;
@@ -23,10 +24,11 @@ export default class Item extends Profile {
 	}
 	
 	colliders = {
-		[ Pad.symbol ]: _ => {
+		[ Pad.symbol ] () {
+			this.action();
 			this.entity.die();
 		},
-		[ BottomWall.symbol ]: _ => {
+		[ BottomWall.symbol ] () {
 			this.entity.die();
 		},
 	};
@@ -36,53 +38,46 @@ export default class Item extends Profile {
 	}
 }
 
-export class Zero extends Item {
+export class ZeroItem extends Item {
 	static defaults = {
 		text: '0',
 		textColor: 'white',
 	};
 	
-	colliders = {
-		[ Pad.symbol ]: collider => {
-			this.entity.die();
-			collider.profile.transform(InvisiblePad);
-		},
-	};
+	action () {
+		objects.pad.profile.transform(InvisiblePad);
+	}
 }
 
-export class One extends Item {
+export class OneItem extends Item {
 	static defaults = {
 		text: '1',
 		textColor: 'dodgerblue',
 	};
 	
 	colliders = {
-		[ Pad.symbol ]: collider => {
-			this.entity.die();
-			collider.profile.transform(Pad2);
-		},
-		[ InvisiblePad.symbol ]: collider => {
+		...this.colliders,
+		
+		[ InvisiblePad.symbol ] (collider) {
 			this.entity.die();
 			collider.profile.transform(Pad);
 		},
 	};
 	
-	die () {
+	action () {
+		objects.pad.profile.transform(Pad2);
 		data.score++;
 	}
 }
 
-export class Life extends Item {
+export class LifeItem extends Item {
 	static defaults = {
 		image: 'floppy',
 	};
 	
-	colliders = {
-		[ Pad.symbol ]: _ => {
-			this.entity.die();
-			data.lives++;
-		},
-	};
+	action () {
+		data.lives++;
+	}
 }
 
 export class UnknownItem extends Item {
@@ -91,12 +86,21 @@ export class UnknownItem extends Item {
 		textColor: 'yellow',
 	};
 	
-	colliders = {
-		[ Pad.symbol ]: _ => {
-			this.entity.die();
-			objects.balls[0].profile.transform(rand([ BlueBall ]));
-		},
-	};
+	action () {
+		objects.balls[0].profile.transform(rand([ BlueBall ]));
+	}
 }
 
-Item.all = [ Life, UnknownItem ];
+export class ShieldItem extends Item {
+	static defaults = {
+		text: '!',
+		textColor: 'yellow',
+	};
+	
+	action () {
+		if (!objects.shield)
+			objects.shield = new Entity(Shield);
+	}
+}
+
+Item.all = [ LifeItem, UnknownItem, ShieldItem ];

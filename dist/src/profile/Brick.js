@@ -5,7 +5,7 @@ import Shape from "../lib/engine/Shape.js";
 
 import { Ball } from "./Ball.js";
 import data from "../data.js";
-import Item, { One, Zero } from "./Item.js";
+import Item, { OneItem, ZeroItem } from "./Item.js";
 import { rand, toArray } from "../lib/utils.js";
 import config from "../lib/engine/config.js";
 
@@ -34,11 +34,15 @@ export class Brick extends Profile {
 	};
 	
 	colliders = {
-		[ Ball.symbol ]: collider => {
-			const bit = [ Zero, One, null, null ];
-			this.spawnAndDieSlowly(bit);
+		[ Ball.symbol ] (collider) {
+			this.action();
 		}
 	};
+	
+	action () {
+		const bit = [ ZeroItem, OneItem, null, null ];
+		this.spawnAndDieSlowly(bit);
+	}
 	
 	spawn (items) {
 		const constructor = rand(toArray(items));
@@ -72,11 +76,9 @@ export class SolidBrick extends Brick {
 		shape: Shape.rectangle,
 	};
 	
-	colliders = {
-		[ Ball.symbol ]: collider => {
-			this.transform(Brick);
-		}
-	};
+	action () {
+		this.transform(Brick);
+	}
 }
 
 export class HardBrick extends SolidBrick {
@@ -85,11 +87,9 @@ export class HardBrick extends SolidBrick {
 		shape: Shape.rectangle,
 	};
 	
-	colliders = {
-		[ Ball.symbol ]: collider => {
-			this.transform(SolidBrick);
-		}
-	};
+	action () {
+		this.transform(SolidBrick);
+	}
 }
 
 export class SpecialBrick extends SolidBrick {
@@ -98,9 +98,7 @@ export class SpecialBrick extends SolidBrick {
 		shape: Shape.rectangle,
 	};
 	
-	colliders = {
-		[ Ball.symbol ]: collider => {
-			this.spawnAndDieSlowly(Item.all);
-		}
-	};
+	action () {
+		this.spawnAndDieSlowly(Item.all);
+	}
 }

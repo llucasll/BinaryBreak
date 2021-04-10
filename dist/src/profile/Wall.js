@@ -1,6 +1,8 @@
 import Profile from "../lib/engine/Profile.js";
 import Shape from "../lib/engine/Shape.js";
 import config from "../lib/engine/config.js";
+import { Ball } from "./Ball.js";
+import objects from "../gameObjects.js";
 
 export class Wall extends Profile {
 	static shape = Shape.rectangle;
@@ -23,3 +25,17 @@ export class HorizontalWall extends Wall {
 }
 
 export class BottomWall extends HorizontalWall {}
+
+export class Shield extends HorizontalWall {
+	static defaults = {
+		y: 98,
+		color: 'red',
+	};
+	
+	colliders = {
+		[ Ball.symbol ] () {
+			delete objects.shield;
+			this.entity.dieSlowly(.5);
+		},
+	};
+}

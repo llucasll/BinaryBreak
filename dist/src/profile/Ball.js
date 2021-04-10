@@ -17,16 +17,16 @@ export class Ball extends Profile {
 	};
 	
 	colliders = {
-		[ HorizontalWall.symbol ]: collider => {
+		[ HorizontalWall.symbol ] (collider) {
 			this.bounce(collider, 'y', this.entity.speed);
 			return true;
 		},
-		[ VerticalWall.symbol ]: collider => {
+		[ VerticalWall.symbol ] (collider) {
 			this.bounce(collider, 'x', this.entity.speed);
 			return true;
 		},
 		[ BottomWall.symbol ]: null,
-		[ Pad.symbol ]: (collider, angle) => {
+		[ Pad.symbol ] (collider, angle) {
 			// this.runCollision('revert', collider, angle);
 			//this.runCollision.revert(collider); // TODO
 			
@@ -39,8 +39,9 @@ export class Ball extends Profile {
 		// 	//this.runCollision(Pad.symbol, collider);
 		// 	//this.runCollision[Pad.symbol](collider); // TODO
 		// },
-		[ Brick.symbol ]: (collider, angle) => {
+		[ Brick.symbol ] (collider, angle) {
 			this.updateSpeedAngle(angle);
+			// this.bounce(collider, 'y', this.entity.speed);
 			// return true;
 			
 			// healthyInterval(
@@ -64,8 +65,6 @@ export class Ball extends Profile {
 	};
 	
 	init (pad = objects.pad) {
-		pad.profile.transform(Pad);
-		
 		if (this.constructor !== Ball)
 			this.transform(Ball);
 		
@@ -124,10 +123,21 @@ export class Ball extends Profile {
 	}
 	
 	die () {
-		console.log("Ball has died/is dead");
-		
 		data.lives--;
-		this.init();
+		
+		objects.pad.dieSlowly();
+		
+		// this.entity.stopMovement();
+		// setTimeout(_ => this.init(), 1000);
+		
+		// this.init();
+		// this.entity.opacity = 0;
+		// setTimeout(_ => this.entity.opacity = 100, 1000);
+		
+		this.entity.stopMovement();
+		this.entity.opacity = 0;
+		setTimeout(_ => this.entity.opacity = 100, 1000);
+		setTimeout(_ => this.init(), 1000);
 		
 		return false;
 	}

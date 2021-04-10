@@ -88,13 +88,13 @@ export function outsideRange (old, proposed, min, max) {
 }
 window.outsideRange = outsideRange;
 
-export function* prototypeChain (obj) {
+export function* prototypeChain (obj) { // TODO
 	yield obj;
 	for (let proto=Object.getPrototypeOf(obj); proto != null; proto = Object.getPrototypeOf(proto))
 		yield proto;
 }
 
-export function* classChain (obj) {
+export function* classChain (obj) { // TODO classChain returning duplicated entries
 	for (let proto of prototypeChain(obj))
 		yield proto.constructor;
 }

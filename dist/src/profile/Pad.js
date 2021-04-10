@@ -9,11 +9,17 @@ export class Pad extends Profile {
 	static defaults = {
 		size: [ 10, 2 ],
 		color: 'white',
+		opacity: 100,
 	};
 	colliders = {
-		[ Wall.symbol ]: _ => {
+		[ Wall.symbol ] () {
 			this.entity.stopMovement();
 		},
+	}
+	
+	die () {
+		this.transform(Pad, true);
+		return false;
 	}
 }
 
@@ -23,15 +29,11 @@ export class Pad2 extends Pad {
 		color: 'green',
 		// pos: [ 45 , 95 ],
 	};
-	
-	act () {
-		// console.log(this.entity.x);
-	}
 }
 
 export class InvisiblePad extends Pad {
 	static defaults = {
 		color: 'grey',
 	};
-	//objects.ball.colliders.remove(Pad);
+	//objects.ball.colliders.remove(Pad); // TODO
 }

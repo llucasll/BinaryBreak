@@ -278,17 +278,18 @@ export default class Entity {
 	element = Entity.buildElement();
 	
 	/**
-	 * @see {@link Profile}
+	 * @see {@link Profile} // TODO not linking
 	 */
-	set profile (Profile) {
-		if (this.profile?.constructor === Profile)
-			return;
-		
-		this.profile?.replacing?.(Profile);
+	updateProfile (Profile) {
+		this.#internal.profile?.replacing?.(Profile);
 		
 		this.#internal.profile = Profile?
 			(Profile instanceof Function? new Profile(this): Profile)
 			: null;
+	}
+	set profile (Profile) {
+		if (this.#internal.profile?.constructor !== Profile)
+			this.updateProfile(Profile);
 	}
 	get profile () { return this.#internal.profile }
 	
@@ -310,12 +311,12 @@ export default class Entity {
 		// if (!obj.ignoreCollision(this))
 			obj.profile.collided?.(this, this.relativePosition(obj));
 		// if (!this.ignoreCollision(obj))
-			return this.profile.collided?.(obj, obj.relativePosition(this));
+			return this.#internal.profile.collided?.(obj, obj.relativePosition(this));
 		
 		// return true;
 	}
 	
-	constructor (Profile=null, defaultProps={}, board=this.board) {
+	constructor (Profile=null, { profile: profileProps={}, ...defaultProps }={}, board=this.board) {
 		this.board = board;
 		board.append(this.element);
 		
@@ -324,13 +325,15 @@ export default class Entity {
 		turn.entities.push(this);
 		
 		Object.assign(this, defaultProps);
+		if (this.#internal.profile)
+			Object.assign(this.#internal.profile, profileProps);
 	}
 	
 	/**
 	 * Destroy element.
 	 */
 	async die () {
-		if ((await this.profile?.die?.()) === false)
+		if ((await this.#internal.profile?.die?.()) === false)
 			return;
 		removeFromArray(turn.entities, this);
 		removeFromArray(turn.moving, this);
@@ -353,7 +356,7 @@ export default class Entity {
 			}
 		});
 		
-		if (this.profile)
-			delete this.profile.shape;
+		if (this.#internal.profile)
+			delete this.#internal.profile.shape;
 	}
 }
