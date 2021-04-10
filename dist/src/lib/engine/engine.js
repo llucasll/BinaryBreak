@@ -2,6 +2,7 @@ import config from "./config.js";
 import { testCollision } from "./Shape.js";
 
 let fps = config.fps;
+let actualFps;
 let timeoutID;
 
 export const entities = []; // TODO move to a static array inside Entity class
@@ -11,6 +12,7 @@ export const accelerating = [];
 
 export const setFps = rate => fps = rate;
 export const getFps = _ => fps;
+export const getActualFps = _ => actualFps;
 
 export let running = false;
 
@@ -30,6 +32,7 @@ export function pause () {
 function turn (lastTime) {
 	const now = Date.now();
 	const elapsed = (now - lastTime) / 1000;
+	actualFps = 1/elapsed;
 	
 	for (const obj of accelerating) {
 		obj.accelerate(
