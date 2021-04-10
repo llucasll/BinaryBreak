@@ -1,6 +1,5 @@
 import config from "./config.js";
 import { testCollision } from "./Shape.js";
-import { outsideRange, removeFromArray } from "../utils.js";
 
 let fps = config.fps;
 let timeoutID;
@@ -39,23 +38,24 @@ function turn (lastTime) {
 		);
 	}
 	for (const obj of moving) {
-		const old = obj.center;
 		obj.move(obj.speed.x * elapsed, obj.speed.y * elapsed);
 		
 		for (const testing of entities) {
 			if (obj === testing)
 				continue;
+			
 			if (testCollision(obj, testing)) {
+				const { speed } = obj;
 				if (!obj.collide(testing))
-					obj.uncollide(...old, testing);
+					obj.profile?.uncollide(testing, speed);
 				
-				obj.ignoreColliders.colliding.push(testing);
-				testing.ignoreColliders.colliding.push(obj);
+				// obj.ignoreColliders.colliding.push(testing);
+				// testing.ignoreColliders.colliding.push(obj);
 			}
-			else {
-				removeFromArray(obj.ignoreColliders.colliding, testing);
-				removeFromArray(testing.ignoreColliders.colliding, obj);
-			}
+			// else {
+				// removeFromArray(obj.ignoreColliders.colliding, testing);
+				// removeFromArray(testing.ignoreColliders.colliding, obj);
+			// }
 		}
 		if (obj.stalker) {
 			obj.stalker.move(obj.speed.x * elapsed, obj.speed.y * elapsed);

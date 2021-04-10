@@ -1,5 +1,5 @@
 window.addEventListener('DOMContentLoaded', (event) => {
-	console.log('DOM fully loaded and parsed');
+	console.log('DOM fully loaded and parsed'); // TODO
 });
 
 import * as engine from './lib/engine/engine.js';
@@ -56,10 +56,21 @@ const audio = Native('audio', { // or video
 		},
 	}),
 });
+
+let audioStarted = config.development.disableMusic;
+
+function startAudio () {
+	if (audioStarted)
+		return;
+	
+	audio.play();
+	audioStarted = true;
+}
+
 // await audio.play();
 // audio.muted = false;
 window.audio = audio;
-window.onclick = _ => audio.play();
+window.onclick = _ => startAudio();
 // document.onload = _ => {
 // 	console.log('loaded');
 // 	audio.play();
@@ -70,7 +81,7 @@ keyboard.setKeydownListener({
 	ArrowLeft: _ => objects.pad.acceleration = [ -50, 0, 50, 0 ],
 	ArrowRight: _ => objects.pad.acceleration = [ 50 , 0, 50, 0 ],
 	' ': _ => {
-		audio.play();
+		startAudio();
 		
 		if (objects.pad.stalker === objects.balls[0]) {
 			const angle = objects.pad.relativePosition(objects.balls[0]);

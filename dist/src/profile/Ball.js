@@ -20,20 +20,15 @@ export class Ball extends Profile {
 	
 	colliders = {
 		[ HorizontalWall.symbol ]: (collider, angle) => {
-			const { x, y } = this.entity.speed;
-			this.entity.speed = [ x, -y ];
-			
-			// return true;
+			this.bounce(collider, 'y', this.entity.speed);
+			return true;
 		},
 		[ VerticalWall.symbol ]: (collider, angle) => {
-			const { x, y } = this.entity.speed;
-			this.entity.speed = [ -x, y ];
-			
-			// return true;
+			this.bounce(collider, 'x', this.entity.speed);
+			return true;
 		},
 		[ BottomWall.symbol ]: (collider, angle) => { // TODO replace this function with null
-			
-			// return true;
+			return true; // cancel uncollission
 		},
 		[ Pad.symbol ]: (collider, angle) => {
 			// this.runCollision('revert', collider, angle);
@@ -46,11 +41,10 @@ export class Ball extends Profile {
 		[ InvisiblePad.symbol ]: collider => { // TODO replace this function with null
 			//this.runCollision(Pad.symbol, collider);
 			//this.runCollision[Pad.symbol](collider); // TODO
-			
-			// return true;
 		},
 		[ Brick.symbol ]: (collider, angle) => {
 			this.updateSpeedAngle(angle);
+			// return true;
 			
 			// healthyInterval(
 			// 	(function* () {
@@ -69,8 +63,6 @@ export class Ball extends Profile {
 			//
 			// const iterator = gen(["a", "b", "c"]);
 			// const result = [...iterator];
-			
-			// return true;
 		},
 	};
 	

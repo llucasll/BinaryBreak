@@ -64,6 +64,55 @@ export default class Profile {
 		return true; // no handler
 	}
 	
+	uncollide (collider, speed) {
+		const requiredDistance = this.entity.minimalDistance(collider);
+		const relativePosition = this.entity.relativePosition(collider);
+		
+		const actualDistance = {
+			x: Math.abs(relativePosition.x),
+			y: Math.abs(relativePosition.y),
+		};
+		
+		const back = {
+			x: requiredDistance.x - actualDistance.x,
+			y: requiredDistance.y - actualDistance.y,
+		};
+		
+		const axis = {
+			main: back.x < back.y? 'x' : 'y',
+			cross: back.x < back.y? 'y' : 'x',
+		};
+		
+		this.entity[axis.main] -= Math.sign(speed[axis.main]) * back[axis.main];
+		this.entity[axis.cross] -= Math.sign(speed[axis.cross]) * back[axis.main]/actualDistance[axis.main];
+		// if (back.x < back.y) {
+		// 	this.entity.x -= Math.sign(speed.x) * back.x;
+		// 	this.entity.y -= Math.sign(speed.y) * back.x/actualDistance.x;
+		// }
+		// else {
+		// 	this.entity.y -= Math.sign(y) * back.y;
+		// 	this.entity.x -= Math.sign(x) * back.y/actualDistance.y;
+		// }
+	}
+	
+	bounce (collider, axis) {
+		const { [axis]: speed } = this.entity.speed;
+		
+		const { x, y } = this.entity.speed;
+		this.entity.speed = [
+			x * (axis==='x'? -1 : 1),
+			y * (axis==='y'? -1 : 1),
+		];
+		
+		const { [axis]: requiredDistance } = this.entity.minimalDistance(collider);
+		const { [axis]: relativePosition } = this.entity.relativePosition(collider);
+		
+		const actualDistance = Math.abs(relativePosition);
+		const back = requiredDistance - actualDistance;
+		
+		this.entity[axis] -= Math.sign(speed) * back;
+	}
+	
 	transform (Profile) {
 		this.entity.profile = Profile;
 	}

@@ -1,5 +1,9 @@
 {
+	"fps": 50,
 	"debug": true,
+	"development": {
+		"disableMusic": true
+	},
 	"scoreLength": 3,
 	"initialLives": 3,
 	"size":{
