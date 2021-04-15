@@ -77,19 +77,26 @@ window.onclick = _ => startAudio();
 // }
 audio.onvolumechange = _ => console.log(audio.volume);
 
-keyboard.setKeydownListener({
-	ArrowLeft: _ => objects.pad.acceleration = [ -50, 0, 50, 0 ],
-	ArrowRight: _ => objects.pad.acceleration = [ 50 , 0, 50, 0 ],
-	' ': _ => {
+const start = (startMusic = true) => {
+	if (startMusic)
 		startAudio();
+	
+	if (objects.pad.stalker === objects.balls[0]) {
+		const angle = objects.pad.relativePosition(objects.balls[0]);
+		objects.balls[0].profile.updateSpeedAngle(angle, 30);
 		
-		if (objects.pad.stalker === objects.balls[0]) {
-			const angle = objects.pad.relativePosition(objects.balls[0]);
-			
-			objects.balls[0].profile.updateSpeedAngle(angle, 30);
-		}
 		delete objects.pad.stalker;
-	},
+	}
+};
+const left = _ => objects.pad.acceleration = [ -50, 0, 50, 0 ];
+const right = _ => objects.pad.acceleration = [ 50 , 0, 50, 0 ];
+const slowDownLeft = _ => objects.pad.acceleration = [ 75, 0, 0, 0 ];
+const slowDownRight = _ => objects.pad.acceleration = [ -75, 0, 0, 0 ];
+
+keyboard.setKeydownListener({
+	ArrowLeft: left,
+	ArrowRight: right,
+	' ': start,
 	g: _ => objects.pad.profile = Pad2,
 	w: _ => objects.pad.profile = Pad,
 	x: _ => objects.balls[0].profile = Pad,
@@ -102,8 +109,34 @@ keyboard.setKeydownListener({
 });
 
 keyboard.setKeyupListener({
-	ArrowLeft: _ => objects.pad.acceleration = [ 75, 0, 0, 0 ],
-	ArrowRight: _ => objects.pad.acceleration = [ -75, 0, 0, 0 ],
+	ArrowLeft: slowDownLeft,
+	ArrowRight: slowDownRight,
+});
+
+let touch;
+let padDirection;
+window.addEventListener('touchstart', e => {
+	const { clientX: x, clientY: y } = e.changedTouches[0];
+	touch = { x, y };
+	
+	start(false);
+});
+window.addEventListener('touchmove', e => {
+	// const { clientX: x, clientY: y } = [ ...e.changedTouches ].pop();
+	// const { clientX: x, clientY: y } = Array.prototype.pop.call(e.changedTouches);
+	const { clientX: x, clientY: y } = e.changedTouches[e.changedTouches.length - 1];
+	
+	if (x > touch.x)
+		right();
+	else
+		left();
+	padDirection = Math.sign(x - touch.x);
+});
+window.addEventListener('touchend', _ => {
+	if (padDirection === 1)
+		slowDownRight();
+	else
+		slowDownLeft();
 });
 
 engine.start();
