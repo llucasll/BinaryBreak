@@ -118,3 +118,32 @@ export async function asyncTryExpression (f, fallback) {
 }
 
 export const noop = _ => _;
+
+export const isObject = item => item && typeof item === 'object' && !Array.isArray(item);
+
+/**
+ * Performs a deep merge of objects and returns new object.
+ * Does not modify objects (immutable)
+ * Does not merges arrays (they are replaced).
+ *
+ * @param {...object} objects - Objects to merge
+ * @returns {object} New object with merged key/values
+ */
+export function deepMerge (...objects) {
+	const isObject = obj => obj && typeof obj === 'object';
+	
+	return objects.reduce((acc, obj) => {
+		if (obj) {
+			Object.keys(obj).forEach(key => {
+				const aVal = acc[key];
+				const oVal = obj[key];
+				
+				acc[key] = (isObject(aVal) && isObject(oVal))?
+					deepMerge(aVal, oVal)
+					: oVal;
+			});
+		}
+		
+		return acc;
+	}, {});
+}

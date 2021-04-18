@@ -14,7 +14,7 @@ export default objects;
 
 export function init () {
 	Object.assign(objects, {
-		...(config.development?.debug?
+		...(config.development?.enable?
 			{ fps: new Entity(Fps) }
 			: { title: new Entity(Title) }
 		),

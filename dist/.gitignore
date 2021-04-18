@@ -1,2 +1,2 @@
 # To ensure that it'll not be pushed during the deploy
-config.development.json
+/config.development.json
