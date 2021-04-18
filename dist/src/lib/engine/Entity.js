@@ -56,15 +56,17 @@ export default class Entity {
 	set y (value) { this.pos = [ undefined, value ] }
 	
 	set pos ([ x=this.pos.x, y=this.pos.y ]) {
-		const outside = (
-			x > 100 // right
-			|| y > 100 // bottom
-			|| x + this.w < 0 // left
-			|| y + this.h < 0 // top
-		);
-		
-		if (outside)
-			return this.die();
+		if (!this.immortal) {
+			const outside = (
+				x > 100 // right
+				|| y > 100 // bottom
+				|| x + this.w < 0 // left
+				|| y + this.h < 0 // top
+			);
+			
+			if (outside)
+				return this.die();
+		}
 		
 		this.element.style.left = x + '%';
 		this.element.style.top = y + '%';

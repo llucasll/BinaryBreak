@@ -8,6 +8,8 @@ import { BlueBall } from "./Ball.js";
 import { BottomWall, Shield } from "./Wall.js";
 import Entity from "../lib/engine/Entity.js";
 
+import data from "../data.js";
+
 export default class Item extends Profile {
 	static shape = Shape.rectangle;
 	

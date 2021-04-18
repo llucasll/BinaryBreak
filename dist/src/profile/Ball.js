@@ -8,6 +8,8 @@ import objects from "../gameObjects.js";
 import config from "../lib/engine/config.js";
 import { BottomWall, HorizontalWall, VerticalWall } from "./Wall.js";
 
+import data from "../data.js";
+
 export class Ball extends Profile {
 	static shape = Shape.rectangle;
 	

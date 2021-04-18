@@ -2,7 +2,25 @@ import Profile from "../lib/engine/Profile.js";
 import { getActualFps } from "../lib/engine/engine.js";
 import config from "../lib/engine/config.js";
 
-export class Fps extends Profile {
+export default class Header extends Profile {
+	static defaults = {
+		center: [ 50, (config.bricks.area.dy - config.bricks.margin)/2 ],
+	};
+}
+
+// export class Title extends Header {
+export class Title extends Profile {
+	static defaults = {
+		// immortal: true,
+		image: 'title.v2',
+		size: [ 45, config.bricks.area.dy - config.bricks.margin ],
+		// pos: [ 0, -10 ],
+		// center: [ 50 ],
+		center: [ 50, (config.bricks.area.dy - config.bricks.margin)/2 ],
+	};
+}
+
+export class Fps extends Header {
 	static decimalPlaces = 2;
 	static prefix = 'FPS: ';
 	

@@ -15,6 +15,15 @@ import Native from "./lib/Native.js";
 
 document.title = 'Binary Break';
 
+// <link rel="shortcut icon" href="img/favicon.ico">
+Native('link', {
+	parent: document.head,
+	props: {
+		rel: "shortcut icon",
+		href: "media/favicon.png",
+	},
+})
+
 new Board({ background:
 	'url('
 	+ config.media.prefix
@@ -75,7 +84,9 @@ window.onclick = _ => startAudio();
 // 	console.log('loaded');
 // 	audio.play();
 // }
-audio.onvolumechange = _ => console.log(audio.volume);
+if (config.development?.debug) {
+	audio.onvolumechange = _ => console.log(audio.volume);
+}
 
 const start = (startMusic = true) => {
 	if (startMusic)
@@ -119,7 +130,7 @@ window.addEventListener('touchstart', e => {
 	const { clientX: x, clientY: y } = e.changedTouches[0];
 	touch = { x, y };
 	
-	start(false);
+	start(false); // TODO remove this flag?
 });
 window.addEventListener('touchmove', e => {
 	// const { clientX: x, clientY: y } = [ ...e.changedTouches ].pop();

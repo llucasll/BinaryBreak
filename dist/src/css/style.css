@@ -7,8 +7,8 @@ body {
 }
 
 .board {
-	width: 80vmin;
-	height: 80vmin;
+	width: 90vmin;
+	height: 90vmin;
 	
 	/*border: 1px solid blue;*/
 }
