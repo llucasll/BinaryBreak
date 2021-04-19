@@ -6,7 +6,7 @@ import { Brick, HardBrick, SolidBrick, SpecialBrick } from "./profile/Brick.js";
 import { rand } from "./lib/utils.js";
 import config from "./lib/engine/config.js";
 import { BottomWall, HorizontalWall, VerticalWall } from "./profile/Wall.js";
-import { Fps, Lives, Score, Title } from "./profile/Header.js";
+import { Fps, LivesCount, LivesIcon, Score, Title } from "./profile/Header.js";
 
 const objects = {};
 
@@ -14,12 +14,17 @@ export default objects;
 
 export function init () {
 	Object.assign(objects, {
+		
 		...(config.development?.enable?
 			{ fps: new Entity(Fps) }
 			: { title: new Entity(Title) }
 		),
 		
-		lives: new Entity(Lives),
+		lives: {
+			icon: new Entity(LivesIcon),
+			count: new Entity(LivesCount),
+		},
+		
 		score: new Entity(Score),
 		
 		pad: new Entity(Pad, { y: 95, center: [ 50 ] }),

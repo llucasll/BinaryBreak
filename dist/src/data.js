@@ -1,10 +1,5 @@
 import objects from "./gameObjects.js";
 import config from "./lib/engine/config.js";
-import Entity from "./lib/engine/Entity.js";
-
-const privateProps = {
-	livesChildren: [],
-};
 
 const data = {
 	get score () {
@@ -14,30 +9,14 @@ const data = {
 		objects.score.text = String(val).padStart(config.scoreLength, '0');
 	},
 	get lives () {
-		return privateProps.lives || 0;
+		return Number(objects.lives.count.text.slice(1));
 	},
 	set lives (val) {
-		const difference = val - this.lives;
+		if (val < 0) {
+			// TODO
+		}
 		
-		objects.lives.size = [ 6*val, 6 ];
-		
-		if (difference > 0)
-			for (let i=0; i<difference; i++) {
-				const entity = new Entity(null, { image: config.sprites.balls.red });
-				privateProps.livesChildren.push(entity)
-				objects.lives.element.append(entity.element);
-			}
-		if (difference < 0)
-			for (let i=0; i<-difference; i++)
-				objects.lives.element.removeChild(objects.lives.element.lastChild);
-		
-		for (let [ i, child ] of privateProps.livesChildren.entries())
-			Object.assign(child, {
-				size: [ 100/val, 100 ],
-				pos: [ 100*i/val ],
-			});
-		
-		privateProps.lives = val;
+		objects.lives.count.text = 'x' + val;
 	},
 };
 
