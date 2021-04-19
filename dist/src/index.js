@@ -78,8 +78,10 @@ function startAudio () {
 
 // await audio.play();
 // audio.muted = false;
+
 window.audio = audio;
-window.onclick = _ => startAudio();
+// window.onclick = _ => startAudio();
+
 // document.onload = _ => {
 // 	console.log('loaded');
 // 	audio.play();
@@ -99,10 +101,11 @@ const start = (startMusic = true) => {
 		delete objects.pad.stalker;
 	}
 };
+window.onclick = start;
+
 const left = _ => objects.pad.acceleration = [ -50, 0, 50, 0 ];
 const right = _ => objects.pad.acceleration = [ 50 , 0, 50, 0 ];
-const slowDownLeft = _ => objects.pad.acceleration = [ 75, 0, 0, 0 ];
-const slowDownRight = _ => objects.pad.acceleration = [ -75, 0, 0, 0 ];
+const slowDown = _ => objects.pad.acceleration = [ 75 * -Math.sign(objects.pad.speed.x), 0, 0, 0 ];
 
 keyboard.setKeydownListener({
 	ArrowLeft: left,
@@ -120,8 +123,8 @@ keyboard.setKeydownListener({
 });
 
 keyboard.setKeyupListener({
-	ArrowLeft: slowDownLeft,
-	ArrowRight: slowDownRight,
+	ArrowLeft: slowDown,
+	ArrowRight: slowDown,
 });
 
 let touch;
@@ -130,7 +133,7 @@ window.addEventListener('touchstart', e => {
 	const { clientX: x, clientY: y } = e.changedTouches[0];
 	touch = { x, y };
 	
-	start(false); // TODO remove this flag?
+	// start(false); // TODO remove this flag?
 });
 window.addEventListener('touchmove', e => {
 	// const { clientX: x, clientY: y } = [ ...e.changedTouches ].pop();
@@ -144,10 +147,10 @@ window.addEventListener('touchmove', e => {
 	padDirection = Math.sign(x - touch.x);
 });
 window.addEventListener('touchend', _ => {
-	if (padDirection === 1)
-		slowDownRight();
-	else
-		slowDownLeft();
+	// debugger
+	// audio.play();
+	// start(false); // TODO remove this flag?
+	slowDown();
 });
 
 engine.start();

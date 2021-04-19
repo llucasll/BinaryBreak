@@ -70,7 +70,7 @@ export class Ball extends Profile {
 		if (this.constructor !== Ball)
 			this.transform(Ball);
 		
-		this.entity.pos = [ pad.x + pad.w/2 - this.entity.w/2, pad.y - this.entity.h ];
+		this.entity.pos = [ pad.x + pad.w/2 - this.entity.w/2, Math.floor(pad.y - this.entity.h) ];
 		this.entity.speed = [ 7, 0 ];
 		
 		pad.stalker = this.entity;
