@@ -366,7 +366,7 @@ export default class Entity {
 		}
 	}
 	
-	dieSlowly (duration=1) {
+	dieSlowly (duration=1, untouchable=true) {
 		// TODO this is being scheduled more than one time if it collides twice
 		this.animate(elapsed => {
 			this.opacity -= elapsed*100/(duration*1000);
@@ -377,7 +377,7 @@ export default class Entity {
 			}
 		});
 		
-		if (this.#internal.profile)
+		if (untouchable && this.#internal.profile)
 			delete this.#internal.profile.shape;
 	}
 }

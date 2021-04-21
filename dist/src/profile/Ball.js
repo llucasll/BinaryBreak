@@ -127,7 +127,7 @@ export class Ball extends Profile {
 	die () {
 		data.lives--;
 		
-		objects.pad.dieSlowly();
+		objects.pad.dieSlowly(1, false);
 		
 		// this.entity.stopMovement();
 		// setTimeout(_ => this.init(), 1000);
