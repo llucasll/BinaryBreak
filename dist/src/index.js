@@ -60,8 +60,8 @@ const audio = Native('audio', { // or video
 	},
 	children: Native('source', {
 		props: {
-			src: 'media/1. Downtown Owl - Just Chillin  (320).mp3',
-			type: 'audio/mpeg',
+			src: 'media/1. Downtown Owl - Just Chillin  (320).ogg',
+			type: 'audio/ogg',
 		},
 	}),
 });
