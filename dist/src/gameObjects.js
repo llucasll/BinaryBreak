@@ -2,8 +2,7 @@ import Entity from "./lib/engine/Entity.js";
 import { Pad } from "./profile/Pad.js";
 import { Ball } from "./profile/Ball.js";
 import data from "./data.js";
-import { Brick, HardBrick, SolidBrick, SpecialBrick } from "./profile/Brick.js";
-import { rand } from "./lib/utils.js";
+import { Brick } from "./profile/Brick.js";
 import config from "./lib/engine/config.js";
 import { BottomWall, HorizontalWall, VerticalWall } from "./profile/Wall.js";
 import { Fps, LivesCount, LivesIcon, Score, Title } from "./profile/Header.js";
@@ -56,7 +55,7 @@ export function init () {
 	for (let j=0; j<config.bricks.amount.y; j++) {
 		objects.bricks[j] = [];
 		for (let i=0; i<config.bricks.amount.x; i++) {
-			objects.bricks[j][i] = Brick.insertBrick(i, j, rand([ Brick, Brick, Brick, SolidBrick, HardBrick, SpecialBrick ]));
+			objects.bricks[j][i] = Brick.insertBrick(i, j, Brick.rand());
 		}
 	}
 }

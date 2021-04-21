@@ -4,7 +4,7 @@
  * @see Entity
  */
 
-import { classChain, prototypeChain, toArray } from "../utils.js";
+import { classChain, rand, toArray } from "../utils.js";
 import { convertTriangle, xy } from "../geometry.js";
 
 export default class Profile {
@@ -21,6 +21,10 @@ export default class Profile {
 	static get symbol () {
 		return Profile.#symbols.get(this)
 			?? Profile.#symbols.set(this, Symbol(this.name)).get(this);
+	}
+	
+	static rand () {
+		return rand(this.all);
 	}
 	
 	#entity;

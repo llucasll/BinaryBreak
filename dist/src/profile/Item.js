@@ -1,6 +1,6 @@
 import Profile from "../lib/engine/Profile.js";
 
-import { InvisiblePad, Pad, Pad2 } from "./Pad.js";
+import { InvisiblePad, Pad } from "./Pad.js";
 import Shape from "../lib/engine/Shape.js";
 import { rand, removeFromArray } from "../lib/utils.js";
 import objects from "../gameObjects.js";
@@ -14,8 +14,7 @@ export default class Item extends Profile {
 	static shape = Shape.rectangle;
 	
 	static defaults = {
-		color: '',
-		// rounded: false,
+		// rounded: false, // TODO create functionality?
 		size: [ 8, 8 ],
 		speed: [ 0, 20 ],
 	};
@@ -67,7 +66,6 @@ export class OneItem extends Item {
 	};
 	
 	action () {
-		objects.pad.profile.transform(Pad2);
 		data.score++;
 	}
 }

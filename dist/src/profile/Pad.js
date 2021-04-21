@@ -23,14 +23,6 @@ export class Pad extends Profile {
 	}
 }
 
-export class Pad2 extends Pad {
-	static defaults = {
-		// size: [ 10, 2 ],
-		color: 'green',
-		// pos: [ 45 , 95 ],
-	};
-}
-
 export class InvisiblePad extends Pad {
 	static defaults = {
 		color: 'grey',

@@ -238,7 +238,16 @@ export default class Entity {
 	}
 	get text () { return this.element.innerText }
 	
-	set color (value) { this.element.style.backgroundColor = value }
+	set color (value) {
+		if (!value)
+			return;
+		
+		this.element.style.backgroundColor = value;
+		this.element.style.backgroundImage = // TODO
+		// 	`radial-gradient(#FFFFFF -150%, ${value} 100%)`;
+			`radial-gradient(black -300%, ${value} 50%, white 400%)`;
+			// `radial-gradient(${value} 0%, #FFFFFF 300%)`;
+	}
 	get color () { return this.element.style.backgroundColor }
 	
 	set image (value) {

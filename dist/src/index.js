@@ -9,7 +9,7 @@ import Board from "./lib/engine/Board.js";
 import config from "./lib/engine/config.js";
 import objects, { init } from "./gameObjects.js";
 
-import { Pad, Pad2 } from "./profile/Pad.js";
+import { Pad } from "./profile/Pad.js";
 import { keepInRange, rand } from "./lib/utils.js";
 import Native from "./lib/Native.js";
 
@@ -111,7 +111,6 @@ keyboard.setKeydownListener({
 	ArrowLeft: left,
 	ArrowRight: right,
 	' ': start,
-	g: _ => objects.pad.profile = Pad2,
 	w: _ => objects.pad.profile = Pad,
 	x: _ => objects.balls[0].profile = Pad,
 	m: _ => audio.paused? audio.play() : audio.pause(),
@@ -152,5 +151,23 @@ window.addEventListener('touchend', _ => {
 	// start(false); // TODO remove this flag?
 	slowDown();
 });
+
+// document.body.style.background = 'currentColor';
+// document.body.animate([
+// 	{
+// 		color: 'black',
+// 	},
+// 	{
+// 		color: 'white',
+// 	},
+// ], {
+// 	duration: 1000,
+// 	fill: "forwards",
+// 	// playState: 'paused',
+// }).pause();
+//
+// pad.element.style.backgroundImage =
+// 	// 'radial-gradient(#FFFFFF -150%, blue 100%)';
+// 	'radial-gradient(blue 0%, #FFFFFF 500%)';
 
 engine.start();

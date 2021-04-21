@@ -45,7 +45,7 @@ export class Brick extends Profile {
 	}
 	
 	spawn (items) {
-		const constructor = rand(toArray(items));
+		const constructor = rand(toArray(items)); // TODO see usages, recursively..
 		if (!constructor)
 			return;
 		
@@ -99,6 +99,8 @@ export class SpecialBrick extends SolidBrick {
 	};
 	
 	action () {
-		this.spawnAndDieSlowly(Item.all);
+		this.spawnAndDieSlowly(Item.rand());
 	}
 }
+
+Brick.all = [ Brick, Brick, Brick, SolidBrick, HardBrick, SpecialBrick ];
