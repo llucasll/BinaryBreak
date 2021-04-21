@@ -60,3 +60,9 @@ export class Score extends Profile {
 		center: [ null, headerHeight / 2 ],
 	};
 }
+
+export class End extends Profile {
+	static defaults = {
+		textSize: '10vmin',
+	};
+}

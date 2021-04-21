@@ -8,6 +8,7 @@ import data from "../data.js";
 import Item, { OneItem, ZeroItem } from "./Item.js";
 import { rand, toArray } from "../lib/utils.js";
 import config from "../lib/engine/config.js";
+import objects from "../gameObjects.js";
 
 export class Brick extends Profile {
 	static insertBrick (x, y, profile=Brick) {
@@ -15,7 +16,7 @@ export class Brick extends Profile {
 		
 		const size = {
 			x: (Brick.area.x - Brick.margin*(Brick.amount.x + 2))/Brick.amount.x,
-			y: (Brick.area.y - Brick.margin*(Brick.amount.y+2))/Brick.amount.y,
+			y: (Brick.area.y - Brick.margin*(Brick.amount.y + 2))/Brick.amount.y,
 		};
 		
 		brick.pos = [
@@ -23,6 +24,10 @@ export class Brick extends Profile {
 			size.y * y + Brick.margin*y + Brick.area.dy,
 		];
 		brick.size = [ size.x, size.y ];
+		
+		brick.profile.x = x;
+		brick.profile.y = y;
+		data.bricks++;
 		
 		return brick;
 	}
@@ -64,7 +69,8 @@ export class Brick extends Profile {
 	
 	die () {
 		data.score++;
-		// TODO remove from objects.bricks
+		delete objects.bricks[this.y][this.x]; // TODO remove from objects.bricks: it's all ok?
+		data.bricks--;
 	}
 }
 
