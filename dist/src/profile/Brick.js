@@ -69,7 +69,7 @@ export class Brick extends Profile {
 	
 	die () {
 		data.score++;
-		delete objects.bricks[this.y][this.x]; // TODO remove from objects.bricks: it's all ok?
+		delete objects.bricks[this.y][this.x];
 		data.bricks--;
 	}
 }
