@@ -9,17 +9,6 @@ const developmentDefaults = await (await fetch(engineLocation + "engine/config.d
 // TODO
 const localDevelopment = await asyncTryExpression(async _ => await (await fetch("config.development.json")).json(), {});
 
-// const development = {
-// 	...developmentDefaults,
-// 	...localDevelopment,
-// };
-//
-// export default { // TODO make it recursive
-// 	...engine,
-// 	...project,
-// 	...development.development.enable? development : {},
-// };
-
 const development = deepMerge(
 	developmentDefaults,
 	localDevelopment,

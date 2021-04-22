@@ -15,6 +15,8 @@ export default class Entity {
 	
 	static board;
 	
+	static all = [];
+	
 	static buildElement () {
 		return Native('div', {
 			props: {
@@ -265,7 +267,7 @@ export default class Entity {
 	get opacity () { return (this.element.style.opacity || 1) * 100 }
 	
 	set rounded (enable) {
-		this.element.style.borderRadius = enable? '20px' : 'unset'; // TODO
+		this.element.style.borderRadius = enable? '20px' : 'unset';
 	}
 	get rounded () { return this.element.style.borderRadius !== '' }
 	
@@ -343,7 +345,7 @@ export default class Entity {
 		
 		this.profile = Profile;
 		
-		turn.entities.push(this);
+		Entity.all.push(this);
 		
 		Object.assign(this, defaultProps);
 		if (this.#internal.profile)
@@ -356,7 +358,7 @@ export default class Entity {
 	async die () {
 		if ((await this.#internal.profile?.die?.()) === false)
 			return;
-		removeFromArray(turn.entities, this);
+		removeFromArray(Entity.all, this);
 		removeFromArray(turn.moving, this);
 		try {
 			this.element.parentNode.removeChild(this.element);

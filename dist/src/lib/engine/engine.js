@@ -1,11 +1,12 @@
 import config from "./config.js";
 import { testCollision } from "./Shape.js";
 
+import Entity from "./Entity.js";
+
 let fps = config.fps;
 let actualFps;
 let timeoutID;
 
-export const entities = []; // TODO move to a static array inside Entity class
 export const moving = [];
 export const accelerating = [];
 // export const animated = [];
@@ -43,7 +44,7 @@ function turn (lastTime) {
 	for (const obj of moving) {
 		obj.move(obj.speed.x * elapsed, obj.speed.y * elapsed);
 		
-		for (const testing of entities) {
+		for (const testing of Entity.all) {
 			if (obj === testing)
 				continue;
 			
@@ -64,7 +65,7 @@ function turn (lastTime) {
 			obj.stalker.move(obj.speed.x * elapsed, obj.speed.y * elapsed);
 		}
 	}
-	for (const obj of entities) {
+	for (const obj of Entity.all) {
 		obj.profile?.act?.(elapsed);
 	}
 	// for (const obj of animated) {
