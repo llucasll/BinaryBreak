@@ -1,0 +1,163 @@
+- Engine
+    - Geral
+        - [x]  start/pause
+        - [x]  Limite de FPS
+    - [x]  Board
+    - Entity
+        - Básicos
+            - [x]  Posição
+            - [x]  Deslocamento relativo
+            - [x]  Tamanho
+            - [x]  Posição relativa ao centro do objeto
+            - [x]  Posição relativa a outro objeto
+            - [x]  Velocidade
+            - [x]  Aceleração
+        - Exibição
+            - [x]  Texto
+                - [x]  Cor
+                - [x]  Fonte
+                - [x]  Tamanho
+            - [x]  Cor
+                - [x]  Arredondamento
+                - [x]  Brilho radial (leve efeito 3D)
+            - [x]  Imagem
+                - [x]  Nome relativo à pasta assets
+            - [x]  Opacidade
+        - Animação
+            - [x]  Por sprites
+            - [x]  Por callback (a cada frame)
+    - Profile
+        - [x]  Sorteio de subclasse
+        - [x]  Entity mudar de Profile
+    - Mecânica (envolve a Entity e o Profile)
+        - [x]  Colisão
+            - [x]  Shape
+                - [x]  Retângulo-retângulo
+                - [ ]  Retângulo-círculo
+                - [ ]  Círculo-Círculo
+            - [x]  Colisão angulada
+            - [x]  Rebater
+                - [x]  Vertical
+                - [x]  Horizontal
+            - [x]  Colisão seletiva
+        - [x]  Stalker
+        - [x]  Morte
+            - [x]  Com animação de esmaecimento
+        - [x]  Act a cada turno
+    - Configurações
+        - [x]  Modo de desenvolvimento
+            - [x]  Exibir FPS
+            - [x]  Desativar música
+    - Teclado
+        - [x]  Orientado a eventos
+        - [x]  keydown
+        - [x]  keyup
+        - [ ]  Listeners por Profile
+    - [ ]  Áudio
+    - [ ]  Telas
+- Game
+    - [x]  MVP
+        - [x]  Bola
+        - [x]  Parede
+        - [x]  Pad
+        - [x]  Tijolos
+        - [x]  Vidas
+        - [x]  Score
+        - [x]  Vitória, derrota e reinício
+        - [x]  FPS
+            - [x]  Apenas modo de desenvolvimento
+    - Visual
+        - [x]  Título
+            - [x]  Página
+            - [x]  No Board
+        - [x]  Favicon
+        - [x]  Background
+            - [x]  Animado
+            - [x]  Sorteio
+        - [ ]  Botões na tela ao invés de comandos pelo teclado
+            - [ ]  Música
+            - [ ]  Pause/resume
+            - [ ]  Volume
+        - [ ]  Animação dos tijolos sendo criados
+        - [ ]  Cronômetro
+    - [x]  Música de fundo
+        - [x]  Play/pause
+        - [x]  Volume
+        - [x]  Otimização (ogg)
+    - Publicação
+        - [x]  Suporte ao mobile
+            - [ ]  Bloqueio do zoom
+            - [ ]  Bloqueio da rotação de tela
+        - [x]  URL pública/disponível online
+    - Extras
+        - [x]  Gerenciamento do estado do jogo (data.js)
+    - Mecânica
+        - [x]  Bola deslizando no Pad antes da partida começar
+    - Avançada
+        - Bola
+            - [ ]  Piscando transparente (com animação)
+            - [ ]  Várias
+            - [ ]  Dano maior
+            - [ ]  Que transpassa
+        - Pad
+            - [x]  Invisível/incolidível
+            - [ ]  Imã
+            - [ ]  Crescer/diminuir
+            - [ ]  Io-iô
+            - [ ]  Atirar
+        - Tijolos
+            - [x]  Brick
+            - [x]  Solid Brick
+            - [x]  Hard Brick
+            - [x]  Special Brick
+            - [ ]  Spawnam sozinhos
+            - [ ]  Quebram um certo tempo dps da colisão
+                - [ ]  Explodem vizinhos
+            - [ ]  Quase inquebráveis (ex: 10 - 50 hits)
+            - [ ]  Só quebram por um dos lados
+        - Itens
+            - [x]  Zero Item
+                - [x]  Torna o Pad incolidível
+            - [x]  One Item
+                - [x]  Mais um ponto
+                - [x]  Anula o Zero Item
+            - [x]  Life Item
+            - [x]  Unknown Item
+                - [ ]  Fazer algo
+            - [x]  Shield Item
+            - [ ]  Pontos extras
+    - Telas
+        - [ ]  Menu
+        - [ ]  High Score
+        - [ ]  Game Over
+        - [ ]  Vitória
+    - Modos de jogo
+        - [x]  Sorteio aleatório dos tijolos
+            - [x]  Modo rápido
+            - [ ]  Modo dinâmico
+                - [ ]  Novas fileiras periodicamente
+            - [ ]  Infinity
+                - [ ]  Aumentar velocidade
+                - [ ]  Novas fileiras a cada 10 tijolos quebrados
+        - [ ]  Fases/modo história
+        - [ ]  IA/Modo batalha
+            - [ ]  Outro Pad
+            - [ ]  Inimigo
+        - [ ]  Limite de tempo
+            - [ ]  Item de ganhar/perder tempo
+- Bugs conhecidos
+    - [ ]  FPS mais limitado do que o solicitado
+    - [ ]  Investigar problema de desempenho
+    - [ ]  config.development.json dando erro silencioso no ambiente de Produção
+    - [ ]  No Mobile, bola muito perto do Pad antes do começo da partida/quando rotaciona a tela
+- Propostas
+    - [ ]  Refatoração
+    - [ ]  Persistência
+    - [ ]  Readme
+    - [ ]  Resolver TODOs
+    - [ ]  Async/await e Generators
+    - [ ]  Easter Eggs
+    - [ ]  PWA
+    - [ ]  TypeScript
+    - [ ]  Testes automatizados
+    - [ ]  Partida online contra jogador real

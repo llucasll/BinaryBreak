@@ -9,7 +9,6 @@ import Board from "./lib/engine/Board.js";
 import config from "./lib/engine/config.js";
 import objects, { init } from "./gameObjects.js";
 
-import { Pad } from "./profile/Pad.js";
 import { keepInRange, rand } from "./lib/utils.js";
 import Native from "./lib/Native.js";
 
@@ -111,8 +110,6 @@ keyboard.setKeydownListener({
 	ArrowLeft: left,
 	ArrowRight: right,
 	' ': start,
-	w: _ => objects.pad.profile = Pad,
-	x: _ => objects.balls[0].profile = Pad,
 	m: _ => audio.paused? audio.play() : audio.pause(),
 	p: _ => engine.running? engine.pause() : engine.start(),
 	// '-': _ => audio.volume -= .1,

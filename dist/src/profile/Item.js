@@ -72,7 +72,7 @@ export class OneItem extends Item {
 
 export class LifeItem extends Item {
 	static defaults = {
-		image: 'floppy',
+		image: 'items/floppy',
 	};
 	
 	action () {
@@ -93,8 +93,7 @@ export class UnknownItem extends Item {
 
 export class ShieldItem extends Item {
 	static defaults = {
-		text: '!',
-		textColor: 'yellow',
+		image: 'items/firewall1',
 	};
 	
 	action () {
