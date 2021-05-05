@@ -150,5 +150,28 @@ export class Ball extends Profile {
 export class BlueBall extends Ball {
 	static defaults = {
 		image: config.sprites.balls.blue,
-	}
+	};
+	
+	colliders = {
+		...this.colliders,
+		[Brick.symbol] (collider, angle) {
+			this.updateSpeedAngle(angle);
+			data.score++;
+		},
+	};
+	
+	act = null;
+}
+
+export class FireBall extends Ball {
+	static defaults = {
+		image: config.sprites.balls.yellow,
+	};
+	
+	colliders = {
+		...this.colliders,
+		[ Brick.symbol ]: null,
+	};
+	
+	act = null;
 }

@@ -5,6 +5,7 @@ import Shape from "../lib/engine/Shape.js";
 import { rand, removeFromArray } from "../lib/utils.js";
 import objects from "../gameObjects.js";
 import { BlueBall } from "./Ball.js";
+import { FireBall } from "./Ball.js";
 import { BottomWall, Shield } from "./Wall.js";
 import Entity from "../lib/engine/Entity.js";
 
@@ -87,7 +88,7 @@ export class UnknownItem extends Item {
 	};
 	
 	action () {
-		objects.balls[0].profile.transform(rand([ BlueBall ]));
+		objects.balls[0].profile.transform(rand([ FireBall, BlueBall]));
 	}
 }
 
