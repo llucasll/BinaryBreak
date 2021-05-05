@@ -1,3 +1,5 @@
+# BinaryBreak
+
 - Engine
     - Geral
         - [x]  start/pause
@@ -41,6 +43,10 @@
                 - [x]  Horizontal
             - [x]  Colisão seletiva
         - [x]  Stalker
+            - [ ]  Stalked E stalker (implementação bilateral)
+            - [ ]  Stalkers (como array)
+                - [ ]  addStalker
+                - [ ]  removeStalker
         - [x]  Morte
             - [x]  Com animação de esmaecimento
         - [x]  Act a cada turno
@@ -48,6 +54,7 @@
         - [x]  Modo de desenvolvimento
             - [x]  Exibir FPS
             - [x]  Desativar música
+        - [ ]  Speed factor
     - Teclado
         - [x]  Orientado a eventos
         - [x]  keydown
@@ -55,6 +62,9 @@
         - [ ]  Listeners por Profile
     - [ ]  Áudio
     - [ ]  Telas
+    - [ ]  Pausar ao sair da tela
+        - [ ]  Pausar a música automaticamente quando sair da janela (desktop e mobile)
+        - [ ]  Pausar engine quando o navegador congelar o JS; ou se dtime > 1s?; ou ao sair da tela
 - Game
     - [x]  MVP
         - [x]  Bola
@@ -70,6 +80,7 @@
         - [x]  Título
             - [x]  Página
             - [x]  No Board
+                - [ ]  BinaryBreak sem espaço
         - [x]  Favicon
         - [x]  Background
             - [x]  Animado
@@ -93,7 +104,7 @@
         - [x]  Gerenciamento do estado do jogo (data.js)
     - Mecânica
         - [x]  Bola deslizando no Pad antes da partida começar
-    - Avançada
+    - Game Objects extras
         - Bola
             - [ ]  Piscando transparente (com animação)
             - [ ]  Várias
@@ -125,7 +136,9 @@
             - [x]  Unknown Item
                 - [ ]  Fazer algo
             - [x]  Shield Item
+                - [x]  Firewall
             - [ ]  Pontos extras
+    - [ ]  Refatorar init do jogo p reiniciar sem recarregar a página
     - Telas
         - [ ]  Menu
         - [ ]  High Score
@@ -150,6 +163,7 @@
     - [ ]  Investigar problema de desempenho
     - [ ]  config.development.json dando erro silencioso no ambiente de Produção
     - [ ]  No Mobile, bola muito perto do Pad antes do começo da partida/quando rotaciona a tela
+    - [ ]  Verificar se ainda está havendo colisão dupla (salvar último colisor, e debugger se colidir novamente, menos wall e pad (seja this ou collisor))
 - Propostas
     - [ ]  Refatoração
     - [ ]  Persistência

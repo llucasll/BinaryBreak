@@ -89,6 +89,7 @@ if (config.development?.debug) {
 	audio.onvolumechange = _ => console.log(audio.volume);
 }
 
+// TODO move to mechanics
 const start = (startMusic = true) => {
 	if (startMusic)
 		startAudio();
@@ -98,6 +99,7 @@ const start = (startMusic = true) => {
 		objects.balls[0].profile.updateSpeedAngle(angle, 30);
 		
 		delete objects.pad.stalker;
+		objects.balls[0].profile.act = null;
 	}
 };
 window.onclick = start;

@@ -74,6 +74,7 @@ export class Ball extends Profile {
 		this.entity.speed = [ 7, 0 ];
 		
 		pad.stalker = this.entity;
+		delete this.act;
 	}
 	
 	// revertVertical (collider) {
@@ -120,7 +121,8 @@ export class Ball extends Profile {
 	act () {
 		const before = this.entity.center.x < objects.pad.x && (this.entity.speed.x < 0);
 		const after = this.entity.center.x > (objects.pad.x + objects.pad.w) && (this.entity.speed.x > 0);
-		if (objects.pad.stalker === this.entity && (before || after))
+		
+		if (before || after)
 			this.entity.speed = [ - this.entity.speed.x ];
 	}
 	
