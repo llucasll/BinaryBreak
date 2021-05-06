@@ -34,8 +34,10 @@ function sleep (ms) {
 	return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-async function* intervalGenerator (ms) {
-	while (true) {
+async function* intervalGenerator (ms, timeout=Infinity) {
+	const start = Date.now();
+	
+	while (Date.now()-start < timeout) {
 		yield await timed(_ => sleep(ms));
 	}
 }
@@ -49,15 +51,12 @@ async function* intervalGenerator (ms) {
  * @param args optional arguments to callback
  */
 export async function softInterval (callback, interval, timeout=Infinity, finishedCallback, ...args) {
-	const start = Date.now();
-	
-	for await (const elapsed of intervalGenerator(interval)) {
-		if (Date.now()-start > timeout)
-			break;
+	for await (const elapsed of intervalGenerator(interval, timeout)) {
+		const result = await callback(...args);
 		
-		if (await callback(...args)) {
+		if (result) {
 			if (typeof finishedCallback == "function")
-				finishedCallback(...args);
+				finishedCallback(...toArray(result), ...args);
 			break;
 		}
 	}
