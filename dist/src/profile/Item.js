@@ -1,6 +1,6 @@
 import Profile from "../lib/engine/Profile.js";
 
-import { InvisiblePad, Pad } from "./Pad.js";
+import { InvisiblePad, Pad, SuperPad } from "./Pad.js";
 import Shape from "../lib/engine/Shape.js";
 import { rand, removeFromArray } from "../lib/utils.js";
 import objects from "../gameObjects.js";
@@ -100,6 +100,20 @@ export class ShieldItem extends Item {
 	action () {
 		if (!objects.shield)
 			objects.shield = new Entity(Shield);
+	}
+}
+
+export class SuperPadItem extends Item {
+	static defaults = {
+		text: 'X',
+		textColor: 'pink',
+	};
+	
+	action () {
+		if (objects.pad.profile !== 'SuperPad')
+			objects.pad.profile.transform(SuperPad);
+		else
+			objects.pad.profile.transform(Pad);
 	}
 }
 
