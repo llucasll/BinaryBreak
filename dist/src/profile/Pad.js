@@ -29,3 +29,19 @@ export class InvisiblePad extends Pad {
 	};
 	//objects.ball.colliders.remove(Pad); // TODO
 }
+
+export class SuperPad extends Pad {
+	static defaults = {
+		size: [ 20, 2 ],
+		color: 'gold',
+	};
+	
+	colliders = {
+		...this.colliders,
+	};
+	
+	die () {
+		this.transform(Pad, true);
+		return false;
+	}
+}
