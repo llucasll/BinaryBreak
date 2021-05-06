@@ -107,8 +107,8 @@ export class SpecialBrick extends SolidBrick {
 		shape: Shape.rectangle,
 	};
 	
-	action () {
-		this.spawnAndDieSlowly(Item.rand());
+	async action () {
+		await this.spawnAndDieSlowly(Item.rand());
 	}
 }
 

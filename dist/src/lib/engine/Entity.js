@@ -1,5 +1,5 @@
 import Native from "../Native.js";
-import { atMost, healthyInterval, removeFromArray } from "../utils.js";
+import { atMost, softInterval, removeFromArray } from "../utils.js";
 
 import * as turn from "./engine.js";
 import { getFps } from "./engine.js";
@@ -275,23 +275,17 @@ export default class Entity {
 	 * Make animation effects
 	 * TODO use async/await
 	 */
-	animate (definition, { fps=getFps(), timeout, finishedCallback } = {}) {
-		if (!Array.isArray(definition)) {
-			const callback = definition;
-			return new Promise(resolve => {
-				const resolver = (...args) => {
-					resolve();
-					if (finishedCallback)
-						finishedCallback(...args);
-				};
-				healthyInterval(callback, fps, timeout, resolver, fps);
-			});
+	async animate (spritesOrCallback, { fps=getFps(), timeout=Infinity, finishedCallback } = {}) {
+		if (!Array.isArray(spritesOrCallback)) {
+			const callback = spritesOrCallback;
+			await softInterval(callback, fps, timeout, finishedCallback, fps);
+			return;
 		}
 		
-		const sprites = definition;
+		const sprites = spritesOrCallback;
 		let i = 0;
 		
-		healthyInterval(
+		await softInterval(
 			_ => {
 				this.image = sprites[i++];
 				i %= sprites.length;
@@ -376,11 +370,11 @@ export default class Entity {
 	
 	async dieSlowly (duration=1, untouchable=true) {
 		// TODO this is being scheduled more than one time if it collides twice
-		await this.animate(elapsed => {
+		await this.animate(async elapsed => {
 			this.opacity -= elapsed*100/(duration*1000);
 			
 			if (this.opacity <= 0) {
-				this.die();
+				await this.die();
 				return true;
 			}
 		});

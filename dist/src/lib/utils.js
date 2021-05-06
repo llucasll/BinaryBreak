@@ -22,6 +22,24 @@ export function removeFromArray (arr, elem) {
 		arr.splice(index, 1);
 }
 
+async function timed (callback) {
+	const start = Date.now();
+	await callback();
+	const end = Date.now();
+	
+	return end - start;
+}
+
+function sleep (ms) {
+	return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function* intervalGenerator (ms) {
+	while (true) {
+		yield await timed(_ => sleep(ms));
+	}
+}
+
 /**
  * A lightweight version of setInterval, using setTimeout and re-scheduling
  * @param callback to be ran periodically
@@ -30,24 +48,19 @@ export function removeFromArray (arr, elem) {
  * @param finishedCallback optional function to be executed after timeout
  * @param args optional arguments to callback
  */
-export function healthyInterval (callback, interval, timeout, finishedCallback, ...args) {
-	let timeoutID;
+export async function softInterval (callback, interval, timeout=Infinity, finishedCallback, ...args) {
+	const start = Date.now();
 	
-	const action = _ => callback(...args)?
-		finishedCallback()
-		: timeoutID = setTimeout(action, interval);
-	
-	setTimeout(action, interval);
-	
-	if (timeout)
-		setTimeout(
-			_ => {
-				clearTimeout(timeoutID);
-				if (typeof finishedCallback == "function")
-					finishedCallback();
-			},
-			timeout
-		);
+	for await (const elapsed of intervalGenerator(interval)) {
+		if (Date.now()-start > timeout)
+			break;
+		
+		if (await callback(...args)) {
+			if (typeof finishedCallback == "function")
+				finishedCallback(...args);
+			break;
+		}
+	}
 }
 
 /**
