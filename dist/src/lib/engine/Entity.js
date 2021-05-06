@@ -275,11 +275,17 @@ export default class Entity {
 	 * Make animation effects
 	 * TODO use async/await
 	 */
-	animate (definition, { fps=getFps(), timeout, timeoutCallback } = {}) {
+	animate (definition, { fps=getFps(), timeout, finishedCallback } = {}) {
 		if (!Array.isArray(definition)) {
 			const callback = definition;
-			healthyInterval(callback, fps, timeout, timeoutCallback, fps);
-			return;
+			return new Promise(resolve => {
+				const resolver = (...args) => {
+					resolve();
+					if (finishedCallback)
+						finishedCallback(...args);
+				};
+				healthyInterval(callback, fps, timeout, resolver, fps);
+			});
 		}
 		
 		const sprites = definition;
@@ -292,7 +298,7 @@ export default class Entity {
 			},
 			1000/fps,
 			timeout*1000,
-			timeoutCallback
+			finishedCallback
 		);
 	}
 	// TODO stop animation
@@ -368,9 +374,9 @@ export default class Entity {
 		}
 	}
 	
-	dieSlowly (duration=1, untouchable=true) {
+	async dieSlowly (duration=1, untouchable=true) {
 		// TODO this is being scheduled more than one time if it collides twice
-		this.animate(elapsed => {
+		await this.animate(elapsed => {
 			this.opacity -= elapsed*100/(duration*1000);
 			
 			if (this.opacity <= 0) {

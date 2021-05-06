@@ -27,16 +27,15 @@ export function removeFromArray (arr, elem) {
  * @param callback to be ran periodically
  * @param interval in milliseconds
  * @param timeout optionally define a time limit (in milliseconds)
- * @param timeoutCallback optional function to be executed after timeout
+ * @param finishedCallback optional function to be executed after timeout
  * @param args optional arguments to callback
  */
-export function healthyInterval (callback, interval, timeout, timeoutCallback, ...args) {
+export function healthyInterval (callback, interval, timeout, finishedCallback, ...args) {
 	let timeoutID;
 	
-	function action () {
-		if (!callback(...args))
-			timeoutID = setTimeout(action, interval);
-	}
+	const action = _ => callback(...args)?
+		finishedCallback()
+		: timeoutID = setTimeout(action, interval);
 	
 	setTimeout(action, interval);
 	
@@ -44,8 +43,8 @@ export function healthyInterval (callback, interval, timeout, timeoutCallback, .
 		setTimeout(
 			_ => {
 				clearTimeout(timeoutID);
-				if (typeof timeoutCallback == "function")
-					timeoutCallback();
+				if (typeof finishedCallback == "function")
+					finishedCallback();
 			},
 			timeout
 		);

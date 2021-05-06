@@ -88,7 +88,7 @@ export class UnknownItem extends Item {
 	};
 	
 	action () {
-		objects.balls[0].profile.transform(rand([ FireBall, BlueBall]));
+		objects.balls[0].profile.transform(rand([ FireBall, BlueBall ]));
 	}
 }
 

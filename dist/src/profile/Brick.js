@@ -3,7 +3,7 @@ import Profile from "../lib/engine/Profile.js";
 
 import Shape from "../lib/engine/Shape.js";
 
-import { Ball } from "./Ball.js";
+import { Ball, BlueBall } from "./Ball.js";
 import data from "../data.js";
 import Item, { OneItem, ZeroItem } from "./Item.js";
 import { rand, toArray } from "../lib/utils.js";
@@ -39,14 +39,17 @@ export class Brick extends Profile {
 	};
 	
 	colliders = {
-		[ Ball.symbol ] (collider) {
-			this.action();
+		async [ Ball.symbol ] (collider) {
+			await this.action();
+			
+			if (collider.profile instanceof BlueBall)
+				data.score++;
 		}
 	};
 	
-	action () {
+	async action () {
 		const bit = [ ZeroItem, OneItem, null, null ];
-		this.spawnAndDieSlowly(bit);
+		await this.spawnAndDieSlowly(bit);
 	}
 	
 	spawn (items) {
@@ -58,16 +61,16 @@ export class Brick extends Profile {
 		item.x = this.entity.x + this.entity.w/2 - item.w/2;
 		item.y = this.entity.y;
 	}
-	spawnAndDieSlowly (items) {
-		this.entity.dieSlowly();
+	async spawnAndDieSlowly (items) {
 		this.spawn(items);
+		await this.entity.dieSlowly();
 	}
 	
 	replacing (next) {
 		data.score++;
 	}
 	
-	die () {
+	async die () {
 		data.score++;
 		data.bricks--;
 		delete objects.bricks[this.y][this.x];
