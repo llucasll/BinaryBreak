@@ -124,12 +124,13 @@ export default class Profile {
 	}
 	
 	transform (Profile, force=false) {
-		if (force) {
-			this.entity.updateProfile(Profile);
-			return;
-		}
+		const center = this.entity.center;
 		
-		this.entity.profile = Profile;
+		force?
+			this.entity.updateProfile(Profile)
+			: this.entity.profile = Profile;
+		
+		this.entity.center = center;
 	}
 	
 	runCollision (collision, collider, ...args) {

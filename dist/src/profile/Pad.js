@@ -41,7 +41,7 @@ export class SuperPad extends Pad {
 	};
 	
 	die () {
-		this.transform(Pad, true);
+		this.transform(Pad);
 		return false;
 	}
 }

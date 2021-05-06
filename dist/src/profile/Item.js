@@ -117,4 +117,4 @@ export class SuperPadItem extends Item {
 	}
 }
 
-Item.all = [ LifeItem, UnknownItem, ShieldItem ];
+Item.all = [ LifeItem, ShieldItem, UnknownItem, SuperPadItem ];
