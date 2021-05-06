@@ -1,10 +1,11 @@
 import Native from "../Native.js";
-import { atMost, softInterval, removeFromArray } from "../utils.js";
+import { atMost, removeFromArray } from "../utils.js";
+import { softInterval } from "../timer.js";
+import { hypotenuse, wh, xy } from "../geometry.js";
 
-import * as turn from "./engine.js";
+import * as engine from "./engine.js";
 import { getFps } from "./engine.js";
 import config from "./config.js";
-import { hypotenuse, wh, xy } from "../geometry.js";
 
 /**
  * A engine's object body.
@@ -163,11 +164,11 @@ export default class Entity {
 		this.internal.speed.y = y ?? old.y;
 		
 		if (x || y) {
-			if (!turn.moving.includes(this))
-				turn.moving.push(this);
+			if (!engine.moving.includes(this))
+				engine.moving.push(this);
 		}
 		else
-			removeFromArray(turn.moving, this);
+			removeFromArray(engine.moving, this);
 	}
 	get speed () {
 		return { ...this.internal.speed };
@@ -184,11 +185,11 @@ export default class Entity {
 		this.internal.acceleration.maxY = maxY ?? old.maxY;
 		
 		if (x || y) {
-			if (!turn.accelerating.includes(this))
-				turn.accelerating.push(this);
+			if (!engine.accelerating.includes(this))
+				engine.accelerating.push(this);
 		}
 		else {
-			removeFromArray(turn.moving, this);
+			removeFromArray(engine.moving, this);
 		}
 	}
 	get acceleration () {
@@ -273,7 +274,7 @@ export default class Entity {
 	
 	/**
 	 * Make animation effects
-	 * TODO use async/await
+	 * TODO create Animation class
 	 */
 	async animate (spritesOrCallback, { fps=getFps(), timeout=Infinity, finishedCallback } = {}) {
 		if (!Array.isArray(spritesOrCallback)) {
@@ -359,7 +360,7 @@ export default class Entity {
 		if ((await this.#internal.profile?.die?.()) === false)
 			return;
 		removeFromArray(Entity.all, this);
-		removeFromArray(turn.moving, this);
+		removeFromArray(engine.moving, this);
 		try {
 			this.element.parentNode.removeChild(this.element);
 		}
@@ -369,7 +370,6 @@ export default class Entity {
 	}
 	
 	async dieSlowly (duration=1, untouchable=true) {
-		// TODO this is being scheduled more than one time if it collides twice
 		await this.animate(async elapsed => {
 			this.opacity -= elapsed*100/(duration*1000);
 			

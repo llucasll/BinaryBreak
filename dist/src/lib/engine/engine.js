@@ -2,11 +2,12 @@ import config from "./config.js";
 import { testCollision } from "./Shape.js";
 
 import Entity from "./Entity.js";
-import { softInterval, stepChronometer } from "../utils.js";
+import { softInterval, stepChronometer } from "../timer.js";
 
 let fps = config.fps;
 let actualFps;
 
+// TODO move to Entity
 export const moving = [];
 export const accelerating = [];
 // export const animated = [];
