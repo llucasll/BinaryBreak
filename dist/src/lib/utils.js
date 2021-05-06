@@ -22,22 +22,70 @@ export function removeFromArray (arr, elem) {
 		arr.splice(index, 1);
 }
 
-async function timed (callback) {
-	const start = Date.now();
+export async function timed (callback) {
+	const dtime = chronometer();
 	await callback();
-	const end = Date.now();
-	
-	return end - start;
+	return dtime();
 }
 
-function sleep (ms) {
+export function sleep (ms) {
 	return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-async function* intervalGenerator (ms, timeout=Infinity) {
+export function getProducer (generator) {
+	const iterator = generator();
+	iterator.next();
+	return _ => iterator.next().value;
+}
+
+function* chronometerGenerator () {
 	const start = Date.now();
 	
-	while (Date.now()-start < timeout) {
+	while (true)
+		yield Date.now() - start;
+}
+
+export function chronometer () {
+	return getProducer(chronometerGenerator);
+}
+
+function* nowGenerator () {
+	let last;
+	while (true) {
+		yield last = Date.now();
+	}
+}
+function* stepChronometerGenerator () {
+	let last = 0;
+	
+	for (const now of nowGenerator()) {
+		yield now - last;
+		last = now;
+	}
+}
+
+// function* stepChronometerGenerator () {
+// 	let last = Date.now();
+// 	let current = Date.now();
+//
+// 	while (true) {
+// 		// const elapsed = Date.now() - last;
+// 		// last = Date.now();
+// 		// yield elapsed;
+//
+// 		yield current - last;
+// 		([ last, current ] = [ current, Date.now() ]);
+// 	}
+// }
+
+export function stepChronometer () {
+	return getProducer(stepChronometerGenerator);
+}
+
+export async function* intervalGenerator (ms, timeout=Infinity) {
+	const dtime = chronometer();
+	
+	while (dtime() < timeout) {
 		yield await timed(_ => sleep(ms));
 	}
 }

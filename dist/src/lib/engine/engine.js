@@ -2,10 +2,10 @@ import config from "./config.js";
 import { testCollision } from "./Shape.js";
 
 import Entity from "./Entity.js";
+import { softInterval, stepChronometer } from "../utils.js";
 
 let fps = config.fps;
 let actualFps;
-let timeoutID;
 
 export const moving = [];
 export const accelerating = [];
@@ -17,22 +17,30 @@ export const getActualFps = _ => actualFps;
 
 export let running = false;
 
-export function start (now=Date.now()) {
-	timeoutID = setTimeout(turn, 1000/fps, now);
+let dtime;
+
+/**
+ * It only resolves when the engine is stopped
+ * @return {Promise<void>} when the engine is paused
+ */
+export async function start () {
+	dtime = stepChronometer();
 	running = true;
+	await softInterval(turn, 1000/fps);
 }
 
 export function pause () {
-	clearTimeout(timeoutID);
 	running = false;
 }
 
 /**
  * Engine's heart. This function executes each 'frame', defined from fps variable.
  */
-function turn (lastTime) {
-	const now = Date.now();
-	const elapsed = (now - lastTime) / 1000;
+function turn () {
+	if (!running)
+		return true;
+	
+	const elapsed = dtime() / 1000;
 	actualFps = 1/elapsed;
 	
 	for (const obj of accelerating) {
@@ -79,6 +87,4 @@ function turn (lastTime) {
 	//
 	// 	entity.image = arr[obj.i++];
 	// }
-	
-	start(now);
 }
