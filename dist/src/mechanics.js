@@ -11,7 +11,7 @@ export function restart () {
 }
 
 function end (message) {
-	engine.pause();
+	setTimeout(_ => engine.pause()); // TODO
 	
 	objects.end = new Entity(End, {
 		text: message,
