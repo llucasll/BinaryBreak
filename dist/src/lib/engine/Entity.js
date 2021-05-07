@@ -331,11 +331,13 @@ export default class Entity {
 		return false;
 	}
 	
-	collide (obj) {
+	async collide (obj) {
+		const pos = obj.relativePosition(this);
+		
 		// if (!obj.ignoreCollision(this))
-			obj.profile.collided?.(this, this.relativePosition(obj));
+			await obj.profile.collided?.(this, this.relativePosition(obj));
 		// if (!this.ignoreCollision(obj))
-			return this.#internal.profile.collided?.(obj, obj.relativePosition(this));
+			return await this.#internal.profile.collided?.(obj, pos);
 		
 		// return true;
 	}
@@ -359,9 +361,14 @@ export default class Entity {
 	async die () {
 		if ((await this.#internal.profile?.die?.()) === false)
 			return;
+		
 		removeFromArray(Entity.all, this);
 		removeFromArray(engine.moving, this);
+		this.dead = true;
+		
 		try {
+			// if (this.profile.constructor.name == "Ball")
+				debugger
 			this.element.parentNode.removeChild(this.element);
 		}
 		catch (e) {
@@ -379,7 +386,8 @@ export default class Entity {
 			}
 		});
 		
-		if (untouchable && this.#internal.profile)
+		if (untouchable && this.#internal.profile) {
 			delete this.#internal.profile.shape;
+		}
 	}
 }

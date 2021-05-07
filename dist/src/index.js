@@ -99,7 +99,6 @@ const start = (startMusic = true) => {
 		objects.balls[0].profile.updateSpeedAngle(angle, 30);
 		
 		delete objects.pad.stalker;
-		objects.balls[0].profile.act = null;
 	}
 };
 window.onclick = start;

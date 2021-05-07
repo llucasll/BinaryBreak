@@ -37,7 +37,7 @@ export function pause () {
 /**
  * Engine's heart. This function executes each 'frame', defined from fps variable.
  */
-function turn () {
+async function turn () {
 	if (!running)
 		return true;
 	
@@ -50,7 +50,7 @@ function turn () {
 			[ obj.acceleration.maxX, obj.acceleration.maxY ]
 		);
 	}
-	for (const obj of moving) {
+	out: for (const obj of moving) {
 		obj.move(obj.speed.x * elapsed, obj.speed.y * elapsed);
 		
 		for (const testing of Entity.all) {
@@ -59,7 +59,16 @@ function turn () {
 			
 			if (testCollision(obj, testing)) {
 				const { speed } = obj;
-				if (!obj.collide(testing))
+				
+				const keepPos = await obj.collide(testing);
+				
+				if (testing.dead)
+					continue;
+				
+				if (obj.dead)
+					continue out;
+				
+				if (!keepPos)
 					obj.profile?.uncollide(testing, speed);
 				
 				// obj.ignoreColliders.colliding.push(testing);
@@ -70,7 +79,7 @@ function turn () {
 				// removeFromArray(testing.ignoreColliders.colliding, obj);
 			// }
 		}
-		if (obj.stalker) {
+		if (obj.stalker) { // TODO array? and mirror "stalking"?
 			obj.stalker.move(obj.speed.x * elapsed, obj.speed.y * elapsed);
 		}
 	}

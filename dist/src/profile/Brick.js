@@ -112,4 +112,4 @@ export class SpecialBrick extends SolidBrick {
 	}
 }
 
-Brick.all = [ Brick, Brick, Brick, SolidBrick, HardBrick, SpecialBrick ];
+Brick.all = [ SpecialBrick ];

@@ -32,6 +32,9 @@ export class Ball extends Profile {
 			// this.runCollision('revert', collider, angle);
 			//this.runCollision.revert(collider); // TODO
 			
+			if (objects.pad.stalker == this.entity)
+				return;
+			
 			this.updateSpeedAngle(angle);
 			
 			// return true;
@@ -70,11 +73,20 @@ export class Ball extends Profile {
 		if (this.constructor !== Ball)
 			this.transform(Ball);
 		
-		this.entity.pos = [ pad.x + pad.w/2 - this.entity.w/2, Math.floor(pad.y - this.entity.h) ];
+		this.entity.pos = [ pad.x + pad.w/2 - this.entity.w/2, Math.floor(pad.y - this.entity.h) - .5 ];
 		this.entity.speed = [ 7, 0 ];
 		
 		pad.stalker = this.entity;
-		delete this.act;
+		this.entity.animate(_ => {
+			if (pad.stalker !== this.entity)
+				return true;
+			
+			const before = this.entity.center.x < objects.pad.x && (this.entity.speed.x < 0);
+			const after = this.entity.center.x > (objects.pad.x + objects.pad.w) && (this.entity.speed.x > 0);
+			
+			if (before || after)
+				this.entity.speed = [ - this.entity.speed.x ];
+		})
 	}
 	
 	// revertVertical (collider) {
@@ -118,18 +130,8 @@ export class Ball extends Profile {
 	// 	}
 	// }
 	
-	act () {
-		const before = this.entity.center.x < objects.pad.x && (this.entity.speed.x < 0);
-		const after = this.entity.center.x > (objects.pad.x + objects.pad.w) && (this.entity.speed.x > 0);
-		
-		if (before || after)
-			this.entity.speed = [ - this.entity.speed.x ];
-	}
-	
-	die () {
+	async die () {
 		data.lives--;
-		
-		objects.pad.dieSlowly(1, false);
 		
 		// this.entity.stopMovement();
 		// setTimeout(_ => this.init(), 1000);
@@ -140,8 +142,11 @@ export class Ball extends Profile {
 		
 		this.entity.stopMovement();
 		this.entity.opacity = 0;
-		setTimeout(_ => this.entity.opacity = 100, 1000);
-		setTimeout(_ => this.init(), 1000);
+		
+		await objects.pad.dieSlowly(1, false);
+		
+		this.entity.opacity = 100;
+		this.init();
 		
 		return false;
 	}
@@ -158,8 +163,6 @@ export class BlueBall extends Ball {
 			this.updateSpeedAngle(angle);
 		},
 	};
-	
-	act = null;
 }
 
 export class FireBall extends Ball {
@@ -171,6 +174,4 @@ export class FireBall extends Ball {
 		...this.colliders,
 		[ Brick.symbol ]: null,
 	};
-	
-	act = null;
 }

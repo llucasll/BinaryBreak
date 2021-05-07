@@ -62,11 +62,13 @@ export default class Profile {
 	 * @param {Entity} collider entity that had collided with this.
 	 * @param relativePos relative position of collider from this
 	 */
-	collided (collider, relativePos) {
+	async collided (collider, relativePos) {
 		for (let colliderClass of classChain(collider.profile)) {
+			// if (colliderClass.name === "BottomWall")
+			// 	debugger;
 			const collisionHandler = this.colliders[colliderClass.symbol];
 			if (collisionHandler)
-				return collisionHandler.call(this, collider, relativePos);
+				return await collisionHandler.call(this, collider, relativePos);
 			if (collisionHandler === null)
 				return true;
 		}

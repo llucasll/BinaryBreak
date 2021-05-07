@@ -29,9 +29,8 @@ export default class Item extends Profile {
 		[ Pad.symbol ] () {
 			this.action();
 			this.entity.die();
-		},
-		[ BottomWall.symbol ] () {
-			this.entity.die();
+			
+			// return true;
 		},
 	};
 	
@@ -88,7 +87,19 @@ export class UnknownItem extends Item {
 	};
 	
 	action () {
-		objects.balls[0].profile.transform(rand([ FireBall, BlueBall ]));
+		objects.balls[0].profile.transform(rand([ BlueBall ]));
+	}
+}
+
+export class FireBallItem extends Item {
+	static defaults = {
+		image: 'items/nero3',
+	};
+	
+	action () {
+		objects.balls.forEach(ball => {
+			ball.profile.transform(FireBall);
+		});
 	}
 }
 
@@ -117,4 +128,4 @@ export class SuperPadItem extends Item {
 	}
 }
 
-Item.all = [ LifeItem, ShieldItem, UnknownItem, SuperPadItem ];
+Item.all = [ FireBallItem , SuperPadItem];
