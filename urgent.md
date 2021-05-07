@@ -3,21 +3,21 @@
 - [[Bug]]: dos navegadores +-
 
 PLAY/PAUSE
-- [[Bug]]: Pad não pausa com a engine
+- [[Bug]]: ~~Pad não pausa com a engine~~
 - [[Engine]]: Modal
 - [[Engine]]: Botões (onclick)
-- Modal 
+- Modal
 - Botões
 
 ANIMAÇÃO DE CRIAÇÃO
-- [[Engine]]: Animação assíncrona
+- [[Engine]]: Animação assíncrona +-
 - [[Refatorar]]: Início do jogo
 - Implementar
 
-NOVIDADES
+~~NOVIDADES~~
 - Itens
-- Pads: 
-  - Crescer/diminuir o tamanho da plataforma;
+- Pads:
+  - ~~Crescer/diminuir o tamanho da plataforma;~~
 - Tijolos:
 - Bolas:
 	- ~~Bola de fogo: quebra e transpassa qualquer bloco, sem rebater;~~
@@ -30,4 +30,4 @@ TELAS
 - Mudar velocidade da bola no LevelUP
 
 NOVOS
-- Crescimento centralizado do SuperPad, sem sair da tela
+- ~~Crescimento centralizado do SuperPad, sem sair da tela~~

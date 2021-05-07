@@ -136,7 +136,7 @@ export class SuperPadItem extends Item {
 			pad.transform(
 				pad instanceof MiniPad?
 					Pad
-					: SuperPad,
+					: SuperPad
 			);
 	}
 }
