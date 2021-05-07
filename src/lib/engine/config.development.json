@@ -1,0 +1,7 @@
+{
+	"development": {
+		"enable": false,
+		"disableMusic": true,
+		"debug": true
+	}
+}
