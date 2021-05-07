@@ -96,7 +96,7 @@ export class DoublePointItem extends Item {
 	};
 	
 	action () {
-		objects.balls[0].profile.transform([ BlueBall ]);
+		objects.balls[0].profile.transform(BlueBall);
 	}
 }
 
@@ -130,11 +130,13 @@ export class SuperPadItem extends Item {
 	};
 	
 	action () {
-		if (!(objects.pad.profile instanceof SuperPad))
-			objects.pad.profile.transform(
-				objects.pad.profile instanceof MiniPad?
+		const pad = objects.pad.profile;
+		
+		if (!(pad instanceof SuperPad))
+			pad.transform(
+				pad instanceof MiniPad?
 					Pad
-					: SuperPad
+					: SuperPad,
 			);
 	}
 }
@@ -146,9 +148,11 @@ export class MiniPadItem extends Item {
 	};
 	
 	action () {
-		if (!(objects.pad.profile instanceof MiniPad))
-			objects.pad.profile.transform(
-				objects.pad.profile instanceof SuperPad?
+		const pad = objects.pad.profile;
+		
+		if (!(pad instanceof MiniPad))
+			pad.transform(
+				pad instanceof SuperPad?
 					Pad
 					: MiniPad
 			);

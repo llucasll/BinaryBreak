@@ -6,6 +6,7 @@
 
 import { classChain, rand, toArray } from "../utils.js";
 import { convertTriangle, xy } from "../geometry.js";
+import config from "./config.js";
 
 export default class Profile {
 	/**
@@ -124,12 +125,20 @@ export default class Profile {
 	}
 	
 	transform (Profile, force=false) {
-		if (force) {
-			this.entity.updateProfile(Profile);
-			return;
-		}
+		const center = this.entity.center;
 		
-		this.entity.profile = Profile;
+		force?
+			this.entity.updateProfile(Profile)
+			: this.entity.profile = Profile;
+		
+		this.entity.center = center;
+		
+		// TODO make it work in vertical direction too
+		const wallSize = config.size.wall; // TODO
+		if (this.entity.x + this.entity.w > 100 - wallSize)
+			this.entity.x = 100 - wallSize - this.entity.w;
+		if (this.entity.x < wallSize)
+			this.entity.x = wallSize;
 	}
 	
 	runCollision (collision, collider, ...args) {
