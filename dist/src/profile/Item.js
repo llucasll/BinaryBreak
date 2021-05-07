@@ -5,7 +5,7 @@ import Shape from "../lib/engine/Shape.js";
 import { rand, removeFromArray } from "../lib/utils.js";
 import objects from "../gameObjects.js";
 import { BlueBall, FireBall } from "./Ball.js";
-import { BottomWall, Shield } from "./Wall.js";
+import { Shield } from "./Wall.js";
 import Entity from "../lib/engine/Entity.js";
 
 import data from "../data.js";
@@ -27,9 +27,6 @@ export default class Item extends Profile {
 	colliders = {
 		[ Pad.symbol ] () {
 			this.action();
-			this.entity.die();
-		},
-		[ BottomWall.symbol ] () {
 			this.entity.die();
 		},
 	};
@@ -87,7 +84,31 @@ export class UnknownItem extends Item {
 	};
 	
 	action () {
-		objects.balls[0].profile.transform(rand([ FireBall, BlueBall ]));
+		// TODO
+		// objects.balls[0].profile.transform(rand([ BlueBall ]));
+	}
+}
+
+export class DoublePointItem extends Item {
+	static defaults = {
+		text: '10',
+		textColor: 'mediumblue',
+	};
+	
+	action () {
+		objects.balls[0].profile.transform([ BlueBall ]);
+	}
+}
+
+export class FireBallItem extends Item {
+	static defaults = {
+		image: 'items/nero3',
+	};
+	
+	action () {
+		objects.balls.forEach(ball => {
+			ball.profile.transform(FireBall);
+		});
 	}
 }
 
@@ -134,4 +155,4 @@ export class MiniPadItem extends Item {
 	}
 }
 
-Item.all = [ LifeItem, UnknownItem, ShieldItem ];
+Item.all = [ LifeItem, ShieldItem, UnknownItem, FireBallItem, DoublePointItem, SuperPadItem, MiniPadItem ];

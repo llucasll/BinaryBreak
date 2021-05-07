@@ -1,6 +1,6 @@
 # TODO
 
-- [[Bug]]: dos navegadores
+- [[Bug]]: dos navegadores +-
 
 PLAY/PAUSE
 - [[Bug]]: Pad não pausa com a engine
