@@ -4,7 +4,7 @@
  * @see Entity
  */
 
-import { classChain, rand, toArray } from "../utils.js";
+import { classChain, rand, selectiveAssign, toArray } from "../utils.js";
 import { convertTriangle, xy } from "../geometry.js";
 import config from "./config.js";
 
@@ -124,7 +124,9 @@ export default class Profile {
 		this.entity[axis] -= Math.sign(speed) * back;
 	}
 	
-	transform (Profile, force=false) {
+	// TODO review it
+	// preserve inheritance aka profile.colliders inheritance: transformPreserve = { ...this.transformPreserve, .... }
+	transform (Profile, { force = false, preserve=this.constructor.transformPreserve ?? [] }={}) {
 		const center = this.entity.center;
 		
 		force?
@@ -132,6 +134,8 @@ export default class Profile {
 			: this.entity.profile = Profile;
 		
 		this.entity.center = center;
+		
+		selectiveAssign(this.entity.profile, this, preserve);
 		
 		// TODO make it work in vertical direction too
 		const wallSize = config.size.wall; // TODO

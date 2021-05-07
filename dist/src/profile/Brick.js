@@ -11,6 +11,7 @@ import config from "../lib/engine/config.js";
 import objects from "../gameObjects.js";
 
 export class Brick extends Profile {
+	static transformPreserve = [ 'x', 'y' ];
 	static insertBrick (x, y, profile=Brick) {
 		const brick = new Entity(profile);
 		

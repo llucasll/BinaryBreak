@@ -18,7 +18,7 @@ export class Pad extends Profile {
 	}
 	
 	die () {
-		this.transform(Pad, true);
+		this.transform(Pad, { force: true });
 		return false;
 	}
 }
@@ -41,7 +41,7 @@ export class SuperPad extends Pad {
 	};
 	
 	die () {
-		this.transform(Pad, true); // TODO
+		this.transform(Pad);
 		return false;
 	}
 }
@@ -57,7 +57,7 @@ export class MiniPad extends Pad {
 	};
 	
 	die () {
-		this.transform(Pad, true); // TODO
+		this.transform(Pad);
 		return false;
 	}
 }

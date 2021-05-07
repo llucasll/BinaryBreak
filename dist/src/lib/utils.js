@@ -151,3 +151,9 @@ export function deepMerge (...objects) {
 export function relativeURLBuilder (base) {
 	return relative => new URL(relative, base).toString();
 }
+
+export function selectiveAssign (dest, source, keys) {
+	for (const key of toArray(keys)) {
+		dest[key] = source[key];
+	}
+}
