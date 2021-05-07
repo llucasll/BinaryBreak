@@ -1,11 +1,10 @@
 import Profile from "../lib/engine/Profile.js";
 
-import { InvisiblePad, Pad, SuperPad } from "./Pad.js";
+import { InvisiblePad, MiniPad, Pad, SuperPad } from "./Pad.js";
 import Shape from "../lib/engine/Shape.js";
 import { rand, removeFromArray } from "../lib/utils.js";
 import objects from "../gameObjects.js";
-import { BlueBall } from "./Ball.js";
-import { FireBall } from "./Ball.js";
+import { BlueBall, FireBall } from "./Ball.js";
 import { BottomWall, Shield } from "./Wall.js";
 import Entity from "../lib/engine/Entity.js";
 
@@ -88,7 +87,7 @@ export class UnknownItem extends Item {
 	};
 	
 	action () {
-		objects.balls[0].profile.transform(rand([ FireBall, BlueBall]));
+		objects.balls[0].profile.transform(rand([ FireBall, BlueBall ]));
 	}
 }
 
@@ -105,15 +104,33 @@ export class ShieldItem extends Item {
 
 export class SuperPadItem extends Item {
 	static defaults = {
-		text: 'X',
-		textColor: 'pink',
+		text: '<>',
+		textColor: 'green',
 	};
 	
 	action () {
-		if (objects.pad.profile !== 'SuperPad')
-			objects.pad.profile.transform(SuperPad);
-		else
-			objects.pad.profile.transform(Pad);
+		if (!(objects.pad.profile instanceof SuperPad))
+			objects.pad.profile.transform(
+				objects.pad.profile instanceof MiniPad?
+					Pad
+					: SuperPad
+			);
+	}
+}
+
+export class MiniPadItem extends Item {
+	static defaults = {
+		text: '><',
+		textColor: 'red',
+	};
+	
+	action () {
+		if (!(objects.pad.profile instanceof MiniPad))
+			objects.pad.profile.transform(
+				objects.pad.profile instanceof SuperPad?
+					Pad
+					: MiniPad
+			);
 	}
 }
 

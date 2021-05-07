@@ -1,3 +1,5 @@
+# TODO
+
 - [[Bug]]: dos navegadores
 
 PLAY/PAUSE
@@ -27,4 +29,5 @@ TELAS
 - Tela de Game Over
 - Mudar velocidade da bola no LevelUP
 
-#todo
+NOVOS
+- Crescimento centralizado do SuperPad, sem sair da tela

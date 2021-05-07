@@ -45,3 +45,19 @@ export class SuperPad extends Pad {
 		return false;
 	}
 }
+
+export class MiniPad extends Pad {
+	static defaults = {
+		size: [ 5, 2 ],
+		color: 'red',
+	};
+	
+	colliders = {
+		...this.colliders,
+	};
+	
+	die () {
+		this.transform(Pad, true); // TODO
+		return false;
+	}
+}
