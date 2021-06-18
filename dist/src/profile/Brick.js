@@ -40,7 +40,7 @@ export class Brick extends Profile {
 	
 	colliders = {
 		async [ Ball.symbol ] (collider) {
-			await this.action();
+			this.action();
 			
 			if (collider.profile instanceof BlueBall)
 				data.score++;
@@ -63,6 +63,7 @@ export class Brick extends Profile {
 	}
 	async spawnAndDieSlowly (items) {
 		this.spawn(items);
+		this.uncollidible(Ball);
 		await this.entity.dieSlowly();
 	}
 	

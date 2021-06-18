@@ -367,12 +367,10 @@ export default class Entity {
 		this.dead = true;
 		
 		try {
-			// if (this.profile.constructor.name == "Ball")
-				debugger
 			this.element.parentNode.removeChild(this.element);
 		}
 		catch (e) {
-			// debugger; // TODO
+			debugger; // TODO
 		}
 	}
 	

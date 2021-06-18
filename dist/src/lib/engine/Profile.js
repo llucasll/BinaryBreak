@@ -135,6 +135,15 @@ export default class Profile {
 		this.entity.center = center;
 	}
 	
+	#uncollidible = {};
+	uncollidible (Class) {
+		this.#uncollidible[Class.symbol] = this.colliders[Class.symbol];
+		this.colliders[Class.symbol] = null;
+	}
+	collidibleAgain (Class) {
+		this.colliders[Class.symbol] = this.#uncollidible[Class.symbol];
+	}
+	
 	runCollision (collision, collider, ...args) {
 		return this.colliders[collision]?.call(this, collider, ...args);
 	}
