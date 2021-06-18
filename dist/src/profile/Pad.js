@@ -18,7 +18,7 @@ export class Pad extends Profile {
 	}
 	
 	die () {
-		this.transform(Pad, true);
+		this.transform(Pad, { force: true });
 		return false;
 	}
 }
@@ -34,6 +34,22 @@ export class SuperPad extends Pad {
 	static defaults = {
 		size: [ 20, 2 ],
 		color: 'gold',
+	};
+	
+	colliders = {
+		...this.colliders,
+	};
+	
+	die () {
+		this.transform(Pad);
+		return false;
+	}
+}
+
+export class MiniPad extends Pad {
+	static defaults = {
+		size: [ 5, 2 ],
+		color: 'red',
 	};
 	
 	colliders = {

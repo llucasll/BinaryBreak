@@ -1,12 +1,11 @@
 import Profile from "../lib/engine/Profile.js";
 
-import { InvisiblePad, Pad, SuperPad } from "./Pad.js";
+import { InvisiblePad, MiniPad, Pad, SuperPad } from "./Pad.js";
 import Shape from "../lib/engine/Shape.js";
 import { rand, removeFromArray } from "../lib/utils.js";
 import objects from "../gameObjects.js";
-import { BlueBall } from "./Ball.js";
-import { FireBall } from "./Ball.js";
-import { BottomWall, Shield } from "./Wall.js";
+import { BlueBall, FireBall } from "./Ball.js";
+import { Shield } from "./Wall.js";
 import Entity from "../lib/engine/Entity.js";
 
 import data from "../data.js";
@@ -29,8 +28,6 @@ export default class Item extends Profile {
 		[ Pad.symbol ] () {
 			this.action();
 			this.entity.die();
-			
-			// return true;
 		},
 	};
 	
@@ -87,7 +84,19 @@ export class UnknownItem extends Item {
 	};
 	
 	action () {
-		objects.balls[0].profile.transform(rand([ BlueBall ]));
+		// TODO
+		// objects.balls[0].profile.transform(rand([ BlueBall ]));
+	}
+}
+
+export class DoublePointItem extends Item {
+	static defaults = {
+		text: '10',
+		textColor: 'mediumblue',
+	};
+	
+	action () {
+		objects.balls[0].profile.transform(BlueBall);
 	}
 }
 
@@ -116,16 +125,38 @@ export class ShieldItem extends Item {
 
 export class SuperPadItem extends Item {
 	static defaults = {
-		text: 'X',
-		textColor: 'pink',
+		text: '<>',
+		textColor: 'green',
 	};
 	
 	action () {
-		if (objects.pad.profile !== 'SuperPad')
-			objects.pad.profile.transform(SuperPad);
-		else
-			objects.pad.profile.transform(Pad);
+		const pad = objects.pad.profile;
+		
+		if (!(pad instanceof SuperPad))
+			pad.transform(
+				pad instanceof MiniPad?
+					Pad
+					: SuperPad
+			);
 	}
 }
 
-Item.all = [ FireBallItem , SuperPadItem];
+export class MiniPadItem extends Item {
+	static defaults = {
+		text: '><',
+		textColor: 'red',
+	};
+	
+	action () {
+		const pad = objects.pad.profile;
+		
+		if (!(pad instanceof MiniPad))
+			pad.transform(
+				pad instanceof SuperPad?
+					Pad
+					: MiniPad
+			);
+	}
+}
+
+Item.all = [ LifeItem, ShieldItem, UnknownItem, FireBallItem, DoublePointItem, SuperPadItem, MiniPadItem ];

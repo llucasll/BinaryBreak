@@ -159,7 +159,7 @@ export class BlueBall extends Ball {
 	
 	colliders = {
 		...this.colliders,
-		[Brick.symbol] (collider, angle) {
+		[ Brick.symbol ] (collider, angle) {
 			this.updateSpeedAngle(angle);
 		},
 	};
