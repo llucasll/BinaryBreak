@@ -41,7 +41,7 @@ export class Brick extends Profile {
 	
 	colliders = {
 		async [ Ball.symbol ] (collider) {
-			this.action();
+			this.action(); // TODO review this async model
 			
 			if (collider.profile instanceof BlueBall)
 				data.score++;

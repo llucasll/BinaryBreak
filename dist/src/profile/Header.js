@@ -7,7 +7,7 @@ export const headerHeight = config.bricks.area.dy - config.bricks.margin;
 export class Title extends Profile {
 	static defaults = {
 		// immortal: true,
-		image: 'title.v2',
+		image: 'title.v3',
 		size: [ 45, config.bricks.area.dy - config.bricks.margin ],
 		// pos: [ 0, -10 ],
 		// center: [ 50 ],

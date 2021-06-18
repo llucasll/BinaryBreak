@@ -1,7 +1,7 @@
 {
 	"name": "binary-break",
 	"description": "Binary Break is a game in Breakout style, developed with Web Technologies",
-	"version": "0.0.0",
+	"version": "1.0.0",
 	"type": "module",
 	"private": true,
 	"license": "GNU GPL 3.0+",

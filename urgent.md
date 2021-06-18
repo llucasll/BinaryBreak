@@ -10,7 +10,7 @@ PLAY/PAUSE
 - Botões
 
 ANIMAÇÃO DE CRIAÇÃO
-- [[Engine]]: Animação assíncrona +-
+- [[Engine]]: ~~Animação assíncrona~~
 - [[Refatorar]]: Início do jogo
 - Implementar
 
